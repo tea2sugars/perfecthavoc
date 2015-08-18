@@ -1,0 +1,187 @@
+# Copyright (C) 2011 WordPress Importer
+# This file is distributed under the same license as the WordPress Importer package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Easy Twitter Feed Widget 0.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wordpress-importer\n"
+"POT-Creation-Date: 2014-01-04 00:08+0500\n"
+"PO-Revision-Date: 2014-01-04 00:09+0500\n"
+"Last-Translator: Arafat Ashraf <life.object@gmail.com>\n"
+"Language-Team: DesignOrbital <designorbital@live.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-KeywordsList: __;_e;esc_attr_e;esc_attr\n"
+"X-Poedit-Basepath: E:\\wamp\\www\\themes\\wp-content\\plugins\\easy-twitter-"
+"feed-widget\\\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: lib/widget-twitter-feed-widget.php:26
+msgid "Easy Twitter Feed Widget"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:159
+msgid "Title:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:163
+msgid "Easy Twitter Feed Widget Settings"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:167
+msgid "Twitter Widget ID:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:172
+msgid "Twitter Screen Name:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:177
+msgid "Tweet Limit:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:186
+msgid "Show Replies:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:195
+msgid "Twitter Widget Width:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:204
+msgid "Twitter Widget Height:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:210
+msgid "Height setting will work only @ Tweet Limit \"default\"."
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:214
+msgid "Twitter Widget Theme:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:223
+msgid "Twitter Widget Link Color:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:223
+#: lib/widget-twitter-feed-widget.php:255
+msgid "e.g #333333"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:228
+msgid "Show Twitter Widget Header:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:237
+msgid "Show Twitter Widget Footer:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:246
+msgid "Show Twitter Widget Border:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:255
+msgid "Twitter Widget Border Color:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:260
+msgid "Show Twitter Widget Scrollbar:"
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:266
+msgid "Scrollbar setting will work only @ Tweet Limit \"default\"."
+msgstr ""
+
+#: lib/widget-twitter-feed-widget.php:270
+msgid "Use Twitter Widget Background Color:"
+msgstr ""
+
+#: lib/admin/admin.php:26
+msgid "Easy Twitter Feed Widget Options"
+msgstr ""
+
+#: lib/admin/admin.php:42
+msgid "Load Twitter Script"
+msgstr ""
+
+#: lib/admin/admin.php:46
+msgid "Reset Easy Twitter Feed Widget Options"
+msgstr ""
+
+#: lib/admin/admin.php:65
+msgid "Plugin Support"
+msgstr ""
+
+#: lib/admin/admin.php:75
+msgid "License"
+msgstr ""
+
+#: lib/admin/admin.php:85
+msgid "Changelog"
+msgstr ""
+
+#: lib/admin/admin.php:92
+msgid "For more information:"
+msgstr ""
+
+#: lib/admin/admin.php:94
+msgid "Easy Twitter Feed Widget Plugin"
+msgstr ""
+
+#: lib/admin/admin.php:97
+msgid "Easy Twitter Feed Widget Official Page"
+msgstr ""
+
+#: lib/admin/admin.php:149
+msgid "yes"
+msgstr ""
+
+#: lib/admin/admin.php:150
+msgid "no"
+msgstr ""
+
+#: lib/admin/admin.php:180
+msgid "Customize Twitter Embeddable Widget by using the following settings."
+msgstr ""
+
+#: lib/admin/admin.php:197
+msgid "Select \"no\" if your theme supports Twitter Embeddable Widget."
+msgstr ""
+
+#: lib/admin/admin.php:204
+msgid ""
+"Here are the general settings to customize easy twitter feed widget plugin."
+msgstr ""
+
+#: lib/admin/admin.php:210
+msgid "Reset EasyTwitterFeedWidget Options."
+msgstr ""
+
+#: lib/admin/page.php:9
+#, php-format
+msgid "%1$s Settings"
+msgstr ""
+
+#: lib/admin/page.php:14
+msgid "Premium WordPress Themes"
+msgstr ""
+
+#: lib/admin/page.php:15
+msgid "Free WordPress Themes"
+msgstr ""
+
+#: lib/admin/page.php:21 lib/admin/page.php:50
+msgid "Save Changes"
+msgstr ""
+
+#: lib/admin/page.php:29
+msgid "Twitter Script Settings"
+msgstr ""
+
+#: lib/admin/page.php:30
+msgid "General Settings"
+msgstr ""

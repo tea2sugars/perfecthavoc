@@ -1,0 +1,4 @@
+AuthUserFile .htpasswd
+AuthName "WP eStore Downloads"
+AuthType Basic
+require valid-user

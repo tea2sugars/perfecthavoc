@@ -1,0 +1,7 @@
+= 0.2 - June 09 2014 =
+
+* `Show Replies` option fixed.
+
+= 0.1 =
+
+* Initial release.
