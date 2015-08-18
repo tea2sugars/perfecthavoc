@@ -1,0 +1,437 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Maintenance\n"
+"POT-Creation-Date: 2014-08-09 15:52+0100\n"
+"PO-Revision-Date: 2014-08-09 15:54+0100\n"
+"Last-Translator: Florent <contact@restezconnectes.fr>\n"
+"Language-Team: Florent Maillefaud <contact@restezconnectes.fr>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:16
+msgid "Options saved."
+msgstr "Options sauvegardées."
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:232
+msgid "General"
+msgstr "Général"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:233
+msgid "Colors & Fonts"
+msgstr "Couleurs et Fonts"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:234
+msgid "Picture"
+msgstr "Image"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:235
+msgid "CountDown"
+msgstr "Compte à rebours"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:236
+msgid "CSS Style"
+msgstr "Style CSS"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:237
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance.php:52
+msgid "Settings"
+msgstr "Réglages"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:238
+msgid "About"
+msgstr "A propos"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:252
+msgid "Enable maintenance mode:"
+msgstr "Activer le mode maintenance :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:253
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:267
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:277
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:335
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:538
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:660
+msgid "Yes"
+msgstr "Oui"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:254
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:661
+msgid "No"
+msgstr "Non"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:258
+msgid "Title and text for the maintenance page:"
+msgstr "Titre et Texte de la page maintenance :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:259
+msgid "Title:"
+msgstr "Titre :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:260
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:262
+msgid "Text:"
+msgstr "Texte :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:261
+msgid "Text in the bottom of maintenance page:"
+msgstr "Texte du bas de page :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:266
+msgid "Enable Google Analytics:"
+msgstr "Activer Google Analytics :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:268
+msgid "Enter your Google analytics tracking ID here:"
+msgstr "Enter votre ID de suivi de Google Analytics ici :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:270
+msgid "Enter your domain URL:"
+msgstr "Entrer votre domain :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:276
+msgid "Enable Social Networks:"
+msgstr "Activer les icônes des réseaux sociaux :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:278
+msgid "Enter text for the title icons:"
+msgstr "Entrez un texte pour la balise title des icônes  :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:279
+msgid "Follow me on"
+msgstr "Suivez-moi sur"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:281
+msgid "Drad and drop the lines to put in the order you want:"
+msgstr ""
+"Cliquez et glisser les lignes pour mettre dans l'ordre que vous souhaitez :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:303
+msgid "Choose icons size:"
+msgstr "Choisissez la taille des icônes :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:314
+msgid "Position:"
+msgstr "Position :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:316
+msgid "Top"
+msgstr "Haut"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:317
+msgid "Bottom"
+msgstr "Bas"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:321
+msgid "Align:"
+msgstr "Alignement :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:323
+msgid "Left"
+msgstr "Gauche"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:324
+msgid "Center"
+msgstr "Centre"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:325
+msgid "Right"
+msgstr "Droite"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:328
+msgid "You have your own icons? Enter the folder name of your theme here:"
+msgstr ""
+"Vous avez vos propres icônes ? Entrez le nom du dossier de votre thème ici :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:334
+msgid "Enable Newletter:"
+msgstr "Activer l'encart de newletter :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:336
+msgid "Enter your newletter shortcode here:"
+msgstr "Entrez le Shortcode de la newletter ici :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:342
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:462
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:524
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:590
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:646
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:684
+msgid "Save this settings"
+msgstr "Sauvegarder ces paramètres"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:355
+msgid "Choice texts colors:"
+msgstr "Choix des couleurs des textes :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:357
+msgid "Background page color:"
+msgstr "Couleur du fond de page :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:358
+msgid "Text color:"
+msgstr "Couleur du texte :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:361
+msgid "Title font settings"
+msgstr "Paramètres de la police du titre"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:367
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:390
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:418
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:441
+msgid "Size:"
+msgstr "Taille :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:384
+msgid "Text font settings"
+msgstr "Paramètres de la police du texte"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:406
+msgid "Choice countdown colors:"
+msgstr "Choix des couleurs du compte à rebours :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:407
+msgid "Countdown text color:"
+msgstr "Couleur du texte du compteur :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:409
+msgid "Countdown background color:"
+msgstr "Couleur du fond du compteur :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:412
+msgid "Countdown font settings"
+msgstr "Paramètres de la police du compte à rebours"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:429
+msgid "Choice texts bottom colors:"
+msgstr "Choix des couleurs du bas de page :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:431
+msgid "Bottom color:"
+msgstr "Couleur du fond :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:432
+msgid "Text bottom color:"
+msgstr "Couleur du texte :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:435
+msgid "Text font on the bottom page:"
+msgstr "Paramètres de la police du texte du bas de page :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:474
+msgid "Upload a picture"
+msgstr "Uploader une image"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:476
+msgid "You use this picture:"
+msgstr "Image actuelle : "
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:478
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:494
+msgid "Select or Upload your picture"
+msgstr "Sélectionnez / Uploader votre image"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:479
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:495
+msgid "Enter a URL or upload an image."
+msgstr "Entrez une url ou uploader une image."
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:484
+msgid "Upload a background picture"
+msgstr "Uploader une image de fond"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:485
+msgid "Enable image background"
+msgstr "Activer l'image de fond"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:487
+msgid "You use this background picture:"
+msgstr "Image de fond actuelle : "
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:491
+msgid "You use this pattern:"
+msgstr "Vous utilisez ce pattern : "
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:496
+msgid "Or choose a pattern:"
+msgstr "Ou choisissez un pattern de fond :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:512
+msgid "Background picture options"
+msgstr "Options de l'image de fond"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:519
+msgid "Fixed"
+msgstr "Fixe"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:537
+msgid "Enable a countdown ?"
+msgstr "Activer le compte à rebours ?"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:539
+msgid "Enter the launch date"
+msgstr "Entrez la date de lancement"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:572
+msgid "Enable seconds ?"
+msgstr "Afficher les secondes ?"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:573
+msgid "Disable maintenance mode at the end of the countdown?"
+msgstr "Désactiver le mode maintenance à la fin du compte à rebours ?"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:574
+msgid "End message:"
+msgstr "Message de fin :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:574
+msgid "Font size:"
+msgstr "Taille de la police :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:602
+msgid "CSS style sheet code:"
+msgstr "Code style CSS :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:603
+msgid ""
+"Edit the CSS sheet of your maintenance page here. Click \"Reset\" and \"Save"
+"\" to retrieve the default style sheet."
+msgstr ""
+"Editer le code CSS de votre page de maintenance ici. Cliquez sur "
+"\"Réinitialiser\" et \"Sauvegarder\" pour remettre le style par défaut."
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:611
+msgid "Markers for colors"
+msgstr "Marqueurs pour les couleurs"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:616
+msgid "Use this code for text color"
+msgstr "Utiliser ce code pour la couleur du texte"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:620
+msgid "Use this code for background text color"
+msgstr "Utiliser ce code pour la couleur de fond du texte"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:624
+msgid "Use this code for background color countdown"
+msgstr "Utiliser ce code pour la couleur du fond du compte à rebours"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:628
+msgid "Use this code for size countdown"
+msgstr "Utiliser ce code pour la taille du compte à rebours"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:632
+msgid "Use this code for countdown color"
+msgstr "Utiliser ce code pour la couleur du texte du compte à rebours"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:641
+msgid "Reset default CSS stylesheet ?"
+msgstr "Réinitialiser la feuille de style ?"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:658
+msgid "Theme maintenance page:"
+msgstr "Page maintenance du thème :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:659
+msgid ""
+"If you would use your maintenance.php page in your theme folder, click Yes."
+msgstr ""
+"Si vous souhaitez utiliser votre page maintenance.php dans le dossier de "
+"votre thème, cliquez sur Oui."
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:662
+msgid "You can use this shortcode to include Google Analytics code:"
+msgstr ""
+"Vous pouvez utiliser ce Shortcode pour include le code Google Analytics sur "
+"votre page :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:662
+msgid "You can use this shortcode to include Social Networks icons:"
+msgstr ""
+"Vous pouvez utiliser ce Shortcode pour include les icons des réseaux sociaux "
+"sur votre page :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:666
+msgid "Roles and Capabilities:"
+msgstr "Rôles et capacités :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:667
+msgid "Allow the site to display these roles:"
+msgstr "Autoriser l'affichage du site à ces rôles :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:700
+msgid ""
+"This plugin has been developed for you for free by <a href=\"http://www."
+"restezconnectes.fr\" target=\"_blank\">Florent Maillefaud</ a>. It is "
+"royalty free, you can take it, modify it, distribute it as you see fit. <br /"
+"> <br />It would be desirable that I can get feedback on your potential "
+"changes to improve this plugin for all."
+msgstr ""
+"Ce plugin a été développé gratuitement pour vous par <a href=\"http://www."
+"restezconnectes.fr\" target=\"_blank\">Florent Maillefaud</a>. Il est libre "
+"de droits, vous pouvez le prendre, le modifier, le distribuer comme bon vous "
+"semble.<br /><br />Il serait néanmoins souhaitable que je puisse avoir des "
+"retours sur vos éventuelles modifications afin d'améliorer ce plugin pour "
+"tous."
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance-admin.php:705
+msgid ""
+"If you want Donate (French Paypal) for my current and future developments:"
+msgstr ""
+"Si vous souhaitez me soutenir pour mes développements actuels et futurs :"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance.php:94
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance.php:536
+msgid "This site is down for maintenance"
+msgstr "Ce site est en maintenance"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance.php:290
+msgid "Choose This Image"
+msgstr "Choisir cette image"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance.php:291
+msgid "Choose Image"
+msgstr "Choisissez une image"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance.php:643
+msgid "Days"
+msgstr "Jours"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance.php:643
+msgid "Hours"
+msgstr "Heures"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance.php:643
+msgid "Minutes"
+msgstr "Minutes"
+
+#: C:\wamp\www\askyourplugin.local.sites.fr\www\wp-content\plugins\wp-maintenance/wp-maintenance.php:645
+msgid "Seconds"
+msgstr "Secondes"
+
+#~ msgid "Choose those that do not display the maintenance page."
+#~ msgstr "Choisissez ceux qui n'auront pas la page de maintenance"
+
+#~ msgid "Note : "
+#~ msgstr "Note :"
+
+#~ msgid "Use this code for add color texte"
+#~ msgstr "Utiliser ce code pour la couleur du texte"
+
+#, fuzzy
+#~ msgid ""
+#~ "If this parameter is set to Yes, this is the maintenance.php page of your "
+#~ "theme to be displayed"
+#~ msgstr ""
+#~ "Si ce paramètre est sur Oui, c'est la page maintenance.php de votre thème "
+#~ "qui sera affichée"
+
+#~ msgid "Day"
+#~ msgstr "Jour"

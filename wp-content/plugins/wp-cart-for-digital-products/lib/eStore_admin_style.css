@@ -1,0 +1,42 @@
+@CHARSET "ISO-8859-1";
+.eStore-admin-clear-float{clear:both;}
+
+.eStore_yellow_box {
+background: #FFF6D5;
+border: 1px solid #D1B655;
+color: #3F2502;
+margin: 10px 0px 10px 0px;
+padding: 5px 5px 5px 10px;
+text-shadow: 1px 1px #FFFFFF;
+}
+
+.eStore_grey_box{
+background: #ECECEC;
+border: 1px solid #CFCFCF;
+color: #363636;
+margin: 10px 0px 15px 0px;
+padding: 5px 5px 5px 10px;
+text-shadow: 1px 1px #FFFFFF;	
+}
+
+.eStore_blue_box{
+background: #D7E7F5;
+border: 1px solid #AACEE6;
+color: #1D263B;
+margin: 10px 0px 15px 0px;
+padding: 5px 5px 5px 10px;
+text-shadow: 1px 1px #FFFFFF;	
+}
+
+.eStore_more_info_anchor{
+color: #21759B;
+font: 0.9em/1.455em "Lucida Grande","Lucida Sans Unicode",Tahoma,Verdana,sans-serif;
+text-decoration: none;
+}
+.eStore_more_info_anchor:hover{
+color:#333333;
+cursor:pointer;
+}
+.eStore_more_info_body{
+opacity:0.8;
+}

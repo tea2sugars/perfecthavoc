@@ -1,0 +1,280 @@
+[17-11-2014 23:59:37] [Error] WPRSS:
+The feed URL is not valid! Please recheck: 
+
+
+[26-05-2015 11:28:33] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". cURL error 28: Operation timed out after 30 seconds with 0 bytes received
+
+
+[09-07-2015 04:06:30] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 15:00:21] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 15:00:51] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 16:26:28] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 17:14:24] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 18:12:02] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 19:05:21] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 20:11:46] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 21:00:32] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 22:09:03] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[27-07-2015 23:06:37] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 00:02:55] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 01:12:30] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 02:06:50] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 03:12:59] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 04:18:11] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 04:59:50] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 06:10:40] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 07:02:39] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 08:34:02] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 09:17:25] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 09:59:28] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 10:58:15] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 12:07:45] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 13:11:30] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 14:10:53] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 15:06:54] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 16:16:27] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 17:04:36] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 18:09:54] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 18:58:52] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 20:40:13] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 21:18:48] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 22:23:15] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[28-07-2015 23:14:34] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 00:01:40] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 01:05:27] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 02:11:49] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 02:11:49] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 03:02:35] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 04:08:32] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 05:13:42] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 06:09:31] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 07:08:05] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 08:07:50] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 09:12:16] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 10:07:04] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 10:58:14] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 12:29:13] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 12:29:13] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 13:08:03] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 14:08:11] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 15:03:47] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 16:11:48] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 17:12:33] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 17:12:44] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 18:08:07] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 19:30:04] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 20:19:50] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 21:08:38] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 22:08:59] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[29-07-2015 23:13:40] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[30-07-2015 00:03:34] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[30-07-2015 01:05:44] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[30-07-2015 02:11:04] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[30-07-2015 03:11:39] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[30-07-2015 04:07:24] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[30-07-2015 05:03:25] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+

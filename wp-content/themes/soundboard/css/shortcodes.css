@@ -1,0 +1,217 @@
+/* 
+-------------------------------------------
+	SHORTCODES 
+-------------------------------------------
+	1.  Columns
+	2.  Dropcaps
+	3.  Pullquotes
+	4.  Highlight	
+	5.  Divider
+	6.  Tabs
+	7.  Toggle
+	8.  Buttons
+	9. JW Player
+-------------------------------------------
+*/
+
+
+/* 1. Columns */
+.one_half { width: 48%; }
+.one_third { width: 30.66%; }
+.two_third { width: 65.33%; }
+.one_fourth { width: 22%; }
+.three_fourth { width: 74%; }
+.one_fifth { width: 16.8%; }
+.two_fifth { width: 37.6%; }
+.three_fifth { width: 58.4%; }
+.four_fifth { width: 79.2%; }
+.one_sixth { width: 13.33%; }
+.five_sixth { width: 82.67%; }
+
+.one_half,
+.one_third,
+.two_third,
+.three_fourth,
+.one_fourth,
+.one_fifth,
+.two_fifth,
+.three_fifth,
+.four_fifth,
+.one_sixth,
+.five_sixth 
+	{
+	position: relative;
+	margin-right: 4%;
+	margin-bottom: 20px;
+	float: left;
+	}
+
+.last	{
+	margin-right: 0!important;
+	clear: right;
+	}
+
+.clearboth {
+        clear:both;
+        display:block;
+        font-size:0;
+        height:0;
+        line-height:0;
+        width:100%;
+        }
+
+/*  2. Dropcaps */
+.dropcap {
+        display: block;
+        position: relative;
+        left: -2px;
+        float: left;
+        font-size: 40px;
+        line-height: 40px;
+        padding-top: 0;
+        margin: 0 6px 0 0;
+        }
+
+
+/*  3. Pullquotes */
+.pullquote_left, 
+.pullquote_right
+        {
+        color: #888;
+        background: url("../images/quotes.png") no-repeat scroll 0 0 transparent;
+        position: relative;
+        top: -2px;
+        font-size: 14px;
+        padding: 0 0 0 30px;
+        clear: none;
+	}
+
+.pullquote_left {    
+        float: left;
+        margin: 20px 20px 20px 0;
+        padding: 0 0 0 30px;
+        width: 30%;
+        }
+	
+.pullquote_right {    
+        float: right;
+        margin: 20px 0 20px 20px;
+        padding: 0 0 0 30px;
+        width: 29%;    
+        }
+
+
+/*  4. Highlight */
+.highlight1 {
+	}
+
+.highlight2 {
+    	color: #fff;
+	}
+
+
+/*  5. Divider */
+.divider_hr {
+        clear:both;
+        display:block;
+        width:100%;
+        margin-bottom:45px;
+        padding-top:14px;
+        }
+
+
+/*  6. Tabs */
+.ui-tabs .ui-tabs-hide {
+        position: absolute;
+        left: -9999px;
+        display: none !important;
+        }
+
+ul.tabs {
+	margin: 0;
+	}
+
+ul.tabs li {
+	list-style: none;  
+        display: inline;
+	}
+
+ul.tabs li a {
+   	color: #fff !important;
+   	float: left;
+        line-height: 25px;
+        margin: 0 5px -1px 0;
+        overflow: hidden;
+        padding: 3px 15px 1px;
+        position: relative;
+	}
+	
+.pane	{
+	border-style: solid;
+	border-width: 1px;
+	clear: both;
+	display: block;
+	font-size: 12px;
+	margin-bottom: 29px;
+	margin-top: 0;
+	padding: 20px 20px;
+	}
+
+
+/* 7. Toggle */
+h6.trigger 
+	{
+	padding: 0 0 0 20px;
+	margin: 0 0 20px;
+	background: url(../images/toggle2.png) no-repeat;
+        cursor: pointer;
+	}
+         
+h6.trigger a
+	{
+	text-decoration: none;
+	display: block;
+        cursor: pointer;
+	}
+
+h6.active 
+	{
+	background-position: left bottom;
+	} /* When toggle is triggered, it will shift the image to the bottom to show its "opened" state */
+
+.toggle_container
+        {
+        margin: 0;
+        padding: 0 0 20px 20px;
+        overflow: hidden;
+        clear: both;
+        }
+         
+.toggle_container .block {
+        padding: 20px; /* Padding of Container */  
+        margin: 0;             
+        overflow: hidden;
+        }
+
+
+/*  8. Buttons */
+.buttonS {
+        display: inline-block;
+        font-weight: normal;
+        height: 31px;
+        padding: 0 10px;
+        text-decoration: none;
+        cursor:pointer;         
+        margin-top: 10px;
+        -webkit-appearance: none;
+        }
+
+.buttonS span
+        {
+        display: block;
+        line-height: 14px;
+        padding: 8px 10px 9px 10px;
+        }
+
+
+/*  9. JW Player */

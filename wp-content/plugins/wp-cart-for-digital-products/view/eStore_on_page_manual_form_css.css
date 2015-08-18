@@ -1,0 +1,119 @@
+form#payment {
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border:1px solid #EEEEEE;
+	padding: 20px;
+}
+
+#error {
+	background: #FF8282;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: 20px;
+	margin: 0 auto;
+	border: 2px solid #FF3B3B;
+}
+
+#success {
+	background: #38D19E;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: 20px;
+	margin: 0 auto;
+	border: 2px solid #147857;
+}
+
+form#payment fieldset {
+	border: none;
+	margin-bottom: 10px;
+}
+form#payment fieldset:last-of-type {
+	margin-bottom: 0;
+}
+
+form#payment legend {
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 10px;
+	text-shadow: 0 1px 1px #EDEDED;
+}
+
+form#payment fieldset fieldset legend {
+	font-size: 13px;
+	font-weight: normal;
+	padding-bottom: 0;
+}
+
+form#payment fieldset ol{
+	padding:0 !important;
+	margin: 0 !important;
+}
+
+form#payment ol li {
+	border-color: #ddd;
+	border-style: solid;
+	border-width: 1px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	line-height: 30px;
+	list-style: none;
+	padding: 5px 10px;
+	margin-bottom: 3px;
+}
+form#payment ol ol li {
+	background: none;
+	border: none;
+	float: left;
+}
+
+form#payment label {
+	float: left;
+	font-size: 13px;
+	width: 150px;
+}
+form#payment fieldset fieldset label {
+	background:none no-repeat left 50%;
+	line-height: 20px;
+	padding: 0 0 0 30px;
+	width: auto;
+}
+
+form#payment fieldset fieldset label:hover {
+	cursor: pointer;
+}
+
+form#payment input:not([type=radio]),
+form#payment textarea {
+	padding: 5px;
+	width: 200px;
+}
+
+form#payment input[type=radio] {
+	float: left;
+	margin-right: 5px;
+}
+
+form#payment button {
+	background: #656D75;
+	border: none;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	-khtml-border-radius: 20px;
+	border-radius: 20px;
+	color: #ffffff;
+	display: block;
+	font: 18px Georgia, "Times New Roman", Times, serif;
+	letter-spacing: 1px;
+	padding: 7px 25px;
+	text-shadow: 0 1px 1px #000000;
+	text-transform: uppercase;
+	margin:auto;
+}
+form#payment button:hover {
+	background: #3D4145;
+	cursor: pointer;
+}
