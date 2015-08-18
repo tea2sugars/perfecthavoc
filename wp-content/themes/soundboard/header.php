@@ -179,8 +179,8 @@ box-shadow: none;
 }
     </style>
     <?php endif; ?>
-  <script type="text/javascript" src="//use.typekit.net/bky7wkj.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+ <!-- <script type="text/javascript" src="//use.typekit.net/bky7wkj.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>-->
 </head><!-- END head -->
 <!-- BEGIN body -->
 <body <?php body_class(); ?>>

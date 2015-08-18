@@ -282,3 +282,11 @@ Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be fou
 The feed URL is not valid! Please recheck: 
 
 
+[18-08-2015 14:59:37] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
+[18-08-2015 15:21:05] [Error] WPRSS > wprss_get_feed_items:
+Failed to fetch feed "http://www.perfecthavoc.com/blog". A feed could not be found at http://www.perfecthavoc.com/blog. A feed with an invalid mime type may fall victim to this error, or SimplePie was unable to auto-discover it.. Use force_feed() if you are certain this URL is a real feed.
+
+
