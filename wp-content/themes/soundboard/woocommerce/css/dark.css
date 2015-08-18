@@ -1,0 +1,156 @@
+/* WOOCOMMERCE dark skin *****************************************/         
+
+
+/* messages */
+.woocommerce_message,
+.woocommerce_error,
+.woocommerce_info {
+        background: url("../../images/00030.png");
+        color: #aaa;
+        } 
+
+
+/* quantity */
+.woocommerce #content .quantity input.qty,
+.woocommerce-cart #content .quantity input.qty,
+.woocommerce #content .quantity .plus,
+.woocommerce #content .quantity .minus,
+.woocommerce-cart #content .quantity .plus,
+.woocommerce-cart #content .quantity .minus {
+        background: #222;
+        border: 1px solid #444;
+        }
+
+.woocommerce #content .quantity .plus:hover,
+.woocommerce #content .quantity .minus:hover,
+.woocommerce-cart #content .quantity .plus:hover,
+.woocommerce-cart #content .quantity .minus:hover {
+        background: #aaa;
+        color: #444;
+        }
+
+
+/* price */
+.price del {
+	color: #aaa;
+        }
+
+
+/* stock */
+div.product .stock, 
+#content div.product .stock {
+	color: #fff;
+	}
+	
+div.product .out-of-stock, #content div.product .out-of-stock {
+	color: #fff;
+	}
+
+
+/* tabs */
+.woocommerce div.product .woocommerce_tabs ul.tabs li.description_tab active a,
+.woocommerce #content div.product .woocommerce_tabs ul.tabs li.description_tab active a,
+.woocommerce div.product .woocommerce-tabs ul.tabs li.description_tab active a,
+.woocommerce #content div.product .woocommerce-tabs ul.tabs li.description_tab active a, 
+.woocommerce .panel {
+        background: url("../../images/00030.png");
+        }
+
+.woocommerce #content div.product .woocommerce_tabs ul.tabs li.active,
+.woocommerce #content div.product .woocommerce-tabs ul.tabs li.active {
+        background: url("../../images/00030.png");
+        }
+
+.woocommerce-page #payment {
+        background: url("../../images/00030.png");
+        }   
+
+div.product .woocommerce_tabs ul.tabs li a, 
+#content div.product .woocommerce_tabs ul.tabs li a,
+div.product .woocommerce-tabs ul.tabs li a, 
+#content div.product .woocommerce-tabs ul.tabs li a{
+	color: #888;    
+	}        
+        
+div.product .woocommerce_tabs ul.tabs li a:hover, 
+#content div.product .woocommerce_tabs ul.tabs li a:hover,
+div.product .woocommerce-tabs ul.tabs li a:hover, 
+#content div.product .woocommerce-tabs ul.tabs li a:hover{
+	color: #777;
+	} 
+	
+div.product .woocommerce_tabs ul.tabs li.active a, 
+#content div.product .woocommerce_tabs ul.tabs li.active a,
+div.product .woocommerce-tabs ul.tabs li.active a, 
+#content div.product .woocommerce-tabs ul.tabs li.active a{
+	color: #888 !important;
+	}  
+	
+.woocommerce #reviews #comments ol.commentlist li .comment-text {
+        border-bottom: 1px dashed #444;
+        }
+
+#reviews #comments ol.commentlist li .comment-text p.meta {
+    color: #fff;
+}        
+      
+        
+        
+/* related */        
+.woocommerce .related h2 {
+        border-top: 1px dashed #444;
+        }         
+
+small.note {
+	color: #777;
+	}	
+
+
+
+/* cart */
+table.cart a.remove, 
+#content table.cart a.remove {
+    background: url("../images/remove-dark.png") repeat scroll 0 0 #DFDBDF;
+}
+	
+	
+/* checkout form */	
+form.login, form.checkout_coupon, form.register {
+	border: 1px dashed #444;
+	}
+
+/* payment */
+#payment div.payment_box {
+	background: #444;
+	}
+
+#payment div.payment_box:after {
+	border-color: transparent transparent #444;
+	}
+	
+
+/* order confirmation */
+.order_details li {
+    border-right: 1px dashed #444;
+}
+
+	
+ /* widgets */       
+.widget_shopping_cart .total {
+        border-top: 1px dashed #444;
+        }	
+	
+	        
+.widget_layered_nav ul li.chosen a {
+		color: #FFFFFF;
+		}        
+
+.widget_price_filter .ui-slider .ui-slider-handle {
+		background: #888;
+		border: 1px solid #888;
+		}        
+
+.widget_price_filter .price_slider_wrapper .ui-widget-content {
+		background: #444;
+		}        
+        

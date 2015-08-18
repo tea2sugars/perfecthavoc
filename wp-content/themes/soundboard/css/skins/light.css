@@ -1,0 +1,337 @@
+/*******************************************************************************
+* LIGHT SKIN
+*******************************************************************************/
+
+body {  /* General background and text color  */        
+        color:#444;
+        }
+
+#bg-wrapper { /* Content background */  
+        background:url('../../images/fff90.png') repeat;
+        }
+        
+h1, h2, h3, h4, h5, h6,
+h1 a, h1 a:link, h1 a:visited,
+h2 a, h2 a:link, h2 a:visited,
+h3 a, h3 a:link, h3 a:visited,
+h4 a, h4 a:link, h4 a:visited,
+h5 a, h5 a:link, h5 a:visited,
+h6 a, h6 a:link, h6 a:visited { /* headline links color*/        
+        color: #222;
+        }
+
+h6.infotitle,
+li.infotitle {
+        color: #888;
+        }
+
+a:hover,
+a:active { /* General links color on mouse hover */
+        color: #808080;
+        }
+
+#loginwrapper {
+        background-color: #222;
+        }
+
+.arrow-down {
+	border-top: 10px solid #222;
+        }  
+        
+ul.login li a { 
+        color: #fff;
+        }
+
+.post-date {
+        color: #222;
+        }
+
+.blog-bottomborder
+        {
+        border-bottom: 1px dashed #ccc;
+        }
+        
+pre, code {
+        background: #eee;
+        color: #808080;
+        }
+
+/* NEWS ON HOMEPAGE / NEWS WIDGET**********************************************/
+
+.time-ago,
+.comment-nr {
+        color: #888;
+        }
+
+        
+/* SLIDER *********************************************************************/
+
+#slide-bg {
+        background:url('../../images/fff90.png') repeat;
+        }
+
+        
+/* BUTTONS ********************************************************************/
+
+.button,
+a.button,
+.button1 span,
+.buttonS span,
+.button1,
+.buttonS,
+.button2,
+li.comment .reply a {
+        color: #fff !important;
+        }
+ 
+.button:hover,        
+.button1:hover,
+.buttonS:hover,
+.button2:hover,
+li.comment .reply:hover {
+        background-color: #808080;
+        }
+
+.cancelled {
+        color: #fff;
+        background-color: #555;
+        }
+
+.soldout {
+        color: #fff;
+        background-color: #808080;
+        }
+
+/* AUDIO ICONS ****************************************************************/
+.audioplayer-icon {
+        background:url('../../images/audio_play.png') no-repeat;
+        }
+
+.soundcloudplayer-icon {
+        background:url('../../images/soundcloud.png') no-repeat;
+        }    
+
+
+/* SELECTION ******************************************************************/
+
+::-moz-selection {
+        color: #fff;
+        background: #222;
+        }
+
+::-webkit-selection {
+        color: #fff;
+        background: #222;
+        }
+
+::selection {
+        color: #fff;
+        background: #222;
+        }
+
+
+/* TABLE **********************************************************************/
+
+table th {
+        border-bottom: 1px dashed #d6d6d6;
+        }
+
+table td {
+        border-bottom: 1px dashed #d6d6d6;
+        }
+
+table tr:hover td {
+        background: #efefef;
+        }
+ 
+
+/* FORMS **********************************************************************/
+
+textarea, input {
+        background-color: #ddd;
+        color: #606060;
+        }
+
+
+/* NOTIFICATION ***************************************************************/  
+.error,
+.moderation {
+        color: #bf5665;
+        }
+       
+        
+/* WIDGETS ********************************************************************/        
+        
+/* news widget */
+
+.news-widget-title h1 {
+        color: #222;
+        }  
+
+.post-info-w {
+        color: #888;
+        }  
+
+
+/* calendar widget */
+
+#wp-calendar tbody {
+        color: #aaa;
+        }
+
+#wp-calendar tbody td {
+        background: #f5f5f5;
+        border: 2px solid #eee;
+        }        
+        
+#footer #wp-calendar tbody {
+        color: #888;
+        }
+
+#footer #wp-calendar tbody td {
+        background: #292929;
+        border: 2px solid #222;
+        }
+        
+
+/* NAVIGATION *****************************************************************/
+
+#topnavi {
+        background:url('../../images/fff90.png') repeat;  
+        }
+
+.sf-menu a,
+.sf-menu a:visited,
+.sf-menu li a,
+.sf-menu li a:active { /* navigation link color */        
+        color: #fff !important;
+        }
+
+.sf-menu li:hover,
+.sf-menu li.sfHover,
+.sf-menu a:focus,
+.sf-menu a:hover,
+.sf-menu a:active { /* navigation link color on mouseover */        
+        color: #eee;
+        }
+
+.sf-menu ul,
+.sf-menu ul a,
+.sf-menu ul a:visited,
+.sf-menu ul li a,
+.sf-menu ul li a:active { /* dropdown */        
+        background-color: #fff;
+        color: #222;
+        }
+  
+  
+/* COMMENTS *******************************************************************/
+        
+.comment-topborder
+        {
+        border-bottom: 1px dashed #ccc;
+        }
+
+.comment-date,
+.comment-date a {
+        color: #aaa;
+        }
+
+.comment-date a:hover {
+        color: #777
+        }
+
+.single-comment {
+        background-color: rgba(0,0,0,0.05); 
+        }
+
+a.page-numbers {
+        color: #fff;
+        background-color: #222;
+        }
+        
+span.page-numbers,
+a.page-numbers:hover {
+        color: #fff;
+        } 
+
+.depth-2 .comment-arrow {
+        color: #aaa;      
+        }       
+        
+        
+/* PAGINATION *****************************************************************/
+
+.pagination_main span, .pagination_main a {
+        color: #fff !important;
+        background-color: #222;
+        }
+
+
+/* FOOTER *********************************************************************/
+
+#footer {/* Footer background color */        
+        background-color: #222;
+        }
+
+#footer h3 { /* Footer headlines */        
+        color: #fff;
+        }
+
+#footer-widget-area { /* Footer general color */        
+        color: #777;
+        }
+
+#footer-widget-area a,
+#footer-widget-area a:link,
+#footer-widget-area a:visited { /* Footer links color */        
+        color: #fff;
+        }
+
+.flickr_badge_image img
+        {
+        background: #1a1a1a;
+        }  
+
+#social,
+#copyright {
+        background-color: #292929;
+        color: #666;        
+        }
+        
+#social {
+        border-bottom: 1px dashed #444;
+        }
+        
+/* SHORTCODES *****************************************************************/        
+
+/*  Divider */
+.divider_hr {
+        border-bottom:1px dashed #ccc;
+        }
+        
+/*  Toggle */
+.toggle_container .block { 
+        background: #eee;   
+        }
+        
+/*  Tabs */        
+.pane	{
+	background: #fff;
+	border-color: #DDDDDD;
+        color: #888;
+	}
+        
+ul.tabs li.ui-tabs-active a
+	{
+	background: #fff;
+        color: #888 !important;
+        border-color: #DDDDDD;        
+        border-style: solid solid none;
+        border-width: 1px 1px medium;
+	}
+
+
+#footer h3 {
+color: #222;
+}
