@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName www.perfecthavoc.com
+AuthUserFile /home/virtual/site29/fst/etc/awstats/.passwd
+AuthGroupFile /dev/null
+Require valid-user
