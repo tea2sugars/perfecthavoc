@@ -52,6 +52,7 @@
                     'with_front' => false
                 ),
                 'capability_type'       => 'feed',
+				'map_meta_cap'			=> true,
                 'supports'              => array( 'title' ),
                 'labels'                => $labels   
             )
@@ -92,7 +93,7 @@
                 'show_in_menu'          => 'edit.php?post_type=wprss_feed',
                 'show_in_admin_bar'     => false,
                 'rewrite'               => array(
-                    'slug'       => 'feeds/items',
+                    'slug'       => 'feed-items',
                     'with_front' => false,
                 ),
                 'capability_type'       => 'feed_source',
@@ -101,7 +102,9 @@
         );
 
         // Register the 'feed_item' post type
-        register_post_type( 'wprss_feed_item', $feed_item_args );        
+        register_post_type( 'wprss_feed_item', $feed_item_args );
+        // Trigger action
+        do_action( 'wprss_registered_post_types' );
     }
 
 

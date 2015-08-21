@@ -55,12 +55,15 @@ body.post-type-wprss_feed #titlediv div.inside { display: none !important; }
 #misc-publishing-actions,
 #minor-publishing-actions { display: none; }
 
+div#force-feed-container {
+    border-top: 1px solid #ddd;
+}
 
 
 /* FORM TABLES */
 .wprss-form-table th {
-    width: 120px;
-    max-width: 120px;
+    width: 135px;
+    max-width: 135px;
     padding: 7px 10px 10px 0;
 }
 .wprss-form-table td {
@@ -407,6 +410,7 @@ body.post-type-wprss_feed.edit-php table.wp-list-table.posts thead th#feed-count
     width: 140px !important;
 }
 /* CATEGORIES */
+body.post-type-wprss_feed_item.edit-php table.wp-list-table.posts thead th#category,
 body.post-type-wprss_feed.edit-php table.wp-list-table.posts thead th#category {
     width: 130px !important;
 }
@@ -611,7 +615,7 @@ body.post-type-wprss_blacklist .alignleft.actions.bulkactions {
 }
 
 /* For non settings page screens */
-@media only screen and (max-width: 1026px) {
+@media only screen and (max-width: 850px) {
 
     body:not(.wprss_feed_page_wprss-aggregator-settings)
         .wprss-tooltip-handle {

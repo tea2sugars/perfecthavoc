@@ -1,11 +1,10 @@
 === WP RSS Aggregator ===
-Contributors: jeangalea, Mekku, xedin.unknown, markzahra
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X9GP6BL4BLXBJ
+Contributors: jeangalea, Mekku, xedin.unknown, markzahra, doytch, chiragswadia
 Plugin URI: http://www.wprssaggregator.com
-Tags: rss, feeds, aggregation, rss to post, autoblog aggregator, rss import, feed aggregator, rss aggregator, multiple rss feeds, multi rss feeds, rss multi importer, feed import, feed import, multiple feed import, feed aggregation, rss feader, feed reader, feed to post, multiple feeds, multi feed importer, multi feed import, multi import, autoblogging, autoblogger
+Tags: rss, feeds, aggregation, rss to post, autoblog aggregator, rss import, feed aggregator, rss aggregator, multiple rss feeds, multi rss feeds, rss multi importer, feed import, feed import, multiple feed import, feed aggregation, rss feader, feed reader, feed to post, multiple feeds, multi feed importer, multi feed import, multi import, autoblogging, autoblogger, rss feeder, rss post importer, autoblog aggregator, autoblog, autopost, content curation, feedwordpress, wp rss multi import, hungryfeed, wp-o-matic, rss feed, rss feed to post, rss retriever, syndication
 Requires at least: 3.3
-Tested up to: 4.0
-Stable tag: 4.6.5
+Tested up to: 4.2.3
+Stable tag: 4.7.3
 License: GPLv2 or later
 The no.1 RSS feed importer for WordPress. Premium add-ons available for more functionality.
 
@@ -47,7 +46,7 @@ To [display your imported feed items](http://wordpress.org/plugins/wp-rss-aggreg
 = Premium Add-Ons =	
 Add-Ons that add more functionality to the core plugin are [available for purchase](http://www.wprssaggregator.com/extensions/). 
 
-* [Feed to Post](http://www.wprssaggregator.com/extensions/feed-to-post) - an advanced importer that lets you import RSS feeds into posts or custom post types. Populate a website in minutes (autoblog). This is the most popular extension.
+* [Feed to Post](http://www.wprssaggregator.com/extensions/feed-to-post) - an advanced importer that lets you import RSS to posts or custom post types. Populate a website in minutes (autoblog). This is the most popular extension.
 * [Keyword Filtering](http://www.wprssaggregator.com/extensions/keyword-filtering) - filter imported feeds based on keywords, so you only get items you're interested in.
 * [Excerpts & Thumbnails](http://www.wprssaggregator.com/extensions/excerpts-thumbnails) - display excerpts and thumbnails together with the title, date and source.
 * [Categories](http://www.wprssaggregator.com/extensions/categories) - categorise your feed sources and display items from a particular category at will within your site.
@@ -60,12 +59,13 @@ We also provide a [Feed Creator](http://createfeed.wprssaggregator.com) service,
 The core plugin can be seen in use on the [demo page](http://www.wprssaggregator.com/demo/).
 
 = Video Walkthrough =
-[youtube http://www.youtube.com/watch?v=5J-S2vXtQ5w]
+[youtube http://www.youtube.com/watch?v=fcENPsmJbvc]
 
 = Documentation =
 Instructions for plugin usage are available on the plugin's [documentation page](http://www.wprssaggregator.com/documentation/).
 
 = As featured on =
+* [Latest WP](http://www.latestwp.com/2015/03/15/wp-rss-aggregator-plugin-review/)
 * [WP Beginner](http://www.wpbeginner.com/plugins/how-to-fetch-feeds-in-wordpress-using-wp-rss-aggregator/)
 * [WPEXplorer](http://www.wpexplorer.com/custom-rss-aggregator-plugin/)
 * [WP Kube](http://www.wpkube.com/wp-rss-aggregator-wordpress-review/)
@@ -82,6 +82,8 @@ Instructions for plugin usage are available on the plugin's [documentation page]
 = Translations =
 * Italian - Davide De Maestri
 * Spanish - Andrew Kurtis
+* Brazilian Portugese - Bruno Calheira
+* Dutch - Erick Suiker
 
 == Installation ==
 
@@ -166,6 +168,80 @@ The full documentation section can be found on the [WP RSS Aggregator website](w
 
 
 == Changelog ==
+
+= 4.7.3 (2015-08-04) =
+* Enhanced: Core now implements an image cache logic.
+* Enhanced: Add-ons on the "Add-ons" page now have an installed-but-inactive status.
+* Enhanced: Google Alerts permalinks will now be normalized.
+* Enhanced: Russian translation added.
+* Fixed bug: Inline help (tooltips) translations now work.
+* Fixed bug: Link to the Feed to Post add-on on the welcome page is no longer broken.
+
+= 4.7.2 (2015-06-30) =
+* Enhanced: Copyright updated.
+* Fixed bug: Word trimming no longer adds extra closing tags at the end.
+* Fixed bug: Presence of `idna_convert` class no longer causes infinite redirects on some servers.
+* Fixed bug: Warning of unterminated comment no longer thrown in PHP 5.5.
+* Fixed bug: Added default value for "Unique Titles" option.
+* Fixed bug: Having a the port number specified with the database host no longer causes issues with the `mysqli` adapter in System Info on some servers.
+* Fixed bug: Nested options of inline help controller no longer cause a fatal error.
+* Fixed bug: Notices will no longer be displayed during rendering of feed items due to absence of required default values.
+
+= 4.7.1 (2015-04-23) =
+* Fixed bug: No warning will be thrown when fetching feeds.
+
+= 4.7 (2015-04-21) =
+* New: Optionally import only items with titles that don't already exist.
+* Enhanced: Accessing feeds over HTTPS is now possible.
+* Enhanced: Added support for multibyte strings in some places.
+* Enhanced: Increased JS compatibility with other plugins.
+* Enhanced: Increased UI support for mobile devices.
+* Fixed bug: Having no mysqli extension no longer causes an error to appear in the debug info.
+* Fixed bug: Saving an empty license key no longer results in a warning. 
+
+= 4.6.13 (2015-03-20) =
+* Fixed bug: The "Force feed" option wasn't being correctly used.
+
+= 4.6.12 (2015-03-09) =
+* Fixed bug: The "Force feed" option was being removed by the Feed to Post add-on.
+
+= 4.6.11 (2015-03-04) =
+* Enhanced: The Help page now includes a support form if a premium add-on is detected.
+* Enhanced: Updated some translations for admin options.
+* Fixed bug: Help tooltips are now optimized for iPad screens.
+* Fixed bug: Errors on the licensing page when a license code has not yet been entered.
+
+= 4.6.10 (2015-02-10) =
+* Enhanced: AJAX license activation.
+* Enhanced: License form more reliable.
+* Enhanced: license-related UI improvements
+* New: Markdown library added. Changelog now read from readme.
+* Fixed bug: Saving license keys not longer triggers error in some cases.
+
+= 4.6.9 (2015-01-21) =
+* Enhanced: Admin user will now be warned about invalid or expiring licenses.
+* Enhanced: Admin notices logic centralized in this plugin.
+* Fixed: Multiple small-scale security vulnerabilities.
+* Fixed: Ampersand in feed URL no longer causes the product of generated feeds to be invalidated by W3C Validator.
+
+= 4.6.8 (2015-01-07) =
+* Enhanced: Added more logging during feed importing.
+* Enhanced: Irrelevent metaboxes added by other plugins are now removed from the Add/Edit Feed Source page.
+* Fixed bug: Valid feed URLS were being invalidated.
+* Fixed bug: The Blacklist feature was being hidden when the Feed to Post add-on was enabled.
+* Fixed bug: Patched a vulnerability where any user on the site can issue a feed fetch.
+* Fixed bug: The "Activate" and "Pause" actions are not shown in the bulk actions dropdown in WordPress v4.1.
+
+= 4.6.7 (2014-12-17) =
+* Enhanced: Some minor interface updates.
+* Enhanced: Added filters for use by the premium add-ons.
+
+= 4.6.6 (2014-12-06) =
+* Enhanced: Added output layouts for feed sources and feed items.
+* Enhanced: Updated EDD updater class to version 1.5.
+* Enhanced: Added time limit extending to prevent script from exhausting its execution time limit while importing.
+* Fixed bug: The "Delete and Re-import" button was deleting items but not re-importing.
+* Fixed bug: Non-object errors when a feed source is deleted while importing.
 
 = 4.6.5 (2014-11-17) =
 * Enhanced: Improved the logging.

@@ -82,6 +82,10 @@
                         'label'     =>  __( 'Feed processing interval', WPRSS_TEXT_DOMAIN ),
                         'callback'  =>  'wprss_setting_cron_interval_callback'
                     ),
+                    'unique-titles' => array(
+                        'label'     =>  __( 'Unique titles only', WPRSS_TEXT_DOMAIN),
+                        'callback'  =>  'wprss_setting_unique_titles'
+                    ),
                     'custom-feed-url' => array(
                         'label'     =>  __( 'Custom feed URL', WPRSS_TEXT_DOMAIN ),
                         'callback'  =>  'wprss_settings_custom_feed_url_callback'
@@ -777,6 +781,19 @@
 		<?php echo wprss_settings_inline_help( $field['field_id'], $field['tooltip'] ) ?><?php
     }
 
+
+    /**
+     * Unique titles only checkbox callback
+     * @since 4.7
+     */
+    function wprss_setting_unique_titles( $field ) {
+        $unique_titles = wprss_get_general_setting( 'unique_titles' );
+        ?>
+        <input id="<?php echo $field['field_id'] ?>" name="wprss_settings_general[unique_titles]" type="checkbox" value="1" <?php echo checked( 1, $unique_titles, false ) ?> />
+        <?php echo wprss_settings_inline_help( $field['field_id'], $field['tooltip'] );
+    }
+
+
     /**
      * Sets the custom feed URL
      * @since 3.3
@@ -1023,6 +1040,12 @@
             wp_schedule_event( time(), $input['cron_interval'], 'wprss_fetch_all_feeds_hook' );
         }
 
+        if ( ! isset( $input['unique_titles'] ) || $input['unique_titles'] !== '1' )
+            $output['unique_titles'] = 0;
+        else
+            $output['unique_titles'] = 1;
+
+
         // Return the array processing any additional functions filtered by this action
         return apply_filters( 'wprss_settings_general_validate', $output, $input );
     }
@@ -1042,11 +1065,19 @@
         }
         // For each entry in the received input
         foreach ( $input as $addon => $license_code ) {
-            // If the entry does not exist OR the code is different
-            if ( !array_key_exists( $addon, $licenses ) || $license_code !== $licenses[ $addon ] ) {
-                // Save it to the licenses option
-                $licenses[ $addon ] = $license_code;
-            }
+			$addon_code = explode( '_', $addon );
+			$addon_code = isset( $addon_code[0] ) ? $addon_code[0] : null;
+            // Only save if the entry does not exist OR the code is different
+            if ( array_key_exists( $addon, $licenses ) && $license_code === $licenses[ $addon ] )
+				continue;
+			
+			$is_valid = apply_filters( 'wprss_settings_license_key_is_valid', true, $license_code );
+			if( $addon_code )
+				$is_valid = apply_filters( "wprss_settings_license_key_{$addon_code}_is_valid", $is_valid, $license_code );
+			if( !$is_valid ) continue;
+			
+			// Save it to the licenses option
+			$licenses[ $addon ] = $license_code;
         }
         wprss_check_license_statuses();
         // Return the new licenses

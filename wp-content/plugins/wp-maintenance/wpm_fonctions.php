@@ -72,7 +72,7 @@ function wpm_getFontsTab() {
  * Returns a select list of Google fonts
  * Feel free to edit this, update the fallbacks, etc.
  */
-function options_typography_get_google_fonts() {
+function wpm_options_typography_get_google_fonts() {
 	// Google Font Defaults
 	$google_faces = array(
 		'Arvo, serif' => 'Arvo',
@@ -124,9 +124,10 @@ h1 {
 }
 
 body {
-    background: none repeat scroll 0 0 #_COLORBG;
+    /*background: none repeat scroll 0 0 #_COLORBG;*/
     color: #_COLORTXT;
     font: 12px/1.5em Arial,Helvetica,Sans-serif;
+    min-height:100%
     margin:0;
     padding:0;
 }
@@ -150,7 +151,7 @@ body {
     margin-bottom: 30px;
 }
 #main .block h3 {
-    line-height: 60px;
+    line-height: 100%;
     margin-bottom: 40px;
     text-align: center;
 }
@@ -159,7 +160,7 @@ body {
 }
 #main #intro p {
     font-size: 16px;
-    line-height: 22px;
+    line-height: 100%;
     text-align: center;
     word-wrap: break-word;
 }
@@ -177,7 +178,7 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
     position: relative;
     background: #_COLORCPTBG;
     display: inline-block;
-    line-height: #_DATESIZE px;
+    line-height: 100%;
     min-width: 160px;
     min-height: 60px;
     padding: 30px 20px 5px 20px;
@@ -209,18 +210,33 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
 .wpm_horizontal li:hover {
     opacity:0.5;
 }
+* html div#wrapper {
+        height: 100%; /* Fix IE 5.5, 6 and 7 */
+}
+#wrapper {
+    min-height: 100%;
+    position: relative;
+}
+#content {
+    height: 100%;
+    clear: both;
+}
 #wpm_footer {
     width: 100%;
     clear: both;
-    height: 150px;
+    height: 60px;
     text-align:center;
     background-color: #_COLOR_BG_BT;
     color:#_COLOR_TXT_BT;
     padding-top:10px;
-    margin-top: 40px;
+    padding-bottom: 10px;
+    margin-top: 15px;
     font-size: 12px;
-    position:relative;
-    bottom:0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    display: inline-block;
 }
 .wpm_copyright {
     color:#_COLOR_TXT_BT;
@@ -237,6 +253,8 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
 }
 .wpm_newletter {
     text-align:center;
+    font-size: 20px;
+    font-weight: bold;
 }
 @media screen and (min-width: 200px) and (max-width: 480px) {
     .full {
@@ -269,9 +287,10 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
 }   
 
 @media screen and (min-width: 480px) and (max-width: 767px) {
-    .full {
-        max-width:342px;
-    }
+    /*.full {
+        max-width:767px;
+    }*/
+    h2 .nav-tab { font-size: 10px; }
 }
     ';   
 }

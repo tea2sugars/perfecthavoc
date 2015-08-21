@@ -1,22 +1,12 @@
 /* jshint onevar:false, loopfunc:true */
 /* global jetpackSlideshowSettings, escape */
 
-function JetpackSlideshow( element, width, height, transition ) {
+function JetpackSlideshow( element, transition, autostart ) {
 	this.element = element;
 	this.images = [];
 	this.controls = {};
 	this.transition = transition || 'fade';
-
-	var currentWidth = this.element.width();
-	if ( !width || width > currentWidth ) {
-		width = currentWidth;
-	}
-
-	this.width = width;
-	this.height = height;
-	this.element.css( {
-		'height': this.height + 'px'
-		} );
+	this.autostart = autostart;
 }
 
 JetpackSlideshow.prototype.showLoadingImage = function( toggle ) {
@@ -27,7 +17,6 @@ JetpackSlideshow.prototype.showLoadingImage = function( toggle ) {
 		img.src = jetpackSlideshowSettings.spinner;
 		this.loadingImage_.appendChild( img );
 		this.loadingImage_.appendChild( this.makeZeroWidthSpan() );
-		this.loadingImage_.style.lineHeight = this.height + 'px';
 		this.element.append( this.loadingImage_ );
 	} else if ( this.loadingImage_ ) {
 		this.loadingImage_.parentNode.removeChild( this.loadingImage_ );
@@ -43,14 +32,16 @@ JetpackSlideshow.prototype.init = function() {
 	for ( var i = 0; i < this.images.length; i++ ) {
 		var imageInfo = this.images[i];
 		var img = document.createElement( 'img' );
-		img.src = imageInfo.src + '?w=' + this.width;
+		img.src = imageInfo.src;
+		img.title = typeof( imageInfo.title ) !== 'undefined' ? imageInfo.title : '';
+		img.alt = typeof( imageInfo.alt ) !== 'undefined' ? imageInfo.alt : '';
 		img.align = 'middle';
+		img.nopin = 'nopin';
 		var caption = document.createElement( 'div' );
 		caption.className = 'slideshow-slide-caption';
 		caption.innerHTML = imageInfo.caption;
 		var container = document.createElement('div');
 		container.className = 'slideshow-slide';
-		container.style.lineHeight = this.height + 'px';
 
 		// Hide loading image once first image has loaded.
 		if ( i === 0 ) {
@@ -94,40 +85,43 @@ JetpackSlideshow.prototype.finishInit_ = function() {
 	this.renderControls_();
 
 	var self = this;
-	// Initialize Cycle instance.
-	this.element.cycle( {
-		fx: this.transition,
-		prev: this.controls.prev,
-		next: this.controls.next,
-		slideExpr: '.slideshow-slide',
-		onPrevNextEvent: function() {
-			return self.onCyclePrevNextClick_.apply( self, arguments );
-		}
-	} );
+	if ( this.images.length > 1 ) {
+		// Initialize Cycle instance.
+		this.element.cycle( {
+			fx: this.transition,
+			prev: this.controls.prev,
+			next: this.controls.next,
+			slideExpr: '.slideshow-slide',
+			onPrevNextEvent: function() {
+				return self.onCyclePrevNextClick_.apply( self, arguments );
+			}
+		} );
 
-	var slideshow = this.element;
-	jQuery( this.controls.stop ).click( function() {
-		var button = jQuery(this);
-		if ( ! button.hasClass( 'paused' ) ) {
+		var slideshow = this.element;
+
+		if ( ! this.autostart ) {
 			slideshow.cycle( 'pause' );
-			button.removeClass( 'running' );
-			button.addClass( 'paused' );
-		} else {
-			button.addClass( 'running' );
-			button.removeClass( 'paused' );
-			slideshow.cycle( 'resume', true );
+			jQuery(this.controls.stop).removeClass( 'running' );
+			jQuery(this.controls.stop).addClass( 'paused' );
 		}
-		return false;
-	} );
 
-	var controls = jQuery( this.controlsDiv_ );
-	slideshow.mouseenter( function() {
-		controls.fadeIn();
-	} );
-	slideshow.mouseleave( function() {
-		controls.fadeOut();
-	} );
-
+		jQuery( this.controls.stop ).click( function() {
+			var button = jQuery(this);
+			if ( ! button.hasClass( 'paused' ) ) {
+				slideshow.cycle( 'pause' );
+				button.removeClass( 'running' );
+				button.addClass( 'paused' );
+			} else {
+				button.addClass( 'running' );
+				button.removeClass( 'paused' );
+				slideshow.cycle( 'resume', true );
+			}
+			return false;
+		} );
+	} else {
+		this.element.children( ':first' ).show();
+		this.element.css( 'position', 'relative' );
+	}
 	this.initialized_ = true;
 };
 
@@ -181,7 +175,7 @@ JetpackSlideshow.prototype.onCyclePrevNextClick_ = function( isNext, i/*, slideE
 				return;
 			}
 
-			var slideshow = new JetpackSlideshow( container, container.data( 'width' ), container.data( 'height' ), container.data( 'trans' ) );
+			var slideshow = new JetpackSlideshow( container, container.data( 'trans' ), container.data( 'autostart' ) );
 			slideshow.images = container.data( 'gallery' );
 			slideshow.init();
 

@@ -44,8 +44,9 @@
       switch ( $column ) {    
         case 'errors':
           $errors = get_post_meta( $post_id, 'wprss_error_last_import', true );
-          $showClass = ( $errors === 'true' )? 'wprss-show' : '';
-          $msg = __( "This feed source experienced an error during the last feed fetch or validation check. Re-check the feed source URL or check the Error Log in the Debugging page for more details.", WPRSS_TEXT_DOMAIN );
+          $showClass = ( $errors !== '' )? 'wprss-show' : '';
+          $default_msg = __( "This feed source experienced an error during the last feed fetch or validation check. Re-check the feed source URL or check the Error Log in the Debugging page for more details.", WPRSS_TEXT_DOMAIN );
+          $msg = strlen( $errors ) > 0 ? $errors : $default_msg;
           echo "<i title=\"$msg\" class=\"fa fa-warning fa-fw wprss-feed-error-symbol $showClass\"></i>";
           break;
         case 'state':
@@ -348,15 +349,15 @@
                   admin_url( 'edit.php?post_type=wprss_feed_item&wprss_feed=' . $post->ID ),
                   $post->ID
                 );
-                $view_items_text = apply_filters( 'wprss_view_feed_items_row_action_text', 'View Items' );
-                $actions['view-items'] = '<a href="' . $view_items_link . '">' . __( $view_items_text, WPRSS_TEXT_DOMAIN ) . '</a>';
+                $view_items_text = apply_filters( 'wprss_view_feed_items_row_action_text', __( 'View Items', WPRSS_TEXT_DOMAIN ) );
+                $actions['view-items'] = '<a href="' . $view_items_link . '">' . $view_items_text . '</a>';
 
-                $fetch_items_row_action_text = apply_filters( 'wprss_fetch_items_row_action_text', 'Fetch Items' );
-                $actions[ 'fetch' ] = '<a href="javascript:;" class="wprss_ajax_action" pid="'. $post->ID .'" purl="'.home_url().'/wp-admin/admin-ajax.php">' . __( $fetch_items_row_action_text, WPRSS_TEXT_DOMAIN ) . '</a>';
+                $fetch_items_row_action_text = apply_filters( 'wprss_fetch_items_row_action_text', __( 'Fetch Items', WPRSS_TEXT_DOMAIN ) );
+                $actions[ 'fetch' ] = '<a href="javascript:;" class="wprss_ajax_action" pid="'. $post->ID .'" purl="'.home_url().'/wp-admin/admin-ajax.php">' . $fetch_items_row_action_text . '</a>';
 
-                $purge_feeds_row_action_text = apply_filters( 'wprss_purge_feeds_row_action_text', 'Delete Items' );
-                $purge_feeds_row_action_title = apply_filters( 'wprss_purge_feeds_row_action_title', 'Delete feed items imported by this feed source' );
-                $actions['purge-posts'] = "<a href='".admin_url("edit.php?post_type=wprss_feed&purge-feed-items=" . $post->ID . $page ) . "' title='" . __( $purge_feeds_row_action_title, WPRSS_TEXT_DOMAIN ) . "' >" . __( $purge_feeds_row_action_text, WPRSS_TEXT_DOMAIN ) . "</a>";
+                $purge_feeds_row_action_text = apply_filters( 'wprss_purge_feeds_row_action_text', __( 'Delete Items', WPRSS_TEXT_DOMAIN ) );
+                $purge_feeds_row_action_title = apply_filters( 'wprss_purge_feeds_row_action_title', __( 'Delete feed items imported by this feed source', WPRSS_TEXT_DOMAIN ) );
+                $actions['purge-posts'] = "<a href='".admin_url("edit.php?post_type=wprss_feed&purge-feed-items=" . $post->ID . $page ) . "' title='" . $purge_feeds_row_action_title . "' >" . __( $purge_feeds_row_action_text, WPRSS_TEXT_DOMAIN ) . "</a>";
                 
                 $actions['trash'] = $trash;
             }
@@ -372,6 +373,7 @@
      * @since 3.5
      */
     function check_delete_for_feed_source( $source_id = NULL ) {
+        if ( ! current_user_can( 'delete_feeds' ) ) return;
         // then we need to check the GET data for the request
         if ( isset( $_GET['purge-feed-items'] ) ) {
             $source_id = $_GET['purge-feed-items'];
@@ -455,6 +457,7 @@
      */
     function wprss_fetch_feeds_action_hook() {
         if ( isset( $_POST['id'] ) && !empty( $_POST['id'] ) ) {
+            if ( ! current_user_can( 'edit_feed_sources' ) ) die();
             $id = $_POST['id'];
             update_post_meta( $id, 'wprss_force_next_fetch', '1' );
 
@@ -478,6 +481,7 @@
 
             // Schedule the event for 5 seconds from now
             wp_schedule_single_event( time() + 1, 'wprss_fetch_single_feed_hook', $schedule_args );
+            wprss_flag_feed_as_updating( $id );
             die();
         }
     }
@@ -485,12 +489,11 @@
 
     add_filter( 'bulk_actions-edit-wprss_feed_item', 'wprss_custom_feed_item_bulk_actions' );
     /**
-     * Remove bulk action link to edit imported feed items
+     * Allow filtering bulk actions for feed items
      * 
      * @since 2.0
      */       
     function wprss_custom_feed_item_bulk_actions( $actions ){
-        unset( $actions[ 'edit' ] );
         return apply_filters( 'wprss_custom_feed_item_bulk_actions', $actions );
     }
 

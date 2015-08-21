@@ -1,50 +1,51 @@
 <?php
 /**********************************************
 * Twitterwidget Widget
+* https://dev.twitter.com/web/embedded-timelines
 **********************************************/
 
 class Kamn_Widget_Easytwitterfeedwidget extends WP_Widget {
-	
+
 	/**
 	 *  Set up the widget's unique name, ID, class, description, and other options.
-	 */	
+	 */
 	function __construct() {
-		
+
 		/* Set up the widget options. */
-		$widget_options = array( 
-			'classname' => 'widget-easy-twitter-feed-widget-kamn', 
+		$widget_options = array(
+			'classname' => 'widget-easy-twitter-feed-widget-kamn',
 			'description' => esc_html__( 'A widget to display Twitter feed.', 'kamn-easy-twitter-feed-widget' )
 		);
-		
+
 		/* Set up the widget control options. */
 		$control_options = array(
 			'width' => 300,
 			'height' => 250
 		);
-		
+
 		/* Create the widget. */
 		$this->WP_Widget( 'widget-easy-twitter-feed-widget-kamn', __( 'Easy Twitter Feed Widget', 'kamn-easy-twitter-feed-widget'), $widget_options, $control_options );
-		
+
 	}
-	
+
 	/**
 	 * Outputs the widget based on the arguments input through the widget controls.
 	 *
 	 * @param array $args Display arguments including before_title, after_title, before_widget, and after_widget.
 	 * @param array $instance The settings for the particular instance of the widget
 	 */
-	
+
 	function widget( $args, $instance ) {
-		
+
 		/** Global Data */
 		global $post;
-		
+
 		/** Extract Args */
 		extract( $args );
-		
+
 		/** Set up the default form values. */
 		$defaults = $this->kamn_defaults();
-		
+
 		/** Merge the user-selected arguments with the defaults. */
 		$instance = wp_parse_args( (array) $instance, $defaults );
 
@@ -77,38 +78,40 @@ class Kamn_Widget_Easytwitterfeedwidget extends WP_Widget {
 		foreach ( $data_twitter_widget as $key => $val ) {
 			$data_twitter_widget_nv .= $key . '=' . '"' . esc_attr( $val ) . '"' . ' ';
 		}
-		
+
 		/** Open the output of the widget. */
 		echo $before_widget;
-		
+
 ?>
-		<div class="widget-easy-twitter-feed-widget-global-wrapper">        
+		<div class="widget-easy-twitter-feed-widget-global-wrapper">
 			<div class="widget-easy-twitter-feed-widget-container">
 
+				<?php if ( ! empty( $instance['title'] ) ) : ?>
 				<div class="row">
 				  <div class="col-lg-12">
 					<?php echo $before_title . '<span>' . apply_filters( 'widget_title',  $instance['title'], $instance, $this->id_base ) . '</span>' . $after_title; ?>
 				  </div>
 				</div>
-	          
+				<?php endif; ?>
+
 	          	<div class="widget-easy-twitter-feed-widget-row">
 		          	<div class="widget-easy-twitter-feed-widget-col">
 			          <div class="twitterwidget <?php echo $widget_id; ?>">
-						<a class="twitter-timeline" width="<?php echo $instance['twitter_widget_width']; ?>" height="<?php echo $instance['twitter_widget_height']; ?>" href="https://twitter.com/twitterapi" <?php echo trim( $data_twitter_widget_nv ); ?>>Tweets by @<?php echo $instance['twitter_widget_screen_name']; ?></a>
-			          </div>	          
+						<a class="twitter-timeline" width="<?php echo $instance['twitter_widget_width']; ?>" height="<?php echo $instance['twitter_widget_height']; ?>" href="https://twitter.com/twitterdev" <?php echo trim( $data_twitter_widget_nv ); ?>><?php _e( 'Tweets by @', 'kamn-easy-twitter-feed-widget' ); ?><?php echo $instance['twitter_widget_screen_name']; ?></a>
+			          </div>
 	          		</div>
           		</div>
-          	
-          	</div> <!-- End .widget-global-wrapper -->        
+
+          	</div> <!-- End .widget-global-wrapper -->
         </div>
-        
-<?php		
-		
+
+<?php
+
 		/** Close the output of the widget. */
 		echo $after_widget;
-	
+
 	}
-	
+
 	/** Updates the widget control options for the particular instance of the widget.
 	 *
 	 * This function should check that $new_instance is set correctly.
@@ -123,19 +126,19 @@ class Kamn_Widget_Easytwitterfeedwidget extends WP_Widget {
 
 		/** Default Args */
 		$defaults = $this->kamn_defaults();
-		
-		/** Update Logic */		
+
+		/** Update Logic */
 		$instance = $old_instance;
-		foreach( $defaults as $key => $val ) {		
-			$instance[$key] = strip_tags( $new_instance[$key] );		
+		foreach( $defaults as $key => $val ) {
+			$instance[$key] = strip_tags( $new_instance[$key] );
 		}
 		return $instance;
 
 	}
-	
+
 	/**
 	 *
-	 * Displays the widget control options in the Widgets admin screen. 
+	 * Displays the widget control options in the Widgets admin screen.
 	 *
 	 * @param array $instance Current settings
 	 */
@@ -143,10 +146,10 @@ class Kamn_Widget_Easytwitterfeedwidget extends WP_Widget {
 
 		/** Set up the default form values. */
 		$defaults = $this->kamn_defaults();
-		
+
 		/** Merge the user-selected arguments with the defaults. */
 		$instance = wp_parse_args( (array) $instance, $defaults );
-		
+
 		$title = strip_tags( $instance['title'] );
 		$twitter_widget_tweet_limit = array_merge( array( 0 => 'default' ), array_combine( range( 1, 20 ), range( 1, 20 ) ) );
 		$twitter_widget_show_replies = array( 'true' => 'Yes', 'false' => 'No' );
@@ -163,7 +166,7 @@ class Kamn_Widget_Easytwitterfeedwidget extends WP_Widget {
 
 		<p><strong><?php _e( 'Easy Twitter Feed Widget Settings', 'kamn-easy-twitter-feed-widget' ); ?></strong></p>
 		<hr />
-        
+
         <p>
 			<label for="<?php echo $this->get_field_id( 'twitter_widget_id' ); ?>"><?php _e( 'Twitter Widget ID:', 'kamn-easy-twitter-feed-widget' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'twitter_widget_id' ); ?>" name="<?php echo $this->get_field_name( 'twitter_widget_id' ); ?>" value="<?php echo esc_attr( $instance['twitter_widget_id'] ); ?>" />
@@ -276,18 +279,18 @@ class Kamn_Widget_Easytwitterfeedwidget extends WP_Widget {
             </select>
 		</p>
 
-<?php		
+<?php
 	}
-	
-	/** Set up the default form values. */	
+
+	/** Set up the default form values. */
 	function kamn_defaults() {
-		
+
 		$defaults = array(
 			'title' => esc_attr__( 'Twitter Widget', 'kamn-easy-twitter-feed-widget'),
 			'twitter_widget_id' => '344713329262084096',
 			'twitter_widget_screen_name' => 'designorbital',
 			'twitter_widget_tweet_limit' => 0,
-			'twitter_widget_show_replies' => 'false',			
+			'twitter_widget_show_replies' => 'false',
 			'twitter_widget_width' => 300,
 			'twitter_widget_height' => 250,
 			'twitter_widget_theme' => 'light',
@@ -297,11 +300,11 @@ class Kamn_Widget_Easytwitterfeedwidget extends WP_Widget {
 			'twitter_widget_chrome_footer' => 1,
 			'twitter_widget_chrome_border' => 1,
 			'twitter_widget_chrome_scrollbar' => 1,
-			'twitter_widget_chrome_background' => 1			
+			'twitter_widget_chrome_background' => 1
 		);
-		
+
 		return $defaults;
-		
+
 	}
-	
+
 }

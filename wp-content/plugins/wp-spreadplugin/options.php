@@ -2,6 +2,8 @@
 
 if (is_user_logged_in() && is_admin()) {
 	
+	load_plugin_textdomain($this->stringTextdomain, false, dirname(plugin_basename(__FILE__)) . '/translation');
+	
 	$adminSettings = $this->defaultOptions;
 
 	if (isset($_POST['update-splg_options'])) {//save option changes
@@ -28,7 +30,7 @@ if (is_user_logged_in() && is_admin()) {
   screen_icon(); 
   ?>
   <h2>Spreadplugin Plugin Options &raquo; Settings</h2>
-  <div id="message" class="updated fade" style="display:none"></div>
+  <div id="sprdplg-message" class="updated fade" style="display:none"></div>
   <div class="metabox-holder">
     <div class="meta-box-sortables ui-sortable">
       <div class="postbox">
@@ -50,8 +52,9 @@ if (is_user_logged_in() && is_admin()) {
               </tr>
               <tr>
                 <td valign="top"><?php _e('Shop country:','spreadplugin'); ?></td>
-                <td><select name="shop_locale" id="shop_locale" class="required">
-                    <option value="de_DE"<?php echo ($adminOptions['shop_locale']=='de_DE' || empty($adminOptions['shop_locale'])?" selected":"") ?>>Deutschland</option>
+                <td><select name="shop_locale" id="shop_locale">
+                    <option value=""<?php echo (empty($adminOptions['shop_locale'])?" selected":"") ?>>None/Unknown</option>
+                    <option value="de_DE"<?php echo ($adminOptions['shop_locale']=='de_DE'?" selected":"") ?>>Deutschland</option>
                     <option value="fr_FR"<?php echo ($adminOptions['shop_locale']=='fr_FR'?" selected":"") ?>>France</option>
                     <option value="en_GB"<?php echo ($adminOptions['shop_locale']=='en_GB'?" selected":"") ?>>United Kingdom</option>
                     <option value="nl_BE"<?php echo ($adminOptions['shop_locale']=='nl_BE'?" selected":"") ?>>Belgie (Nederlands)</option>
@@ -69,13 +72,15 @@ if (is_user_logged_in() && is_admin()) {
                     <option value="us_US"<?php echo ($adminOptions['shop_locale']=='us_US'?" selected":"") ?>>United States</option>
                     <option value="us_CA"<?php echo ($adminOptions['shop_locale']=='us_CA'?" selected":"") ?>>Canada (English)</option>
                     <option value="fr_CA"<?php echo ($adminOptions['shop_locale']=='fr_CA'?" selected":"") ?>>Canada (Fran&ccedil;ais)</option>
+                    <option value="us_AU"<?php echo ($adminOptions['shop_locale']=='us_AU'?" selected":"") ?>>Australia</option>
+                    <option value="us_BR"<?php echo ($adminOptions['shop_locale']=='us_BR'?" selected":"") ?>>Brazil</option>
                   </select></td>
               </tr>
               <tr>
                 <td valign="top"><?php _e('Shop source:','spreadplugin'); ?></td>
                 <td><select name="shop_source" id="shop_source" class="required">
                     <option value="net"<?php echo ($adminOptions['shop_source']=='net'?" selected":"") ?>>Europe</option>
-                    <option value="com"<?php echo ($adminOptions['shop_source']=='com'?" selected":"") ?>>US/Canada</option>
+                    <option value="com"<?php echo ($adminOptions['shop_source']=='com'?" selected":"") ?>>US/Canada/Australia/Brazil</option>
                   </select></td>
               </tr>
               <tr>
@@ -102,22 +107,22 @@ if (is_user_logged_in() && is_admin()) {
                 <td valign="top"><?php _e('Product category:','spreadplugin'); ?></td>
                 <td><select name="shop_productcategory" id="shop_productcategory">
                     <option value="">
-                    <?php _e('All products'); ?>
+                    <?php _e('All products','spreadplugin'); ?>
                     </option>
-                    <option value="<?php _e('Men'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('Men')?" selected":""); ?>>
-                    <?php _e('Men'); ?>
+                    <option value="<?php _e('Men','spreadplugin'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('Men','spreadplugin')?" selected":""); ?>>
+                    <?php _e('Men','spreadplugin'); ?>
                     </option>
-                    <option value="<?php _e('Women'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('Women')?" selected":""); ?>>
-                    <?php _e('Women'); ?>
+                    <option value="<?php _e('Women'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('Women','spreadplugin')?" selected":""); ?>>
+                    <?php _e('Women','spreadplugin'); ?>
                     </option>
-                    <option value="<?php _e('Kids & Babies'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('Kids & Babies')?" selected":""); ?>>
-                    <?php _e('Kids & Babies'); ?>
+                    <option value="<?php _e('Kids & Babies'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('Kids & Babies','spreadplugin')?" selected":""); ?>>
+                    <?php _e('Kids & Babies','spreadplugin'); ?>
                     </option>
-                    <option value="<?php _e('Accessories'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('Accessories')?" selected":""); ?>>
-                    <?php _e('Accessories'); ?>
+                    <option value="<?php _e('Accessories'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('Accessories','spreadplugin')?" selected":""); ?>>
+                    <?php _e('Accessories','spreadplugin'); ?>
                     </option>
-                    <option value="<?php _e('New Products'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('New Products')?" selected":""); ?>>
-                    <?php _e('New Products'); ?>
+                    <option value="<?php _e('New Products'); ?>"<?php echo ($adminOptions['shop_productcategory']==__('New Products','spreadplugin')?" selected":""); ?>>
+                    <?php _e('New Products','spreadplugin'); ?>
                     </option>
                   </select></td>
               </tr>
@@ -161,7 +166,7 @@ if (is_user_logged_in() && is_admin()) {
                 <td><?php _e('Enter the name of your target iframe or frame, if available. Default is _blank (new window).','spreadplugin'); ?>
                   <br />
                   <br />
-                  <input type="text" name="shop_linktarget" value="<?php echo (empty($adminOptions['shop_linktarget'])?'_blank':$adminOptions['shop_linktarget']); ?>" /></td>
+                  <input type="text" name="shop_linktarget" value="<?php echo (empty($adminOptions['shop_linktarget'])?'_self':$adminOptions['shop_linktarget']); ?>" /></td>
               </tr>
               <tr>
                 <td valign="top"><?php _e('Use iframe for checkout:','spreadplugin'); ?></td>
@@ -183,13 +188,14 @@ if (is_user_logged_in() && is_admin()) {
                   <?php _e('Integrated [BETA] (All marketplace designs are shown on design tab)','spreadplugin'); ?>
                   <br />
                   <input type="radio" name="shop_designer" value="2"<?php echo ($adminOptions['shop_designer']==2?" checked":"") ?> />
-                  <?php _e('Premium (Only designs in your premium designer shop are shown)','spreadplugin'); ?><div id="premium-shop-span">
-                  <br />
-                  <br />
-                  <?php _e('Premium Designer Shop Id','spreadplugin'); ?>
-                  <input type="text" name="shop_designershop" value="<?php echo $adminOptions['shop_designershop']; ?>" class="only-digit" />
-                  <br />
-                  <?php _e('If you have a designer Shop (Spreadshirt premium account), enter the ID here. A new link will appear where the customer can change the design.','spreadplugin'); ?></div></td>
+                  <?php _e('Premium (Contents of your designer shop are shown - Tablomat)','spreadplugin'); ?>
+                  <div id="premium-shop-span"> <br />
+                    <br />
+                    <?php _e('Premium Designer Shop Id','spreadplugin'); ?>
+                    <input type="text" name="shop_designershop" value="<?php echo $adminOptions['shop_designershop']; ?>" class="only-digit" />
+                    <br />
+                    <?php _e('If you have a designer Shop activated, enter the ID here. A new link will appear where the customer can change the design.','spreadplugin'); ?>
+                  </div></td>
               </tr>
               <tr>
                 <td valign="top"><?php _e('Default display:','spreadplugin'); ?></td>
@@ -247,7 +253,8 @@ if (is_user_logged_in() && is_admin()) {
                   <?php _e('List view','spreadplugin'); ?>
                   <br />
                   <input type="radio" name="shop_view" value="2"<?php echo ($adminOptions['shop_view']==2?" checked":"") ?> />
-                  <?php _e('Min view','spreadplugin'); ?> (Disables Zoom, too)</td>
+                  <?php _e('Min view','spreadplugin'); ?>
+                  (Disables Zoom, too)</td>
               </tr>
               <tr>
                 <td valign="top"><?php _e('Basket text or icon:','spreadplugin'); ?></td>
@@ -282,7 +289,8 @@ if (is_user_logged_in() && is_admin()) {
                   <?php _e('Inner','spreadplugin'); ?>
                   <br />
                   <input type="radio" name="shop_zoomtype" value="1"<?php echo ($adminOptions['shop_zoomtype']==1?" checked":"") ?> />
-                  <?php _e('Lens','spreadplugin'); ?><br />
+                  <?php _e('Lens','spreadplugin'); ?>
+                  <br />
                   <input type="radio" name="shop_zoomtype" value="2"<?php echo ($adminOptions['shop_zoomtype']==2?" checked":"") ?> />
                   <?php _e('Disabled','spreadplugin'); ?></td>
               </tr>
@@ -295,10 +303,15 @@ if (is_user_logged_in() && is_admin()) {
                     <option value="da_DK"<?php echo ($adminOptions['shop_language']=='da_DK'?" selected":"") ?>>Dansk</option>
                     <option value="de_DE"<?php echo ($adminOptions['shop_language']=='de_DE'?" selected":"") ?>>Deutsch</option>
                     <option value="nl_NL"<?php echo ($adminOptions['shop_language']=='nl_NL'?" selected":"") ?>>Dutch (Nederlands)</option>
-                    <option value="fr_FR"<?php echo ($adminOptions['shop_language']=='fr_FR'?" selected":"") ?>>Français</option>
+                    <option value="fi_FI"<?php echo ($adminOptions['shop_language']=='fi_FI'?" selected":"") ?>>Suomi</option>
+                    <option value="es_ES"<?php echo ($adminOptions['shop_language']=='es_ES'?" selected":"") ?>>EspaÃ±ol)</option>
+                    <option value="fr_FR"<?php echo ($adminOptions['shop_language']=='fr_FR'?" selected":"") ?>>French</option>
                     <option value="it_IT"<?php echo ($adminOptions['shop_language']=='it_IT'?" selected":"") ?>>Italiano</option>
-                    <option value="nb_NO"<?php echo ($adminOptions['shop_language']=='nb_NO'?" selected":"") ?>>Norsk (Bokmål)</option>
-                    <option value="nb_NO"<?php echo ($adminOptions['shop_language']=='nn_NO'?" selected":"") ?>>Nynorsk</option>
+                    <option value="nb_NO"<?php echo ($adminOptions['shop_language']=='nb_NO'?" selected":"") ?>>Norsk</option>
+                    <option value="nn_NO"<?php echo ($adminOptions['shop_language']=='nn_NO'?" selected":"") ?>>Nynorsk</option>
+                    <option value="pl_PL"<?php echo ($adminOptions['shop_language']=='pl_PL'?" selected":"") ?>>Jezyk polski</option>
+                    <option value="pt_PT"<?php echo ($adminOptions['shop_language']=='pt_PT'?" selected":"") ?>>PortuguÃªs</option>
+                    <option value="jp_JP"<?php echo ($adminOptions['shop_language']=='jp_JP'?" selected":"") ?>>Japanese</option>
                   </select></td>
               </tr>
               <tr>
@@ -323,6 +336,19 @@ if (is_user_logged_in() && is_admin()) {
                   <br />
                   <strong>Don't change this value, if you have no problems rebuilding your article cache otherwise it would take very long!</strong> Changing this value is only neccessary if you are experiencing problems when rebuilding cache. Some webspaces (e.g. godaddy.com) have request limits, which you can avoid by setting this value to for example 10.</td>
               </tr>
+              <tr>
+                <td valign="top"><?php _e('Read quantity of articles (max):','spreadplugin'); ?></td>
+                <td><select name="shop_max_quantity_articles" id="shop_max_quantity_articles">
+                    <option value="1"<?php echo ($adminOptions['shop_max_quantity_articles']==1?" selected":"") ?>>1</option>
+                    <option value="5"<?php echo ($adminOptions['shop_max_quantity_articles']==5?" selected":"") ?>>5</option>
+                    <option value="10"<?php echo ($adminOptions['shop_max_quantity_articles']==10?" selected":"") ?>>10</option>
+                    <option value="100"<?php echo ($adminOptions['shop_max_quantity_articles']==100?" selected":"") ?>>100</option>
+                    <option value="200"<?php echo ($adminOptions['shop_max_quantity_articles']==200?" selected":"") ?>>200</option>
+                    <option value="1000"<?php echo (empty($adminOptions['shop_max_quantity_articles']) || $adminOptions['shop_max_quantity_articles']==1000?" selected":"") ?>>1000 (default)</option>
+                  </select><br />
+<br />
+<?php _e('Limit the quantity of articles which will be read. Use a lower value if you have problems saving the articles.','spreadplugin'); ?></td>
+              </tr>
             </table>
             <input type="submit" name="update-splg_options" id="update-splg_options" class="button-primary" value="<?php _e('Update settings','spreadplugin'); ?>" />
           </form>
@@ -338,8 +364,16 @@ if (is_user_logged_in() && is_admin()) {
           </h4>
           <p>[spreadplugin]</p>
           <h4>
-            <?php _e('Extended sample shortcode','spreadplugin'); ?>
+            <?php _e('Sample shortcode with category','spreadplugin'); ?>
           </h4>
+          <p>[spreadplugin shop_category="CATEGORYID"]</p>
+          <h4>
+            <?php _e('Sample shortcode with only Men products','spreadplugin'); ?>
+          </h4>
+          <p>[spreadplugin shop_productcategory="Men"]</p>
+          <h4>
+            <?php _e('Extended sample shortcode','spreadplugin'); ?>
+            (only for experienced users) </h4>
           <p>
             <?php _e('The extended shortcodes will overwrite the default settings. You may use it to create a different shop with the same plugin.'); ?>
           </p>
@@ -376,10 +410,174 @@ if (is_user_logged_in() && is_admin()) {
   <p>If you like this plugin, I'd be happy to read your comments on <a href="http://www.facebook.com/lovetee.de" target="_blank">facebook</a>. 
     If you experience any problems or have suggestions, feel free to leave a message on <a href="http://wordpress.org/support/plugin/wp-spreadplugin" target="_blank">wordpress</a> or send an email to <a href="mailto:info@spreadplugin.de">info@spreadplugin.de</a>.<br />
   </p>
-  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EZLKTKW8UR6PQ" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal." /></a>
+  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EZLKTKW8UR6PQ" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" alt="Jetzt einfach, schnell und sicher online bezahlen ï¿½ mit PayPal." /></a>
   <p>All donations or backlinks to <a href="http://lovetee.de/" target="_blank">http://lovetee.de/</a> valued greatly</p>
 </div>
-<script language='javascript' type='text/javascript'>function setMessage(e){jQuery("#message").append(e);jQuery("#message").show()}function rebuildItem(e,t,n){if(n==0){setMessage("Rebuilding Page "+(t+1)+" of "+e.length+" ("+e[t].title+")...<br>")}if(n>=e[t].items.length){setMessage("Done<br>");jQuery.ajax({url:"<?php echo admin_url('admin-ajax.php'); ?>",type:"POST",data:"action=rebuildCache&do=save&_pageid="+e[t].id,timeout:36e4,cache:false,success:function(e){setMessage("Successfully stored page "+t+"<br>")},error:function(e,n,r){setMessage("Error "+e.status+" storing page "+t+"<br>")}});t=t+1;if(e[t]){rebuildItem(e,t,0)}return}setMessage("Rebuilding Item "+(n+1)+" of "+e[t].items.length+" ("+e[t].items[n].articlename+") <img src='"+e[t].items[n].previewimage+"' width='32' height='32'>... ");jQuery.ajax({url:"<?php echo admin_url('admin-ajax.php'); ?>",type:"POST",data:"action=rebuildCache&do=rebuild&_pageid="+e[t].id+"&_articleid="+e[t].items[n].articleid+"&_pos="+e[t].items[n].place,success:function(r){setMessage(r+" <br>");n=n+1;rebuildItem(e,t,n)},error:function(r,i,s){setMessage("Request not performed error "+r.status+". Try next<br>");n=n+1;rebuildItem(e,t,n)}})}function rebuild(){jQuery("html, body").animate({scrollTop:0},800);setMessage("Reading pages. Please wait.<br>");jQuery.ajax({url:"<?php echo admin_url('admin-ajax.php'); ?>",type:"POST",data:"action=rebuildCache&do=getlist",timeout:36e4,cache:false,dataType:"json",success:function(e){var t=e;if(!t){setMessage("No pages found.<br>");return}var n=0;var r=0;rebuildItem(t,n,r)},error:function(e,t,n){setMessage("Get list not performed error "+e.status+"<br>")}})}jQuery("#premium-shop-span").hide();jQuery(".only-digit").keyup(function(){if(/\D/g.test(this.value)){this.value=this.value.replace(/\D/g,"")}});jQuery("#shop_locale").change(function(){var e=jQuery(this).val();if(e=="us_US"||e=="us_CA"||e=="fr_CA"){jQuery("#shop_source").val("com")}else{jQuery("#shop_source").val("net")}});jQuery("input[type=radio][name=shop_designer]").click(function(){jQuery("#premium-shop-span").hide()});jQuery("input[type=radio][name=shop_designer][value=2]").not(":selected").click(function(){jQuery("#premium-shop-span").show()});jQuery("#splg_options_form").submit(function(){var e=true;jQuery("#splg_options_form .required").each(function(){if(jQuery.trim(jQuery(this).val()).length==0){jQuery(this).parent().addClass("highlight");e=false}else{jQuery(this).parent().removeClass("highlight")}});if(!e){setMessage("<p><?php _e('Please fill in the highlighted fields!','spreadplugin'); ?></p>")}else{return true}return false});jQuery(document).ready(function(){jQuery(".colorpicker").wpColorPicker()})</script>
+<script language='javascript' type='text/javascript'>
+function setMessage(msg) {
+	jQuery("#sprdplg-message").append(msg); //.html(msg)
+	jQuery("#sprdplg-message").show();
+}
+
+function rebuildItem(listcontent,cur1,cur2) {
+	
+	if (cur2==0) {
+		if (typeof listcontent[cur1].title !== 'undefined') {
+			setMessage("Rebuilding Page " + (cur1+1) + " of " + listcontent.length + "...<br>");
+		} else {
+			setMessage("Rebuilding Page " + (cur1+1) + " of " + listcontent.length + " (" + listcontent[cur1].title + ")...<br>");
+		}
+	}
+	
+	
+	if (cur2 >= listcontent[cur1].items.length) {
+		setMessage("Done<br>");
+		
+		// storing items
+		jQuery.ajax({
+			url: "<?php echo admin_url('admin-ajax.php'); ?>",
+			type: "POST",
+			data: "action=rebuildCache&do=save&_pageid=" + listcontent[cur1].id + "&_ts=" + (new Date()).getTime(),
+			timeout: 360000,
+			cache: false,
+			success: function(result) {
+				//console.debug(result);
+				setMessage("Successfully stored page " + cur1 + "<br>");
+			},
+			error: function(request, status, error) {
+				setMessage("Error " + request.status + " storing page " + cur1 + "<br>");
+			}
+			
+		});
+		
+		// next page
+		cur1 = cur1 + 1;
+		
+		if (listcontent[cur1]) {
+			rebuildItem(listcontent,cur1,0);
+		}
+
+		return;
+	}
+	
+	
+	setMessage("Rebuilding Item " + (cur2+1) + " of " + listcontent[cur1].items.length + " (" + listcontent[cur1].items[cur2].articlename + ") <img src='" + listcontent[cur1].items[cur2].previewimage + "' width='32' height='32'>... ");
+
+	jQuery.ajax({
+		url: "<?php echo admin_url('admin-ajax.php'); ?>",
+		type: "POST",
+		data: "action=rebuildCache&do=rebuild&_pageid=" + listcontent[cur1].id + "&_articleid=" + listcontent[cur1].items[cur2].articleid + "&_pos=" + listcontent[cur1].items[cur2].place + "&_ts=" + (new Date()).getTime(),
+		success: function(result) {
+			setMessage(result + ' <br>');
+			
+			// next item
+			cur2 = cur2 + 1;
+			rebuildItem(listcontent,cur1,cur2);
+		},
+		error: function(request, status, error) {
+			setMessage("Request not performed error " + request.status + '. Try next<br>');
+			
+			// skip to next item
+			cur2 = cur2 + 1;
+			rebuildItem(listcontent,cur1,cur2);
+		}
+		
+	});
+}
+				
+function rebuild() {
+	
+	jQuery('html, body').animate({scrollTop: 0}, 800);
+	setMessage("Reading pages. Please wait.<br>");
+	
+	jQuery.ajax({
+		url: "<?php echo admin_url('admin-ajax.php'); ?>",
+		type: "POST",
+		data: "action=rebuildCache&do=getlist" + "&_ts=" + (new Date()).getTime(),
+		timeout: 360000,
+		cache: false,
+		dataType: 'json',
+		success: function(result) {
+			var list = result;
+
+			if (!list) {
+				setMessage("No pages found.<br>");
+				return;
+			}
+	
+			var curr1 = 0;				
+			var curr2 = 0;
+
+			rebuildItem(list,curr1,curr2);
+		},
+		error: function(request, status, error) {
+			setMessage("Getlist not performed error '" + error + " (" + request.status + ")'. Please check the browser console for more informations." + '<br>');
+			console.log("Got following error message: " + request.responseText);
+		}
+	});
+}
+			
+
+jQuery('.only-digit').keyup(function() {
+	if (/\D/g.test(this.value)) {
+		// Filter non-digits from input value.
+		this.value = this.value.replace(/\D/g, '');
+	}
+});
+
+// select different locale if north america is set
+jQuery('#shop_locale').change(function() {
+	var sel = jQuery(this).val();
+
+	if (sel == 'us_US' || sel == 'us_CA' || sel == 'fr_CA') {
+		jQuery('#shop_source').val('com');
+	} else {
+		jQuery('#shop_source').val('net');
+	}
+});
+jQuery('#premium-shop-span').hide();	
+jQuery('input[type=radio][name=shop_designer]').click(function() {
+	jQuery('#premium-shop-span').hide();
+});
+jQuery('input[type=radio][name=shop_designer][value=2]').not(':selected').click(function() {
+	jQuery('#premium-shop-span').show();
+});
+
+if (jQuery('#premium-shop-span input').val().length >0) {
+	jQuery('#premium-shop-span').show();
+}
+
+
+// bind to the form's submit event
+jQuery('#splg_options_form').submit(function() {
+
+	var isFormValid = true;
+		
+	jQuery("#splg_options_form .required").each(function() { 
+		if (jQuery.trim(jQuery(this).val()).length == 0) {
+			jQuery(this).parent().addClass("highlight");
+			isFormValid = false;
+		} else {
+			jQuery(this).parent().removeClass("highlight");
+		}
+	});
+	
+	
+	// FormularprÃ¼fung
+	if (!isFormValid) { 	
+		setMessage("<p><?php _e('Please fill in the highlighted fields!','spreadplugin'); ?></p>");
+	} else {
+		return true;
+	}
+
+	return false;
+});
+
+// add color picker
+jQuery(document).ready(function() {  
+	jQuery('.colorpicker').wpColorPicker();  
+});
+</script>
 <?php 
 if (isset($_GET['saved'])) {
 	/*echo '<script language="javascript">rebuild();</script>';*/

@@ -8,7 +8,7 @@ register_widget( 'soundcloud_master_widget_buttons' );
 
 class soundcloud_master_widget_buttons extends WP_Widget {
 	function soundcloud_master_widget_buttons() {
-	$widget_ops = array( 'classname' => 'SoundCloud Master Buttons', 'description' => __('SoundCloud Master Buttons Widget allows you to display the SoundCloud Connect and Lyrics Button. ', 'SoundCloud Master Buttons') );
+	$widget_ops = array( 'classname' => 'SoundCloud Master Buttons', 'description' => __('SoundCloud Master Buttons Widget allows you to display the SoundCloud Connect and Lyrics Button.', 'SoundCloud Master Buttons') );
 	$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'soundcloud_master_widget_buttons' );
 	$this->WP_Widget( 'soundcloud_master_widget_buttons', __('SoundCloud Master Buttons', 'soundcloud_master'), $widget_ops, $control_ops );
 	}
@@ -28,9 +28,17 @@ class soundcloud_master_widget_buttons extends WP_Widget {
 		// Display the widget title
 	if ( $soundcloud_title ){
 		if (empty ($soundcloud_title_new)){
-		$soundcloud_title_new = "Soundcloud Master";
-		}
+			if(is_multisite()){
+			$soundcloud_title_new = get_site_option('soundcloud_master_name');
+			}
+			else{
+			$soundcloud_title_new = get_option('soundcloud_master_name');
+			}
 		echo $before_title . $soundcloud_title_new . $after_title;
+		}
+		else{
+		echo $before_title . $soundcloud_title_new . $after_title;
+		}
 	}
 	else{
 	}
@@ -79,7 +87,7 @@ class soundcloud_master_widget_buttons extends WP_Widget {
 		<br>
 		<b>Check the buttons to be displayed:</b>
 	<p>
-	<img src="<?php echo plugins_url('../images/techgasp-minilogo-16.png', __FILE__); ?>" style="float:left; height:16px; vertical-align:middle;" />
+	<img src="<?php echo plugins_url('images/techgasp-minilogo-16.png', dirname(__FILE__)); ?>" style="float:left; height:16px; vertical-align:middle;" />
 	&nbsp;
 	<input type="checkbox" <?php checked( (bool) $instance['soundcloud_title'], true ); ?> id="<?php echo $this->get_field_id( 'soundcloud_title' ); ?>" name="<?php echo $this->get_field_name( 'soundcloud_title' ); ?>" />
 	<label for="<?php echo $this->get_field_id( 'soundcloud_title' ); ?>"><b><?php _e('Display Widget Title', 'soundcloud_master'); ?></b></label></br>
@@ -89,9 +97,9 @@ class soundcloud_master_widget_buttons extends WP_Widget {
 	<br>
 	<input id="<?php echo $this->get_field_id( 'soundcloud_title_new' ); ?>" name="<?php echo $this->get_field_name( 'soundcloud_title_new' ); ?>" value="<?php echo $instance['soundcloud_title_new']; ?>" style="width:auto;" />
 	</p>
-<div style="background: url(<?php echo plugins_url('../images/techgasp-hr.png', __FILE__); ?>) repeat-x; height: 10px"></div>
+<div style="background: url(<?php echo plugins_url('images/techgasp-hr.png', dirname(__FILE__)); ?>) repeat-x; height: 10px"></div>
 	<p>
-	<img src="<?php echo plugins_url('../images/techgasp-minilogo-16.png', __FILE__); ?>" style="float:left; width:16px; vertical-align:middle;" />
+	<img src="<?php echo plugins_url('images/techgasp-minilogo-16.png', dirname(__FILE__)); ?>" style="float:left; width:16px; vertical-align:middle;" />
 	&nbsp;
 	<input type="checkbox" <?php checked( (bool) $instance['show_soundcloudconnect'], true ); ?> id="<?php echo $this->get_field_id( 'show_soundcloudconnect' ); ?>" name="<?php echo $this->get_field_name( 'show_soundcloudconnect' ); ?>" />
 	<label for="<?php echo $this->get_field_id( 'show_soundcloudconnect' ); ?>"><b><?php _e('SoundCloud Connect Button', 'soundcloud_master'); ?></b></label></br>
@@ -100,9 +108,9 @@ class soundcloud_master_widget_buttons extends WP_Widget {
 	<label for="<?php echo $this->get_field_id( 'soundcloudconnect_page' ); ?>"><?php _e('insert SoundCloud User Page link:', 'soundcloud_master'); ?></label>
 	<input id="<?php echo $this->get_field_id( 'soundcloudconnect_page' ); ?>" name="<?php echo $this->get_field_name( 'soundcloudconnect_page' ); ?>" value="<?php echo $instance['soundcloudconnect_page']; ?>" style="width:auto;" />
 	</p>
-<div style="background: url(<?php echo plugins_url('../images/techgasp-hr.png', __FILE__); ?>) repeat-x; height: 10px"></div>
+<div style="background: url(<?php echo plugins_url('images/techgasp-hr.png', dirname(__FILE__)); ?>) repeat-x; height: 10px"></div>
 	<p>
-	<img src="<?php echo plugins_url('../images/techgasp-minilogo-16.png', __FILE__); ?>" style="float:left; width:16px; vertical-align:middle;" />
+	<img src="<?php echo plugins_url('images/techgasp-minilogo-16.png', dirname(__FILE__)); ?>" style="float:left; width:16px; vertical-align:middle;" />
 	&nbsp;
 	<input type="checkbox" <?php checked( (bool) $instance['show_soundcloudlyrics'], true ); ?> id="<?php echo $this->get_field_id( 'show_soundcloudlyrics' ); ?>" name="<?php echo $this->get_field_name( 'show_soundcloudlyrics' ); ?>" />
 	<label for="<?php echo $this->get_field_id( 'show_soundcloudlyrics' ); ?>"><b><?php _e('Soundcloud Lyrics Button', 'soundcloud_master'); ?></b></label></br>
@@ -111,9 +119,9 @@ class soundcloud_master_widget_buttons extends WP_Widget {
 	<label for="<?php echo $this->get_field_id( 'soundcloudlyrics_page' ); ?>"><?php _e('insert SoundClound Lyrics Link:', 'soundclound master'); ?></label></br>
 	<input id="<?php echo $this->get_field_id( 'soundcloudlyrics_page' ); ?>" name="<?php echo $this->get_field_name( 'soundcloudlyrics_page' ); ?>" value="<?php echo $instance['soundcloudlyrics_page']; ?>" style="width:auto;" />
 	</p>
-<div style="background: url(<?php echo plugins_url('../images/techgasp-hr.png', __FILE__); ?>) repeat-x; height: 10px"></div>
+<div style="background: url(<?php echo plugins_url('images/techgasp-hr.png', dirname(__FILE__)); ?>) repeat-x; height: 10px"></div>
 		<p>
-		<img src="<?php echo plugins_url('../images/techgasp-minilogo-16.png', __FILE__); ?>" style="float:left; width:16px; vertical-align:middle;" />
+		<img src="<?php echo plugins_url('images/techgasp-minilogo-16.png', dirname(__FILE__)); ?>" style="float:left; width:16px; vertical-align:middle;" />
 		&nbsp;
 		<b><?php echo get_option('soundcloud_master_name'); ?> Website</b>
 		</p>

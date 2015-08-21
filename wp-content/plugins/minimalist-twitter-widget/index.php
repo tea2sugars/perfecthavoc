@@ -1,7 +1,7 @@
 <?php
 /* Plugin Name: Minimalist Twitter Widget
 Plugin URI: http://impression11.co.uk/
-Version: 1.4
+Version: 1.5
 Description: A minimalist Twitter widget to display tweets.
 Author: Impression11 Ltd
 Author URI: http://impression11.co.uk/
@@ -13,14 +13,16 @@ add_shortcode('mintweet', 'mintweet');
 function printtweets($tweetarray, $type, $count, $retweets, $replies)
 {
 	$countcheck = 0;
-	echo '<ul id="tweets">';
+	$twitterhtml ='';
+	$twitterhtml.= '<ul id="tweets">';
 	if ($type == 'user') {
 		foreach($tweetarray as $tweet) {
 			if ($count > $countcheck) {
 				if ($retweets == 0 && isset($tweet['Retweet']) || $replies == 0 && isset($tweet['Reply'])) {
 				}
 				else {
-					echo '<li>' . $tweet['Tweet'] . '</li>';
+					$twitterhtml.= '<li>' . $tweet['Tweet'] . '</li>';
+						
 					$countcheck = $countcheck + 1;
 				}
 			}
@@ -29,16 +31,18 @@ function printtweets($tweetarray, $type, $count, $retweets, $replies)
 	else {
 		foreach($tweetarray as $tweet) {
 					if ($count > $countcheck) {
-			echo '<li><a href="https://twitter.com/#!/' . $tweet['User'] . '" target="_blank"/>' . $tweet['User'] . '</a>: ' . $tweet['Tweet'] . '</li>';					$countcheck = $countcheck + 1;
+			$twitterhtml.= '<li><a href="https://twitter.com/#!/' . $tweet['User'] . '" target="_blank"/>' . $tweet['User'] . '</a>: ' . $tweet['Tweet'] . '</li>';					$countcheck = $countcheck + 1;
 }
 		}
 	}
 
-	echo '</ul>';
+	$twitterhtml.= '</ul>';
+	return $twitterhtml;
 }
 
 function mintweet($atts)
 {
+	$twiwihtml ='';
 	extract(shortcode_atts(array(
 		'username' => 'ethanjim',
 		'count' => 5,
@@ -51,16 +55,22 @@ function mintweet($atts)
 
 	$options = get_option('tweet_plugin_options');
 	$file = plugin_dir_path(__FILE__) . $username . '_tweets.php';
+
 	if ($username == '' || $count == '' || $options['ck'] == '' || $options['cs'] == '' || $options['at'] == '' || $options['ats'] == '') {
-		echo 'Please ensure this plugin is correctly configured under "Tweet Options" & "Widgets"';
+		if ($options['debug'] == 1){
+			if($username==''){$debuginfo.= 'Your Username has not been set.';}
+			if($count==''){$debuginfo.= 'The number of tweets has not been set.';}
+			if($options['ck']=='' | $options['cs']==''|$options['at']==''){$debuginfo.= 'Your API details are not complete.';}
+					return 'Please ensure this plugin is correctly configured under "Tweet Options" & "Widgets'.'<h3>Debug Details</h3>'.$debuginfo;
+;
+
+}
 	}
 	else {
 		if ($options['caching'] == 1 && file_exists($file) && time() - filemtime($file) < $options['cache_exp'] * 3600) {
 			include (plugin_dir_path(__FILE__) . $username . '_tweets.php');
-
-			printtweets($tweetarray, $type, $count, $retweets, $replies);
-			echo '</ul>';
-			echo '<!-- Cached File -->';
+			$twiwihtml.= printtweets($tweetarray, $type, $count, $retweets, $replies);
+			return $twiwihtml;
 		}
 		else {
 			require_once 'lib/twitteroauth.php';
@@ -72,7 +82,6 @@ function mintweet($atts)
 			$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
 			if (file_exists($file) && $options['caching'] == 1) {
 				include (plugin_dir_path(__FILE__) . $username . '_tweets.php');
-
 			}
 
 			if (!isset($tweetarray)) {
@@ -114,27 +123,39 @@ function mintweet($atts)
 
 				$statuses = $statuses->statuses;
 			}
-			if (count($statuses) == 0 && !$options['caching'] == 1 || isset($statuses->error)) {
-				echo 'Please check your Twitter Application details, that you have specified the number of tweets to load, if you have ran out of API requests, or if your account is set to private';
+			if (count($statuses) == 0 && !$options['caching'] == 1 || isset($statuses->errors)) {
+				if ($options['debug'] == 1){
+				$debuginfo = print_r($statuses,true);
+								return 'Please check your Twitter Application details, that you have specified the number of tweets to load, if you have ran out of API requests, or if your account is set to private'.'<h3>Debug Details</h3>'.$debuginfo;
+			} else {return 'Please check your Twitter Application details, that you have specified the number of tweets to load, if you have ran out of API requests, or if your account is set to private';}
 			}
 			else {
 				foreach($statuses as $status) {
+					
+					//$date = new DateTime($status->created_at);
+					//$date->setTimezone(new DateTimeZone(get_option('timezone_string')));
+					//$tweetarray[$status->id_str]['Date'] = $date->format('d M y');
+
+					$tweetarray[$status->id_str]['Id'] = $status->id_str;
+					
+								if ($type == 'hash') {
+					$tweetarray[$status->id_str]['User'] = $status->user->screen_name;}
+					
+					
 					if (isset($status->retweeted_status)) {
-						$tweetarray[$status->id_str]['Retweet'] = 1;
-						$status->retweeted_status->text = 'RT @'.$status->retweeted_status->user->screen_name.' '.$status->retweeted_status->text;
-						$status->retweeted_status->text = preg_replace('|([\w\d]*)\s?(https?://([\d\w\.-]+\.[\w\.]{2,6})[^\s\]\[\<\>]*/?)|i', '$1 <a href="$2" target="_blank">$2</a>', $status->retweeted_status->text);
-					$status->retweeted_status->text = preg_replace('/\B\@([a-zA-Z0-9_]{1,20})/', '<a href="https://twitter.com/#!/$1" target="_blank">$0</a>', $status->retweeted_status->text);
-					$status->retweeted_status->text = preg_replace('/(^|\s)#(\w*[a-zA-Z_]+\w*)/', '\1#<a href="http://twitter.com/search?q=%23\2">\2</a>', $status->retweeted_status->text);
-					$tweetarray[$status->id_str]['Tweet'] = $status->retweeted_status->text;
+					$tweetarray[$status->id_str]['Retweet'] = 1;
+					$tweetcontent = 'RT @'.$status->retweeted_status->user->screen_name.' '.$status->retweeted_status->text;
 
 					}
 					else{
-					$status->text = preg_replace('|([\w\d]*)\s?(https?://([\d\w\.-]+\.[\w\.]{2,6})[^\s\]\[\<\>]*/?)|i', '$1 <a href="$2" target="_blank">$2</a>', $status->text);
-					$status->text = preg_replace('/\B\@([a-zA-Z0-9_]{1,20})/', '<a href="https://twitter.com/#!/$1" target="_blank">$0</a>', $status->text);
-					$status->text = preg_replace('/(^|\s)#(\w*[a-zA-Z_]+\w*)/', '\1<a href="http://twitter.com/search?q=%23\2" target="_blank">#\2</a>', $status->text);
-
-					$tweetarray[$status->id_str]['Tweet'] = $status->text;
+					
+					$tweetcontent = $status->text;
+					
 					}
+					
+					$tweetcontent = preg_replace(array('|([\w\d]*)\s?(https?://([\d\w\.-]+\.[\w\.]{2,6})[^\s\]\[\<\>]*/?)|i','/\B\@([a-zA-Z0-9_]{1,20})/','/(^|\s)#(\w*[a-zA-Z_]+\w*)/'), array('$1 <a href="$2" target="_blank">$2</a>','<a href="https://twitter.com/#!/$1" target="_blank">$0</a>','\1<a href="http://twitter.com/search?q=%23\2" target="_blank">#\2</a>'), $tweetcontent);
+					
+					$tweetarray[$status->id_str]['Tweet'] = $tweetcontent;
 
 					if (isset($status->in_reply_to_user_id)) {
 						$tweetarray[$status->id_str]['Reply'] = 1;
@@ -142,13 +163,12 @@ function mintweet($atts)
 
 					krsort($tweetarray);
 				}
-
-				printtweets($tweetarray, $type, $count, $retweets, $replies);
 				if ($options['caching'] == 1) {
 					$var_str = var_export($tweetarray, true);
 					$var = "<?php\n\n\$tweetarray = $var_str;\n\n?>";
 					file_put_contents(plugin_dir_path(__FILE__) . $username . '_tweets.php', $var);
 				}
+								return printtweets($tweetarray, $type, $count, $retweets, $replies);
 			}
 		}
 	}
@@ -170,10 +190,7 @@ class wp_tweets extends WP_Widget
 
 	function widget($args, $instance)
 	{
-		echo $args['before_widget'];
-		echo $args['before_title'] . $instance['title'] . $args['after_title'];
-		echo do_shortcode('[mintweet type=' . $instance['search'] . ' username=' . $instance['username'] . ' count=' . $instance['count'] . ' retweets="' . $instance['retweet'] . '" replies="' . $instance['replies'] . '"]');
-		echo $args['after_widget'];
+		echo $args['before_widget'] . $args['before_title'] . $instance['title'] . $args['after_title'] . do_shortcode('[mintweet type=' . $instance['search'] . ' username=' . $instance['username'] . ' count=' . $instance['count'] . ' retweets="' . $instance['retweet'] . '" replies="' . $instance['replies'] . '"]') .$args['after_widget'];
 	}
 
 	public

@@ -63,7 +63,7 @@ include( dirname( __FILE__ ) . '/after-the-deadline/config-options.php' );
 include( dirname( __FILE__ ) . '/after-the-deadline/config-unignore.php' );
 include( dirname( __FILE__ ) . '/after-the-deadline/proxy.php' );
 
-define( 'ATD_VERSION', '20140527' );
+define( 'ATD_VERSION', '20150708' );
 
 /*
  * Display the AtD configuration options
@@ -138,6 +138,9 @@ function add_AtD_tinymce_plugin( $plugin_array ) {
 function AtD_change_mce_settings( $init_array ) {
 	if ( ! AtD_is_allowed() )
 		return $init_array;
+
+	if ( ! is_array( $init_array ) )
+		$init_array = array();
 
 	$user = wp_get_current_user();
 
@@ -253,6 +256,9 @@ function AtD_load_submit_check_javascripts() {
  * Check if a user is allowed to use AtD
  */
 function AtD_is_allowed() {
+	if ( ( defined( 'AtD_FORCED_ON' ) && AtD_FORCED_ON ) ) {
+		return true;
+	}
 	$user = wp_get_current_user();
 	if ( ! $user || $user->ID == 0 )
 		return;
@@ -286,6 +292,15 @@ function AtD_should_load_on_page() {
 		return true;
 	}
 
+	/**
+	 * Allows scripts to be loaded via AtD in admin.
+	 *
+	 * By default, AtD only enqueues JS on certain admin pages to reduce bloat. The filter allows additional pages to have AtD JS.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @param bool false Boolean to load or not load AtD scripts in admin.
+	 */
 	return apply_filters( 'atd_load_scripts', false );
 }
 

@@ -56,6 +56,15 @@ function tweet_options_do_page1() {
         <td><input  id="cache_exp" class="regular-text" type="text" name="tweet_plugin_options[cache_exp]" value="<?php esc_attr_e( $options['cache_exp'] ); ?>" /></td>
       </tr> 
     </table>
+     <h3>Debug Mode</h3>
+        <p>If Debug mode is active it will give a read out of technical infomation along with the friendly error message, use this to figure out exactly what is wrong</p>
+    <table class="form-table">
+ <tr valign="top">
+        <th scope="row"><?php _e( 'Enable Debug Mode', 'minimalisttwitterwidget' ); ?></th>
+        <td><input id="debug" name="tweet_plugin_options[debug]" type="checkbox" value="1" <?php checked( '1', $options['debug'] ); ?> /></td>
+      </tr>
+         </table>
+
         <p class="submit">
       <input type="submit" class="button-primary" value="<?php _e( 'Save Options', 'minimalisttwitterwidget' ); ?>" />
     </p>
@@ -73,5 +82,8 @@ function tweet_options_validate( $input ) {
 	if ( ! isset( $input['caching'] ) )
 		$input['caching'] = null;
 		$input['caching'] = ( $input['caching'] == 1 ? 1 : 0 );
+		if ( ! isset( $input['debug'] ) )
+		$input['debug'] = null;
+		$input['debug'] = ( $input['debug'] == 1 ? 1 : 0 );
 	return $input;
 }

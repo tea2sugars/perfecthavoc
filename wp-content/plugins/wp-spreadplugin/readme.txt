@@ -4,8 +4,8 @@ Author: Thimo Grauerholz
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EZLKTKW8UR6PQ
 Tags: spreadshirt,wordpress,plugin,shop,store,shirt,t-shirt,integration,online store,online shop
 Requires at least: 3.3
-Tested up to: 3.9
-Stable tag: 3.7.9
+Tested up to: 4.2
+Stable tag: 3.8.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,27 +72,15 @@ http://welovetee.spreadshirt.net or http://welovetee.spreadshirt.com
 == Installation ==
 
 1. Upload the spreadplugin directory to the `/wp-content/plugins/wp-spreadplugin` Directory (if not exists please create) or install using wordpress plugin installer
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Edit default settings using `http://YOURBLOGURL/wp-admin/options-general.php?page=splg_options`.
+2. Activate the plugin through the **Plugins** menu in WordPress
+3. Edit default settings using **Spreadplugin Options**
 4. Create a new site or edit an existing site
 5. Insert shortcode
 
-**Minimum**
-
 [spreadplugin]
 
-**Extended**
-
-US/NA:
-`[spreadplugin shop_id="414192" shop_limit="10" shop_locale="us_US" shop_source="com" shop_category="" shop_social="1" shop_enablelink="1" shop_productcategory="" shop_checkoutiframe="2" shop_sortby="" shop_designershop="0" shop_display="0" shop_api="" shop_secret=""]`
-
-EU:
-`[spreadplugin shop_id="732552" shop_limit="10" shop_locale="de_DE" shop_source="net" shop_category="" shop_social="1" shop_enablelink="1" shop_productcategory="" shop_checkoutiframe="2" shop_sortby="" shop_designershop="0" shop_display="0" shop_api="" shop_secret=""]`
-
-6. These values are required: Shop Id, Shop locale, Shop source, Shop API and Shop secret!
-7. When adding default settings, only the minimum shortcode is required. 
-(If you extend the shortcode with additional values, you can overwrite the default settings and use the plugin with an additional shop (add the extended shortcode to a different article/site)).
-8. Done
+6. Go back to **Spreadplugin Options** and click **Rebuild cache**. Please wait until the cache has been rebuild. 
+7. Done
 
 == Frequently asked questions ==
 
@@ -106,12 +94,12 @@ The currency bases on the currency you're using for your Spreadshirt Shop. So if
 
 = How do I get the category Id? =
 
-1. You must have already created a category in your spreadshirt shop, if not, please do so, now. Please refer to spreadshirt, if you don't know how.
+1. You must have already created a category in your spreadshirt shop (http://www.spreadshirt.com/help-C1328/categoryId/3/articleId/147), if not, please do so, now. Please refer to spreadshirt, if you don't know how.
 2. Please open your normal spreadshirt shop (shopid.spreadshirt.net). In my case: http://welovetee.spreadshirt.de/
 3. Choose a category from the category selection.
 4. The url of your shop has changed to `http://welovetee.spreadshirt.de/alsterwasser-C300890` in my case
 5. The category Id in this case is `300890` (the numbers after the "-C" part)
-6. Paste this number in the `shop_category=""` variable. In my case `shop_cagegory="300890"`.
+6. Paste this number in the `shop_category=""` variable. In my case `shop_category="300890"`.
 7. Save and done.
 
 = How to display one category per page? (Custom categories) =
@@ -119,7 +107,7 @@ The currency bases on the currency you're using for your Spreadshirt Shop. So if
 1. Please see `How do I get the category Id?` 
 2. If you have got your category id, create a page in wordpress
 3. Go to text mode
-4. Paste extended shortcode (you don't need all values, just the one you want to overwrite) `[spreadplugin shop_cagegory="CATEGORYID"]`
+4. Paste extended shortcode (you don't need all values, just the one you want to overwrite) `[spreadplugin shop_category="CATEGORYID"]`
 5. Save and repeat by each category you want to display.
 
 = How to display one pre-defined category per page? =
@@ -165,7 +153,7 @@ Activate by changing shop_display="0" to shop_display="1" or change it in the ad
 
 = It shows old articles =
 
-Please go to the settings page in the admin panel of the plugin and click "Clear cache". 
+Please go to the settings page in the admin panel of the plugin and click "Rebuild cache". 
 
 = I want to use more than one shop on the same website =
 
@@ -195,6 +183,10 @@ You can find it here: http://www.spreadshirt.net/user-data-C162 or http://www.sp
 
 If you change the language in your wordpress installation, the language of the plugin changes, too. Well, but you can change the language only for the plugin by selecting your language in the spreadplugin options, now. If you have multiple pages with different shops on it and want to use a different language on each page, please use the shortcode and extend your already used shortcode by - for example `shop_language="de_DE"` - possible values are: de_DE, en_GB, fr_FR, nl_NL, nn_NO, nb_NO, da_DK, it_IT. Your new shortcode could look like this: `[spreadplugin shop_language="de_DE"]`
 
+= "Rebuild cache" reads nothing, but Shop Id is correct! =
+
+Change "Shop country:" to "None/Please choose" and click "Rebuild cache" again.
+
 = Where do I find great website templates for wordpress? =
 
 Please have a look here: http://themeforest.net/category/wordpress?ref=thimo
@@ -206,6 +198,71 @@ Please have a look here: http://themeforest.net/category/wordpress?ref=thimo
 3. Settings page
 
 == Changelog ==
+
+= 3.8.8 =
+* Bugfix with doubled content
+
+= 3.8.7.9 =
+* Added limit of max read articles. Now you can reduce the quantity of articles to be read.
+* Bugfix for Users using Plugin "Page Builder by SiteOrigin"
+
+= 3.8.7.8 =
+* Added japanese thanks to schlafcola.de
+
+= 3.8.7.7 =
+* Added spanish, portuguese translation, thanks to schlafcola.de
+
+= 3.8.7.6 =
+* bugfixes
+
+= 3.8.7.4 =
+* Norway bugfix
+
+= 3.8.7.3 =
+* Minor Bugfixes
+
+= 3.8.7 =
+* Switched to tablomat to use with designer shop (premium). Please choose "Show Spreadshirt designs in the designer" in "Apperance" -> "Settings", if you don't want to display Spreadshirt Marketplace designs.
+
+= 3.8.6.7 =
+* Fixed english checkout link
+
+= 3.8.6.6 =
+* Fixed problems with the new checkout of spreadshirt
+
+= 3.8.6.5 =
+* Renamed some CSS
+
+= 3.8.6.4 =
+* Removed the caching block
+
+= 3.8.6.3 =
+* Tried to reduce caching problems with other plugins
+
+= 3.8.6.2 =
+* One XSS vulnerability fixed
+
+= 3.8.6 =
+* CSS fixes
+
+= 3.8.5 =
+* Changes in Spreadshirt API
+* Added polish
+
+= 3.8.4 =
+* Added Brazil and Australia for US/Canada
+
+= 3.8.3 =
+* Minor Bugfixes
+
+= 3.8.2 =
+* Responsive detail page
+
+= 3.8.1 =
+* Minor Bugfixes
+
+= 3.8 =
+* Bugfix release. In some cases, not all articles are displayed and increased debugging.
 
 = 3.7.9 =
 * Bugfixing / tried sync from basket to designer again
@@ -421,7 +478,7 @@ Edit article now opens in fancybox when set `shop_checkoutiframe="2"`. It opens 
 
 = 2.6.1 =
 * Bugfixes (incl. sorting bug - hopefully ;-))
-* Added short product description e.g. Women’s Classic T-Shirt, Men’s Classic T-Shirt,...
+* Added short product description e.g. Womenï¿½s Classic T-Shirt, Menï¿½s Classic T-Shirt,...
 
 = 2.6 =
 * New social buttons, if you don't like, just replace in the image directory with your own. See FAQ

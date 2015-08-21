@@ -3,7 +3,7 @@
  * Plugin Name: WP-Spreadplugin
  * Plugin URI: http://wordpress.org/extend/plugins/wp-spreadplugin/
  * Description: This plugin uses the Spreadshirt API to list articles and let your customers order articles of your Spreadshirt shop using Spreadshirt order process.
- * Version: 3.7.9
+ * Version: 3.8.8
  * Author: Thimo Grauerholz
  * Author URI: http://www.spreadplugin.de
  */
@@ -25,10 +25,10 @@ if (!class_exists('WP_Spreadplugin')) {
         );
 
         public $defaultOptions = array(
-            'shop_id' => '','shop_locale' => '','shop_api' => '','shop_source' => '','shop_secret' => '','shop_limit' => '','shop_category' => '','shop_social' => '','shop_enablelink' => '','shop_productcategory' => '','shop_productsubcategory' => '','shop_sortby' => '','shop_linktarget' => '','shop_checkoutiframe' => '','shop_designershop' => '','shop_display' => '','shop_designsbackground' => '','shop_showdescription' => '','shop_showproductdescription' => '','shop_imagesize' => '','shop_showextendprice' => '','shop_zoomimagebackground' => '','shop_infinitescroll' => '','shop_customcss' => '','shop_design' => '','shop_view' => '','shop_zoomtype' => '','shop_lazyload' => '','shop_language' => '','shop_basket_text_icon' => '','shop_debug' => '','shop_sleep' => '','shop_designer' => ''
+            'shop_id' => '','shop_locale' => '','shop_api' => '','shop_source' => '','shop_secret' => '','shop_limit' => '','shop_category' => '','shop_social' => '','shop_enablelink' => '','shop_productcategory' => '','shop_productsubcategory' => '','shop_sortby' => '','shop_linktarget' => '','shop_checkoutiframe' => '','shop_designershop' => '','shop_display' => '','shop_designsbackground' => '','shop_showdescription' => '','shop_showproductdescription' => '','shop_imagesize' => '','shop_showextendprice' => '','shop_zoomimagebackground' => '','shop_infinitescroll' => '','shop_customcss' => '','shop_design' => '','shop_view' => '','shop_zoomtype' => '','shop_lazyload' => '','shop_language' => '','shop_basket_text_icon' => '','shop_debug' => '','shop_sleep' => '','shop_designer' => '', 'shop_max_quantity_articles' => ''
         );
 
-        private static $shopCache = 8760; // Shop article cache in hours 24*365 => 1 year
+        private static $shopCache = 0; // Shop article cache - never expires
         public function __construct() {
             add_action('init', array(
                 &$this,'startSession'
@@ -45,12 +45,14 @@ if (!class_exists('WP_Spreadplugin')) {
             ));
 
             // Ajax actions
+			/*
             add_action('wp_ajax_nopriv_mergeBasket', array(
                 &$this,'mergeBaskets'
             ));
             add_action('wp_ajax_mergeBasket', array(
                 &$this,'mergeBaskets'
             ));
+			*/
             add_action('wp_ajax_nopriv_myAjax', array(
                 &$this,'doAjax'
             ));
@@ -149,6 +151,7 @@ if (!class_exists('WP_Spreadplugin')) {
             self::$shopOptions['shop_zoomtype'] = ($conOp['shop_zoomtype'] == '' ? 0 : $conOp['shop_zoomtype']);
             self::$shopOptions['shop_lazyload'] = ($conOp['shop_lazyload'] == '' ? 1 : $conOp['shop_lazyload']);
             self::$shopOptions['shop_debug'] = ($conOp['shop_debug'] == '' ? 0 : $conOp['shop_debug']);
+            self::$shopOptions['shop_max_quantity_articles'] = ($conOp['shop_max_quantity_articles'] == '' ? 1000 : $conOp['shop_max_quantity_articles']);
 
             // Disable Zoom on min view, because of the new view - not on details page
             if (self::$shopOptions['shop_view'] == 2 && empty($_GET['splproduct'])) {
@@ -216,6 +219,16 @@ if (!class_exists('WP_Spreadplugin')) {
                 // get designs data
                 $designsData = self::getCacheDesignsData();
 
+                if (self::$shopOptions['shop_debug'] == 1) {
+                    echo "Stored Article Data RAW (0):<br>";
+                    print_r($articleData);
+                }
+
+                if (self::$shopOptions['shop_debug'] == 1) {
+                    echo "Stored Design Data RAW (0):<br>";
+                    print_r($designsData);
+                }
+
                 // built array with articles for sorting and filtering
                 if (is_array($designsData)) {
                     foreach ($designsData as $designId => $arrDesigns) {
@@ -226,13 +239,27 @@ if (!class_exists('WP_Spreadplugin')) {
                             }
                         }
                     }
+
+                    if (self::$shopOptions['shop_debug'] == 1) {
+                        echo "With Design (1):<br>";
+                        print_r($articleCleanData);
+                    }
                 }
 
-                // Add those articles which have no own designs
-                if (isset($articleData[0]) && is_array($articleData[0])) {
-                    foreach ($articleData[0] as $articleId => $arrArticle) {
-                        $articleCleanData[$articleId] = $arrArticle;
-                        $articleCleanDataComplete[$articleId] = $arrArticle;
+                // Add all those articles with no own designs and other cases - maybe overwrite them
+                if (!empty($articleData)) {
+                    foreach ($articleData as $arrDesigns) {
+                        if (!empty($arrDesigns)) {
+                            foreach ($arrDesigns as $articleId => $arrArticle) {
+                                $articleCleanData[$articleId] = $arrArticle;
+                                $articleCleanDataComplete[$articleId] = $arrArticle;
+                            }
+                        }
+                    }
+
+                    if (self::$shopOptions['shop_debug'] == 1) {
+                        echo "With some cases (2):<br>";
+                        print_r($articleCleanData);
                     }
                 }
 
@@ -266,29 +293,25 @@ if (!class_exists('WP_Spreadplugin')) {
                     if (!empty(self::$shopOptions['shop_sortby']) && is_array($designsData) && in_array(self::$shopOptions['shop_sortby'], self::$shopArticleSortOptions)) {
                         if (self::$shopOptions['shop_sortby'] == "recent") {
                             krsort($designsData);
-                        } else
-                            if (self::$shopOptions['shop_sortby'] == "price") {
-                                uasort($designsData, create_function('$a,$b', "return (\$a[pricenet] < \$b[pricenet])?-1:1;"));
-                            } else
-                                if (self::$shopOptions['shop_sortby'] == "weight") {
-                                    uasort($designsData, create_function('$a,$b', "return (\$a[weight] > \$b[weight])?-1:1;"));
-                                } else {
-                                    uasort($designsData, create_function('$a,$b', "return strnatcmp(\$a[" . self::$shopOptions['shop_sortby'] . "],\$b[" . self::$shopOptions['shop_sortby'] . "]);"));
-                                }
+                        } elseif (self::$shopOptions['shop_sortby'] == "price") {
+                            uasort($designsData, create_function('$a,$b', "return (\$a[pricenet] < \$b[pricenet])?-1:1;"));
+                        } elseif (self::$shopOptions['shop_sortby'] == "weight") {
+                            uasort($designsData, create_function('$a,$b', "return (\$a[weight] > \$b[weight])?-1:1;"));
+                        } else {
+                            uasort($designsData, create_function('$a,$b', "return strnatcmp(\$a[" . self::$shopOptions['shop_sortby'] . "],\$b[" . self::$shopOptions['shop_sortby'] . "]);"));
+                        }
                     }
                 } else {
                     if (!empty(self::$shopOptions['shop_sortby']) && is_array($articleCleanData) && in_array(self::$shopOptions['shop_sortby'], self::$shopArticleSortOptions)) {
                         if (self::$shopOptions['shop_sortby'] == "recent") {
                             krsort($articleCleanData);
-                        } else
-                            if (self::$shopOptions['shop_sortby'] == "price") {
-                                uasort($articleCleanData, create_function('$a,$b', "return (\$a[pricenet] < \$b[pricenet])?-1:1;"));
-                            } else
-                                if (self::$shopOptions['shop_sortby'] == "weight") {
-                                    uasort($articleCleanData, create_function('$a,$b', "return (\$a[weight] > \$b[weight])?-1:1;"));
-                                } else {
-                                    uasort($articleCleanData, create_function('$a,$b', "return strnatcmp(\$a[" . self::$shopOptions['shop_sortby'] . "],\$b[" . self::$shopOptions['shop_sortby'] . "]);"));
-                                }
+                        } elseif (self::$shopOptions['shop_sortby'] == "price") {
+                            uasort($articleCleanData, create_function('$a,$b', "return (\$a[pricenet] < \$b[pricenet])?-1:1;"));
+                        } elseif (self::$shopOptions['shop_sortby'] == "weight") {
+                            uasort($articleCleanData, create_function('$a,$b', "return (\$a[weight] > \$b[weight])?-1:1;"));
+                        } else {
+                            uasort($articleCleanData, create_function('$a,$b', "return strnatcmp(\$a[" . self::$shopOptions['shop_sortby'] . "],\$b[" . self::$shopOptions['shop_sortby'] . "]);"));
+                        }
                     }
                 }
 
@@ -313,13 +336,13 @@ if (!class_exists('WP_Spreadplugin')) {
                 // wrapper for integrated designer
                 if (self::$shopOptions['shop_designer'] == 1) {
                     $output .= '
-					<div id="spreadplugin-designer-wrapper"><div id="spreadplugin-designer" class="spreadplugin-designer clearfix"></div></div>
+					<div id="spreadplugin-designer-wrapper"><div id="spreadplugin-designer" class="spreadplugin-designer spreadplugin-clearfix"></div></div>
 					';
                 }
 
                 // Start div
                 $output .= '
-				<div id="spreadplugin-items" class="spreadplugin-items clearfix">
+				<div id="spreadplugin-items" class="spreadplugin-items spreadplugin-clearfix">
 				';
 
                 // display
@@ -377,55 +400,59 @@ if (!class_exists('WP_Spreadplugin')) {
 
                         // Designs view
                         if (self::$shopOptions['shop_display'] == 1) {
-                            foreach ($designsData as $designId => $arrDesigns) {
-                                $bgc = false;
-                                $addStyle = '';
+                            if (!empty($designsData)) {
+                                foreach ($designsData as $designId => $arrDesigns) {
+                                    $bgc = false;
+                                    $addStyle = '';
 
-                                // Display just Designs with products
-                                if (!empty($articleData[$designId])) {
-
-                                    // check if designs background is enabled
-                                    if (self::$shopOptions['shop_designsbackground'] == 1) {
-                                        // fetch first article background color
-                                        @reset($articleData[$designId]);
-                                        $bgcV = $articleData[$designId][key($articleData[$designId])]['default_bgc'];
-                                        $bgcV = str_replace("#", "", $bgcV);
-                                        // calc to hex
-                                        $bgc = $this->hex2rgb($bgcV);
-                                        $addStyle = "style=\"background-color:rgba(" . $bgc[0] . "," . $bgc[1] . "," . $bgc[2] . ",0.4);\"";
-                                    }
-
-                                    $output .= "<div class=\"spreadplugin-designs\">";
-                                    $output .= $this->displayDesigns($designId, $arrDesigns, $articleData[$designId], $bgc);
-                                    $output .= "<div id=\"designContainer_" . $designId . "\" class=\"design-container clearfix\" " . $addStyle . ">";
-
+                                    // Display just Designs with products
                                     if (!empty($articleData[$designId])) {
 
-                                        // default sort
-                                        @uasort($articleData[$designId], create_function('$a,$b', "return (\$a[id] > \$b[id])?-1:1;")); // 2014-06-22 Changed from place to id, place is not set anymore (and sort direction to desc
-
-                                        switch (self::$shopOptions['shop_view']) {
-                                            case 1:
-                                                foreach ($articleData[$designId] as $articleId => $arrArticle) {
-                                                    $output .= $this->displayListArticles($articleId, $arrArticle, self::$shopOptions['shop_zoomimagebackground']);
-                                                }
-                                                break;
-                                            case 2:
-                                                foreach ($articleData[$designId] as $articleId => $arrArticle) {
-                                                    $output .= $this->displayMinArticles($articleId, $arrArticle, self::$shopOptions['shop_zoomimagebackground']);
-                                                }
-                                                break;
-                                            default:
-                                                foreach ($articleData[$designId] as $articleId => $arrArticle) {
-                                                    $output .= $this->displayArticles($articleId, $arrArticle, self::$shopOptions['shop_zoomimagebackground']);
-                                                }
-                                                break;
+                                        // check if designs background is enabled
+                                        if (self::$shopOptions['shop_designsbackground'] == 1) {
+                                            // fetch first article background color
+                                            @reset($articleData[$designId]);
+                                            $bgcV = $articleData[$designId][key($articleData[$designId])]['default_bgc'];
+                                            $bgcV = str_replace("#", "", $bgcV);
+                                            // calc to hex
+                                            $bgc = $this->hex2rgb($bgcV);
+                                            $addStyle = "style=\"background-color:rgba(" . $bgc[0] . "," . $bgc[1] . "," . $bgc[2] . ",0.4);\"";
                                         }
-                                    }
 
-                                    $output .= "</div>";
-                                    $output .= "</div>";
+                                        $output .= "<div class=\"spreadplugin-designs\">";
+                                        $output .= $this->displayDesigns($designId, $arrDesigns, $articleData[$designId], $bgc);
+                                        $output .= "<div id=\"designContainer_" . $designId . "\" class=\"design-container spreadplugin-clearfix\" " . $addStyle . ">";
+
+                                        if (!empty($articleData[$designId])) {
+
+                                            // default sort
+                                            @uasort($articleData[$designId], create_function('$a,$b', "return (\$a[id] > \$b[id])?-1:1;")); // 2014-06-22 Changed from place to id, place is not set anymore (and sort direction to desc
+
+                                            switch (self::$shopOptions['shop_view']) {
+                                                case 1:
+                                                    foreach ($articleData[$designId] as $articleId => $arrArticle) {
+                                                        $output .= $this->displayListArticles($articleId, $arrArticle, self::$shopOptions['shop_zoomimagebackground']);
+                                                    }
+                                                    break;
+                                                case 2:
+                                                    foreach ($articleData[$designId] as $articleId => $arrArticle) {
+                                                        $output .= $this->displayMinArticles($articleId, $arrArticle, self::$shopOptions['shop_zoomimagebackground']);
+                                                    }
+                                                    break;
+                                                default:
+                                                    foreach ($articleData[$designId] as $articleId => $arrArticle) {
+                                                        $output .= $this->displayArticles($articleId, $arrArticle, self::$shopOptions['shop_zoomimagebackground']);
+                                                    }
+                                                    break;
+                                            }
+                                        }
+
+                                        $output .= "</div>";
+                                        $output .= "</div>";
+                                    }
                                 }
+                            } else {
+                                $output .= "No designs available?";
                             }
                         } else {
                             // Article view
@@ -455,7 +482,7 @@ if (!class_exists('WP_Spreadplugin')) {
 
                         $output .= "<div id=\"pagination\">";
                         if ($cArticleNext > 0) {
-                            $output .= "<a href=\"" . add_query_arg('pagesp', $paged + 1) . "\">" . __('next', $this->stringTextdomain) . "</a>";
+                            $output .= "<a href=\"" . add_query_arg('pagesp', $paged + 1, get_permalink()) . "\">" . __('next', $this->stringTextdomain) . "</a>";
                         }
                         $output .= "</div>";
                     } else {
@@ -531,9 +558,6 @@ if (!class_exists('WP_Spreadplugin')) {
          */
         private function getRawArticleData($pageId) {
 
-            // Limit to read max articles
-            $_maxlimit = 1000;
-
             $articleData = array();
             $articleDataObj = array();
 
@@ -542,7 +566,7 @@ if (!class_exists('WP_Spreadplugin')) {
             $apiUrlBase .= '/articles?' . (!empty(self::$shopOptions['shop_locale']) ? 'locale=' . self::$shopOptions['shop_locale'] . '&' : '') . 'fullData=true&noCache=true';
 
             // call first to get count of articles
-            $apiUrl = $apiUrlBase . '&limit=' . $_maxlimit;
+            $apiUrl = $apiUrlBase . '&limit=' . self::$shopOptions['shop_max_quantity_articles'];
 
             $stringXmlShopBase = wp_remote_get($apiUrl, array(
                 'timeout' => 120
@@ -556,6 +580,8 @@ if (!class_exists('WP_Spreadplugin')) {
             }
             if ($stringXmlShopBase['body'][0] != '<') die($stringXmlShopBase['body']);
             $stringXmlShopBase = wp_remote_retrieve_body($stringXmlShopBase);
+			// Quickfix for Namespace changes of Spreadshirt API
+			$stringXmlShopBase = str_replace('<ns3:','<',$stringXmlShopBase);
             $objArticlesBase = new SimpleXmlElement($stringXmlShopBase);
             if (!is_object($objArticlesBase)) {
                 if (self::$shopOptions['shop_debug'] == 1) {
@@ -582,6 +608,8 @@ if (!class_exists('WP_Spreadplugin')) {
                 'timeout' => 120
             ));
             $stringTypeXml = wp_remote_retrieve_body($stringTypeXml);
+			// Quickfix for Namespace changes of Spreadshirt API
+			$stringTypeXml = str_replace('<ns3:','<',$stringTypeXml);
             $objTypes = new SimpleXmlElement($stringTypeXml);
 
             if (is_object($objTypes)) {
@@ -615,11 +643,13 @@ if (!class_exists('WP_Spreadplugin')) {
                 'timeout' => 120
             ));
             $stringTypeXml = wp_remote_retrieve_body($stringTypeXml);
+			// Quickfix for Namespace changes of Spreadshirt API
+			$stringTypeXml = str_replace('<ns3:','<',$stringTypeXml);
             $objTypes = new SimpleXmlElement($stringTypeXml);
 
             $countryCode = explode("_", self::$shopOptions['shop_locale']);
 
-            if (is_object($objTypes)) {
+            if (is_object($objTypes) && !empty($countryCode[1])) {
                 foreach ($objTypes->shippingType as $row) {
                     foreach ($row->shippingCountries as $subrow) {
                         foreach ($subrow->shippingCountry as $subrow2) {
@@ -682,8 +712,10 @@ if (!class_exists('WP_Spreadplugin')) {
             ));
             if ($stringXmlShop['body'][0] != '<') return 'Body error: ' . $stringXmlShop['body'];
             $stringXmlShop = wp_remote_retrieve_body($stringXmlShop);
+			// Quickfix for Namespace changes of Spreadshirt API
+			$stringXmlShop = str_replace('<ns3:','<',$stringXmlShop);
 
-            if (substr($stringXmlShop, 0, 5) != "<?xml") {
+            if (substr($stringXmlShop, 0, 5) != "<?xml" && substr($stringXmlShop, 0, 5) != "<arti") {
                 return 'Error fetching URL: ' . $apiUrl;
             }
 
@@ -691,38 +723,43 @@ if (!class_exists('WP_Spreadplugin')) {
             if (!is_object($article)) return 'Article empty (object)';
 
             if ((int)$article['id'] > 0) {
-				
-				$url = wp_remote_get((string)$article->product->productType->attributes('http://www.w3.org/1999/xlink') . '?' . (!empty(self::$shopOptions['shop_locale']) ? 'locale=' . self::$shopOptions['shop_locale'] . '&noCache=true' : '&noCache=true'), array(
+
+                $url = wp_remote_get((string)$article->product->productType->attributes('http://www.w3.org/1999/xlink') . '?' . (!empty(self::$shopOptions['shop_locale']) ? 'locale=' . self::$shopOptions['shop_locale'] . '&noCache=true' : '&noCache=true'), array(
                     'timeout' => 120
                 ));
                 $stringXmlArticle = wp_remote_retrieve_body($url);
+				// Quickfix for Namespace changes of Spreadshirt API
+				$stringXmlArticle = str_replace('<ns3:','<',$stringXmlArticle);
 
-                if (substr($stringXmlArticle, 0, 5) == "<?xml") {
+                if (substr($stringXmlArticle, 0, 5) == "<?xml" && substr($stringXmlShop, 0, 5) != "<prod") {
                     $objArticleData = new SimpleXmlElement($stringXmlArticle);
                 }
-				
-				$url = wp_remote_get((string)$article->price->currency->attributes('http://www.w3.org/1999/xlink'));
+
+                $url = wp_remote_get((string)$article->price->currency->attributes('http://www.w3.org/1999/xlink'));
                 $stringXmlCurreny = wp_remote_retrieve_body($url);
-                if (substr($stringXmlCurreny, 0, 5) == "<?xml") {
-                    $objCurrencyData = new SimpleXmlElement($stringXmlCurreny);
+                if (substr($stringXmlCurreny, 0, 5) == "<?xml" || substr($stringXmlCurreny, 0, 5) == "<curr") {
+					// Quickfix for Namespace changes of Spreadshirt API
+					$stringXmlCurreny = str_replace('<ns3:','<',$stringXmlCurreny);
+					$objCurrencyData = new SimpleXmlElement($stringXmlCurreny);
                 }
-				
-				
-				$url = wp_remote_get((string)$article->product->attributes('http://www.w3.org/1999/xlink') . '?' . (!empty(self::$shopOptions['shop_locale']) ? 'locale=' . self::$shopOptions['shop_locale'] . '&noCache=true' : '&noCache=true'), array(
+
+                $url = wp_remote_get((string)$article->product->attributes('http://www.w3.org/1999/xlink') . '?' . (!empty(self::$shopOptions['shop_locale']) ? 'locale=' . self::$shopOptions['shop_locale'] . '&noCache=true' : '&noCache=true'), array(
                     'timeout' => 120
                 ));
                 $stringXmlProduct = wp_remote_retrieve_body($url);
-                if (substr($stringXmlProduct, 0, 5) == "<?xml") {
+                if (substr($stringXmlProduct, 0, 5) == "<?xml" || substr($stringXmlProduct, 0, 5) == "<prod") {
                     $objProductData = new SimpleXmlElement($stringXmlProduct);
                 }
 
                 if (is_object($objProductData)) {
                     if (!empty($objProductData->configurations->configuration->printType)) {
-						$url = wp_remote_get((string)$objProductData->configurations->configuration->printType->attributes('http://www.w3.org/1999/xlink') . '?' . (!empty(self::$shopOptions['shop_locale']) ? 'locale=' . self::$shopOptions['shop_locale'] . '&noCache=true' : '&noCache=true'), array(
+                        $url = wp_remote_get((string)$objProductData->configurations->configuration->printType->attributes('http://www.w3.org/1999/xlink') . '?' . (!empty(self::$shopOptions['shop_locale']) ? 'locale=' . self::$shopOptions['shop_locale'] . '&noCache=true' : '&noCache=true'), array(
                             'timeout' => 120
                         ));
                         $stringXmlPrint = wp_remote_retrieve_body($url);
-                        if (substr($stringXmlPrint, 0, 5) == "<?xml") {
+                        if (substr($stringXmlPrint, 0, 5) == "<?xml" || substr($stringXmlPrint, 0, 5) == "<prin") {
+							// Quickfix for Namespace changes of Spreadshirt API
+							$stringXmlPrint = str_replace('<ns3:','<',$stringXmlPrint);
                             $objPrintData = new SimpleXmlElement($stringXmlPrint);
                         }
                     }
@@ -874,12 +911,14 @@ if (!class_exists('WP_Spreadplugin')) {
             if (isset($stringXmlShop->errors) && count($stringXmlShop->errors) > 0) die('Error getting articles. Please check Shop-ID, API and secret.');
             if ($stringXmlShop['body'][0] != '<') die($stringXmlShop['body']);
             $stringXmlShop = wp_remote_retrieve_body($stringXmlShop);
+			// Quickfix for Namespace changes of Spreadshirt API
+			$stringXmlShop = str_replace('<ns3:','<',$stringXmlShop);
             $objArticles = new SimpleXmlElement($stringXmlShop);
             if (!isset($objArticles) || !is_object($objArticles)) die('Articles not loaded');
 
             // re-call to read articles with count
-            // read max 1000 articles because of spreadshirt max. limit
-            $apiUrl = $apiUrlBase . '&limit=' . ($objArticles['count'] <= 1 ? 2 : ($objArticles['count'] < 1000 ? $objArticles['count'] : 1000));
+            // read max self::$shopOptions['shop_max_quantity_articles'] articles because of spreadshirt max. limit
+            $apiUrl = $apiUrlBase . '&limit=' . ($objArticles['count'] <= 1 ? 2 : ($objArticles['count'] < self::$shopOptions['shop_max_quantity_articles'] ? $objArticles['count'] : self::$shopOptions['shop_max_quantity_articles']));
 
             $stringXmlShop = wp_remote_get($apiUrl, array(
                 'timeout' => 120
@@ -887,8 +926,10 @@ if (!class_exists('WP_Spreadplugin')) {
             if (isset($stringXmlShop->errors) && count($stringXmlShop->errors) > 0) die('Error getting articles. Please check your Shop-ID.');
             if ($stringXmlShop['body'][0] != '<') die($stringXmlShop['body']);
             $stringXmlShop = wp_remote_retrieve_body($stringXmlShop);
-            $objArticles = new SimpleXmlElement($stringXmlShop);
-            if (!is_object($objArticles)) die('Articles not loaded');
+ 			// Quickfix for Namespace changes of Spreadshirt API
+			$stringXmlShop = str_replace('<ns3:','<',$stringXmlShop);
+           $objArticles = new SimpleXmlElement($stringXmlShop);
+            if (!is_object($objArticles)) die('Designs not loaded');
 
             if ($objArticles['count'] > 0) {
 
@@ -915,7 +956,7 @@ if (!class_exists('WP_Spreadplugin')) {
                     $i++;
                 }
 
-                set_transient('spreadplugin2-designs-cache-' . $pageId, $articleData, self::$shopCache * 3600);
+                set_transient('spreadplugin2-designs-cache-' . $pageId, $articleData, self::$shopCache);
             }
         }
 
@@ -927,19 +968,20 @@ if (!class_exists('WP_Spreadplugin')) {
          * @return html
          */
         private function displayArticles($id, $article, $backgroundColor = '') {
+					
             $imgSrc = '//image.spreadshirt.' . self::$shopOptions['shop_source'] . '/image-server/v1/products/' . $article['productId'] . '/views/' . $article['view'] . ',width=' . self::$shopOptions['shop_imagesize'] . ',height=' . self::$shopOptions['shop_imagesize'];
 
-            $output = '<div class="spreadplugin-article clearfix grid-view" id="article_' . $id . '" style="width:' . (self::$shopOptions['shop_imagesize'] + 7) . 'px">';
+            $output = '<div class="spreadplugin-article spreadplugin-clearfix grid-view" id="article_' . $id . '" style="width:' . (self::$shopOptions['shop_imagesize'] + 7) . 'px">';
             $output .= '<a name="' . $id . '"></a>';
             $output .= '<h3>' . (!empty($article['name']) ? htmlspecialchars($article['name'], ENT_QUOTES) : '') . '</h3>';
             $output .= '<form method="post" id="form_' . $id . '">';
 
             // edit article button
             if (self::$shopOptions['shop_designer'] == 1) {
-                $output .= ' <div class="edit-wrapper-integrated" data-designid="' . $article['designid'] . '" data-productid="' . $article['productid'] . '" data-viewid="' . $article['view'] . '" data-appearanceid="' . $article['appearance'] . '" data-producttypeid="' . $article['type'] . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></div>';
+                $output .= ' <div class="edit-wrapper-integrated" data-designid="' . $article['designid'] . '" data-productid="' . (!empty($article['productid'])?$article['productid']:'') . '" data-viewid="' . $article['view'] . '" data-appearanceid="' . $article['appearance'] . '" data-producttypeid="' . $article['type'] . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></div>';
             } else
                 if (self::$shopOptions['shop_designer'] == 2 && self::$shopOptions['shop_designershop'] > 0) {
-                    $output .= ' <div class="edit-wrapper"><a href="//' . self::$shopOptions['shop_designershop'] . '.spreadshirt.' . self::$shopOptions['shop_source'] . '/-D1/customize/product/' . $article['productId'] . '?noCache=true" target="' . self::$shopOptions['shop_linktarget'] . '" title="' . __('Edit article', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></a></div>';
+                    $output .= ' <div class="edit-wrapper"><a href="//' . self::$shopOptions['shop_designershop'] . self::workaroundLangUrl('.spreadshirt.' . self::$shopOptions['shop_source']) . '/tablomat/-D1/customize/product/' . $article['productId'] . '?noCache=true" target="' . self::$shopOptions['shop_linktarget'] . '" title="' . __('Edit article', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></a></div>';
                 }
 
             // display preview image
@@ -957,24 +999,24 @@ if (!class_exists('WP_Spreadplugin')) {
 
             // add a select with available sizes
             if (isset($article['sizes']) && is_array($article['sizes'])) {
-                $output .= '<div class="size-wrapper clearfix"><span>' . __('Size', $this->stringTextdomain) . ':</span> <select id="size-select" name="size">';
+                $output .= '<div class="size-wrapper spreadplugin-clearfix"><span>' . __('Size', $this->stringTextdomain) . ':</span> <select id="size-select" name="size">';
 
                 foreach ($article['sizes'] as $k => $v) {
-                    $output .= '<option value="' . $k . '">' . $v['name'] . '</option>';
+                    $output .= '<option value="' . $k . '">' . (!empty($v['name'])?$v['name']:$k) . '</option>';
                 }
 
                 $output .= '</select></div>';
             }
 
             if (self::$shopOptions['shop_enablelink'] == 1) {
-                $output .= '<div class="details-wrapper2 clearfix"><a href="' . add_query_arg('splproduct', $id, get_permalink()) . '" target="' . self::$shopOptions['shop_linktarget'] . '">' . __('Details', $this->stringTextdomain) . '</a></div>';
+                $output .= '<div class="details-wrapper2 spreadplugin-clearfix"><a href="' . add_query_arg('splproduct', $id, get_permalink()) . '" target="' . self::$shopOptions['shop_linktarget'] . '">' . __('Details', $this->stringTextdomain) . '</a></div>';
             }
 
             $output .= '<div class="separator"></div>';
 
             // add a list with availabel product colors
             if (isset($article['appearances']) && is_array($article['appearances'])) {
-                $output .= '<div class="color-wrapper clearfix"><span>' . __('Color', $this->stringTextdomain) . ':</span> <ul class="colors" name="color">';
+                $output .= '<div class="color-wrapper spreadplugin-clearfix"><span>' . __('Color', $this->stringTextdomain) . ':</span> <ul class="colors" name="color">';
 
                 foreach ($article['appearances'] as $k => $v) {
                     $output .= '<li value="' . $k . '"><img src="' . $this->cleanURL($v) . '" alt="" /></li>';
@@ -985,7 +1027,7 @@ if (!class_exists('WP_Spreadplugin')) {
 
             // add a list with available product views
             if (isset($article['views']) && is_array($article['views'])) {
-                $output .= '<ul class="views" name="views">';
+                $output .= '<div class="views-wrapper"><ul class="views" name="views">';
 
                 $_vc = 0;
                 foreach ($article['views'] as $k => $v) {
@@ -1001,7 +1043,7 @@ if (!class_exists('WP_Spreadplugin')) {
                     $_vc++;
                 }
 
-                $output .= '</ul>';
+                $output .= '</ul></div>';
             }
 
             // Short product description
@@ -1049,8 +1091,9 @@ if (!class_exists('WP_Spreadplugin')) {
             }
             $output .= '</div>';
 
-            // order buttons
             $output .= '<input type="text" value="1" id="quantity" name="quantity" maxlength="4" />';
+			
+            // order buttons
             $output .= '<input type="submit" name="submit" value="' . __('Add to basket', $this->stringTextdomain) . '" /><br>';
 
             // Social buttons
@@ -1092,10 +1135,10 @@ if (!class_exists('WP_Spreadplugin')) {
 
             // edit article button
             if (self::$shopOptions['shop_designer'] == 1) {
-                $output .= ' <div class="edit-wrapper-integrated" data-designid="' . $article['designid'] . '" data-productid="' . $article['productid'] . '" data-viewid="' . $article['view'] . '" data-appearanceid="' . $article['appearance'] . '" data-producttypeid="' . $article['type'] . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></div>';
+                $output .= ' <div class="edit-wrapper-integrated" data-designid="' . $article['designid'] . '" data-productid="' . (!empty($article['productid'])?$article['productid']:'') . '" data-viewid="' . $article['view'] . '" data-appearanceid="' . $article['appearance'] . '" data-producttypeid="' . $article['type'] . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></div>';
             } else
                 if (self::$shopOptions['shop_designer'] == 2 && self::$shopOptions['shop_designershop'] > 0) {
-                    $output .= ' <div class="edit-wrapper"><a href="//' . self::$shopOptions['shop_designershop'] . '.spreadshirt.' . self::$shopOptions['shop_source'] . '/-D1/customize/product/' . $article['productId'] . '?noCache=true" target="' . self::$shopOptions['shop_linktarget'] . '" title="' . __('Edit article', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></a></div>';
+                    $output .= ' <div class="edit-wrapper"><a href="//' . self::$shopOptions['shop_designershop'] . self::workaroundLangUrl('.spreadshirt.' . self::$shopOptions['shop_source']) . '/tablomat/-D1/customize/product/' . $article['productId'] . '?noCache=true" target="' . self::$shopOptions['shop_linktarget'] . '" title="' . __('Edit article', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></a></div>';
                 }
 
             // display preview image
@@ -1117,7 +1160,7 @@ if (!class_exists('WP_Spreadplugin')) {
             $output .= '</div>';
 
             if (self::$shopOptions['shop_enablelink'] == 1) {
-                $output .= '<div class="details-wrapper2 clearfix"><a href="' . add_query_arg('splproduct', $id, get_permalink()) . '" target="' . self::$shopOptions['shop_linktarget'] . '">' . __('Details', $this->stringTextdomain) . '</a></div>';
+                $output .= '<div class="details-wrapper2 spreadplugin-clearfix"><a href="' . add_query_arg('splproduct', $id, get_permalink()) . '" target="' . self::$shopOptions['shop_linktarget'] . '">' . __('Details', $this->stringTextdomain) . '</a></div>';
             }
 
             $output .= '</div><div class="articleContentRight"><h3>' . (!empty($article['name']) ? htmlspecialchars($article['name'], ENT_QUOTES) : '') . '</h3>';
@@ -1133,10 +1176,10 @@ if (!class_exists('WP_Spreadplugin')) {
 
             // add a select with available sizes
             if (isset($article['sizes']) && is_array($article['sizes'])) {
-                $output .= '<div class="size-wrapper clearfix"><span>' . __('Size', $this->stringTextdomain) . ':</span> <select id="size-select" name="size">';
+                $output .= '<div class="size-wrapper spreadplugin-clearfix"><span>' . __('Size', $this->stringTextdomain) . ':</span> <select id="size-select" name="size">';
 
                 foreach ($article['sizes'] as $k => $v) {
-                    $output .= '<option value="' . $k . '">' . $v['name'] . '</option>';
+                    $output .= '<option value="' . $k . '">' . (!empty($v['name'])?$v['name']:$k) . '</option>';
                 }
 
                 $output .= '</select></div>';
@@ -1144,7 +1187,7 @@ if (!class_exists('WP_Spreadplugin')) {
 
             // add a list with availabel product colors
             if (isset($article['appearances']) && is_array($article['appearances'])) {
-                $output .= '<div class="color-wrapper clearfix"><span>' . __('Color', $this->stringTextdomain) . ':</span> <ul class="colors" name="color">';
+                $output .= '<div class="color-wrapper spreadplugin-clearfix"><span>' . __('Color', $this->stringTextdomain) . ':</span> <ul class="colors" name="color">';
 
                 foreach ($article['appearances'] as $k => $v) {
                     $output .= '<li value="' . $k . '"><img src="' . $this->cleanURL($v) . '" alt="" /></li>';
@@ -1155,7 +1198,7 @@ if (!class_exists('WP_Spreadplugin')) {
 
             // add a list with available product views
             if (isset($article['views']) && is_array($article['views'])) {
-                $output .= '<div class="views-wrapper clearfix"><ul class="views" name="views">';
+                $output .= '<div class="views-wrapper spreadplugin-clearfix"><ul class="views" name="views">';
 
                 $_vc = 0;
                 foreach ($article['views'] as $k => $v) {
@@ -1178,7 +1221,7 @@ if (!class_exists('WP_Spreadplugin')) {
             $output .= '<input type="hidden" value="' . $article['view'] . '" id="view" name="view" />';
             $output .= '<input type="hidden" value="' . $id . '" id="article" name="article" />';
 
-            $output .= '<div class="price-wrapper clearfix">';
+            $output .= '<div class="price-wrapper spreadplugin-clearfix">';
             if (self::$shopOptions['shop_showextendprice'] == 1) {
                 $output .= '<span id="price-without-tax">' . __('Price (without tax):', $this->stringTextdomain) . " " . self::formatPrice($article['pricenet'], $article['currencycode']) . "<br /></span>";
                 $output .= '<span id="price-with-tax">' . __('Price (with tax):', $this->stringTextdomain) . " " . self::formatPrice($article['pricebrut'], $article['currencycode']) . "</span>";
@@ -1189,9 +1232,10 @@ if (!class_exists('WP_Spreadplugin')) {
                 $output .= '<span id="price">' . __('Price:', $this->stringTextdomain) . " " . self::formatPrice($article['pricebrut'], $article['currencycode']) . "</span>";
             }
             $output .= '</div>';
+			
+            $output .= '<input type="text" value="1" id="quantity" name="quantity" maxlength="4" />';
 
             // order buttons
-            $output .= '<input type="text" value="1" id="quantity" name="quantity" maxlength="4" />';
             $output .= '<input type="submit" name="submit" value="' . __('Add to basket', $this->stringTextdomain) . '" /><br>';
 
             // Social buttons
@@ -1224,16 +1268,16 @@ if (!class_exists('WP_Spreadplugin')) {
         private function displayMinArticles($id, $article, $backgroundColor = '') {
             $imgSrc = '//image.spreadshirt.' . self::$shopOptions['shop_source'] . '/image-server/v1/products/' . $article['productId'] . '/views/' . $article['view'] . ',width=' . self::$shopOptions['shop_imagesize'] . ',height=' . self::$shopOptions['shop_imagesize'];
 
-            $output = '<div class="spreadplugin-article clearfix min-view" id="article_' . $id . '" style="width:' . (self::$shopOptions['shop_imagesize'] + 7) . 'px">';
+            $output = '<div class="spreadplugin-article spreadplugin-clearfix min-view" id="article_' . $id . '" style="width:' . (self::$shopOptions['shop_imagesize'] + 7) . 'px">';
             $output .= '<a name="' . $id . '"></a>';
             $output .= '<form method="post" id="form_' . $id . '">';
 
             // edit article button
             if (self::$shopOptions['shop_designer'] == 1) {
-                $output .= ' <div class="edit-wrapper-integrated" data-designid="' . $article['designid'] . '" data-productid="' . $article['productid'] . '" data-viewid="' . $article['view'] . '" data-appearanceid="' . $article['appearance'] . '" data-producttypeid="' . $article['type'] . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></div>';
+                $output .= ' <div class="edit-wrapper-integrated" data-designid="' . $article['designid'] . '" data-productid="' . (!empty($article['productid'])?$article['productid']:'') . '" data-viewid="' . $article['view'] . '" data-appearanceid="' . $article['appearance'] . '" data-producttypeid="' . $article['type'] . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></div>';
             } else
                 if (self::$shopOptions['shop_designer'] == 2 && self::$shopOptions['shop_designershop'] > 0) {
-                    $output .= ' <div class="edit-wrapper"><a href="//' . self::$shopOptions['shop_designershop'] . '.spreadshirt.' . self::$shopOptions['shop_source'] . '/-D1/customize/product/' . $article['productId'] . '?noCache=true" target="' . self::$shopOptions['shop_linktarget'] . '" title="' . __('Edit article', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></a></div>';
+                    $output .= ' <div class="edit-wrapper"><a href="//' . self::$shopOptions['shop_designershop'] . self::workaroundLangUrl('.spreadshirt.' . self::$shopOptions['shop_source']) . '/tablomat/-D1/customize/product/' . $article['productId'] . '?noCache=true" target="' . self::$shopOptions['shop_linktarget'] . '" title="' . __('Edit article', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></a></div>';
                 }
 
             // display preview image
@@ -1257,10 +1301,10 @@ if (!class_exists('WP_Spreadplugin')) {
 
             // add a select with available sizes
             if (isset($article['sizes']) && is_array($article['sizes'])) {
-                $output .= '<div class="size-wrapper clearfix"><span>' . __('Size', $this->stringTextdomain) . ':</span> <select id="size-select" name="size">';
+                $output .= '<div class="size-wrapper spreadplugin-clearfix"><span>' . __('Size', $this->stringTextdomain) . ':</span> <select id="size-select" name="size">';
 
                 foreach ($article['sizes'] as $k => $v) {
-                    $output .= '<option value="' . $k . '">' . $v['name'] . '</option>';
+                    $output .= '<option value="' . $k . '">' . (!empty($v['name'])?$v['name']:$k) . '</option>';
                 }
 
                 $output .= '</select></div>';
@@ -1270,7 +1314,7 @@ if (!class_exists('WP_Spreadplugin')) {
             $output .= '<input type="hidden" value="' . $article['view'] . '" id="view" name="view" />';
             $output .= '<input type="hidden" value="' . $id . '" id="article" name="article" />';
 
-            $output .= '<div class="add-basket-wrapper clearfix"><input type="submit" name="submit" class="add-basket-button" value=""></div>';
+            $output .= '<div class="add-basket-wrapper spreadplugin-clearfix"><input type="submit" name="submit" class="add-basket-button" value=""></div>';
 
             // order buttons
             $output .= '<input type="hidden" value="1" id="quantity" name="quantity" />';
@@ -1301,7 +1345,7 @@ if (!class_exists('WP_Spreadplugin')) {
                 $dSrc = plugins_url('/img/blank.gif', __FILE__);
             }
 
-            $output = '<div class="spreadplugin-design clearfix" id="design_' . $id . '" style="width:187px">';
+            $output = '<div class="spreadplugin-design spreadplugin-clearfix" id="design_' . $id . '" style="width:187px">';
             $output .= '<a name="' . $id . '"></a>';
             $output .= '<h3>' . htmlspecialchars($designData['name'], ENT_QUOTES) . '</h3>';
             $output .= '<div class="image-wrapper" ' . $addStyle . '>';
@@ -1426,6 +1470,8 @@ if (!class_exists('WP_Spreadplugin')) {
             $header[] = self::createAuthHeader("GET", $basketCheckoutUrl);
             $header[] = "Content-Type: application/xml";
             $result = self::oldHttpRequest($basketCheckoutUrl, $header, 'GET');
+			// Quickfix for Namespace changes of Spreadshirt API
+			$result = str_replace('<ns3:','<',$result);
 
             if ($result[0] == '<') {
                 $checkoutRef = new SimpleXMLElement($result);
@@ -1497,6 +1543,8 @@ if (!class_exists('WP_Spreadplugin')) {
                 $header[] = "Content-Type: application/xml";
                 $result = self::oldHttpRequest($basketUrl, $header, 'GET');
                 if ($result[0] == '<') {
+					// Quickfix for Namespace changes of Spreadshirt API
+					$result = str_replace('<ns3:','<',$result);
                     $basket = new SimpleXMLElement($result);
                 }
             }
@@ -1588,7 +1636,7 @@ if (!class_exists('WP_Spreadplugin')) {
                 print_r($result);
                 $debug = explode("\r\n\r\n", $result);
                 if (!empty($debug[1])) {
-                    print_r(gzdecode($debug[1]));
+                    print_r(self::ownGzDecode($debug[1]));
                 }
             }
 
@@ -1604,7 +1652,7 @@ if (!class_exists('WP_Spreadplugin')) {
         /**
          * call to merge the designer shop basket with the api basket
          * @TODO doesn't work yet - Spreadshirt's API is beta :(
-         */
+         *
         public function mergeBaskets() {
             $header = array();
             $basketId = "";
@@ -1625,6 +1673,7 @@ if (!class_exists('WP_Spreadplugin')) {
             echo $result;
             die();
         }
+		*/
 
         /**
          * Function loadHead
@@ -1656,7 +1705,7 @@ if (!class_exists('WP_Spreadplugin')) {
 					var textProdHideDesc = '" . esc_attr__('Hide product description', $this->stringTextdomain) . "';
 					var textProdShowDesc = '" . esc_attr__('Show product description', $this->stringTextdomain) . "';
 					var loadingImage = '" . plugins_url('/img/loading.gif', __FILE__) . "';
-					var loadingMessage = '" . esc_attr__('Loading new articles...', $this->stringTextdomain) . "';
+					var loadingMessage = 'Loading...';
 					var loadingFinishedMessage = '" . esc_attr__('You have reached the end', $this->stringTextdomain) . "';
 					var pageLink = '" . get_page_link() . "';
 					var pageCheckoutUseIframe = '" . self::$shopOptions['shop_checkoutiframe'] . "';
@@ -1669,7 +1718,7 @@ if (!class_exists('WP_Spreadplugin')) {
 					var lazyLoad = '" . (self::$shopOptions['shop_lazyload'] == 1 || self::$shopOptions['shop_lazyload'] == '' ? 1 : 0) . "';
 					var zoomConfig = {
 						";
-
+			// " . esc_attr__('Loading new articles...', $this->stringTextdomain) . "
             if (self::$shopOptions['shop_zoomtype'] == 0) {
                 echo '
 						zoomType : "inner",
@@ -1794,6 +1843,8 @@ if (!class_exists('WP_Spreadplugin')) {
                 if (count($stringXmlShop->errors) > 0) die('Error getting basket.');
                 if ($stringXmlShop['body'][0] != '<') die($stringXmlShop['body']);
                 $stringXmlShop = wp_remote_retrieve_body($stringXmlShop);
+				// Quickfix for Namespace changes of Spreadshirt API
+				$stringXmlShop = str_replace('<ns3:','<',$stringXmlShop);
                 $objShop = new SimpleXmlElement($stringXmlShop);
                 if (!is_object($objShop)) die('Basket not loaded');
 
@@ -1806,26 +1857,16 @@ if (!class_exists('WP_Spreadplugin')) {
 
                 // get the checkout url
                 $checkoutUrl = self::checkout($basketUrl, $namespaces);
-
-                // Workaround for checkout language
-                $_langCode = @explode("_", (empty(self::$shopOptions['shop_language']) ? self::$shopOptions['shop_locale'] : self::$shopOptions['shop_language']));
-                $_langCode = $_langCode[0];
-
-                if (!empty($_langCode)) {
-                    if ($_langCode == "us") {
-                        $_langCode = "en";
-                    }
-
-                    $_urlParts = explode("/", $checkoutUrl);
-                    $_urlParts[3] = $_langCode;
-                    $checkoutUrl = implode("/", $_urlParts);
-                }
+				
+				// Workaround
+				$checkoutUrl = self::workaroundLangUrl($checkoutUrl);
 
                 // saving to session
                 $_SESSION['basketUrl'][self::$shopOptions['shop_source'] . self::$shopOptions['shop_language']] = $basketUrl;
                 $_SESSION['namespaces'][self::$shopOptions['shop_source'] . self::$shopOptions['shop_language']] = $namespaces;
                 $_SESSION['checkoutUrl'][self::$shopOptions['shop_source'] . self::$shopOptions['shop_language']] = $checkoutUrl;
             }
+
 
             // add an article to the basket
             if (isset($_POST['size']) && isset($_POST['appearance']) && isset($_POST['quantity'])) {
@@ -1866,11 +1907,11 @@ if (!class_exists('WP_Spreadplugin')) {
 
             $output = '<div class="spreadplugin-article-detail" id="article_' . $id . '">';
             $output .= '<a name="' . $id . '"></a>';
-            $output .= '<form method="post" id="form_' . $id . '"><table><tr><td>';
+            $output .= '<form method="post" id="form_' . $id . '"><div class="articleContentLeft">';
 
             // edit article button
             if (self::$shopOptions['shop_designershop'] > 0) {
-                $output .= ' <div class="edit-wrapper"><a href="//' . self::$shopOptions['shop_designershop'] . '.spreadshirt.' . self::$shopOptions['shop_source'] . '/-D1/customize/product/' . $article['productId'] . '?noCache=true" target="' . self::$shopOptions['shop_linktarget'] . '" title="' . __('Edit article', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></a></div>';
+                $output .= ' <div class="edit-wrapper"><a href="//' . self::$shopOptions['shop_designershop'] . self::workaroundLangUrl('.spreadshirt.' . self::$shopOptions['shop_source']) . '/tablomat/-D1/customize/product/' . $article['productId'] . '?noCache=true" target="' . self::$shopOptions['shop_linktarget'] . '" title="' . __('Edit article', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/edit.png', __FILE__) . '"></a></div>';
             }
 
             // display preview image
@@ -1898,22 +1939,22 @@ if (!class_exists('WP_Spreadplugin')) {
                 $output .= ' <div class="details-wrapper2"><a href="//' . self::$shopOptions['shop_id'] . '.spreadshirt.' . self::$shopOptions['shop_source'] . '/-A' . $id . '" target="_blank">' . __('Additional details', $this->stringTextdomain) . '</a></div>';
             }
 
-            $output .= '</td><td><h3>' . (!empty($article['name']) ? htmlspecialchars($article['name'], ENT_QUOTES) : '') . '</h3>';
+            $output .= '</div><div class="articleContentRight"><h3>' . (!empty($article['name']) ? htmlspecialchars($article['name'], ENT_QUOTES) : '') . '</h3>';
 
             // Show description link if not empty
             if (!empty($article['description'])) {
-                $output .= '<div class="description-wrapper clearfix">' . htmlspecialchars($article['description'], ENT_QUOTES) . '</div>';
+                $output .= '<div class="description-wrapper spreadplugin-clearfix">' . htmlspecialchars($article['description'], ENT_QUOTES) . '</div>';
             }
 
             // Show product description
-            $output .= '<div class="product-description-wrapper clearfix"><h4>' . __('Product details', $this->stringTextdomain) . '</h4>' . $article['productshortdescription'] . '</div>';
+            $output .= '<div class="product-description-wrapper spreadplugin-clearfix"><h4>' . __('Product details', $this->stringTextdomain) . '</h4>' . $article['productshortdescription'] . '</div>';
 
             // add a select with available sizes
             if (isset($article['sizes']) && is_array($article['sizes'])) {
-                $output .= '<div class="size-wrapper clearfix"><span>' . __('Size', $this->stringTextdomain) . ':</span> <select id="size-select" name="size">';
+                $output .= '<div class="size-wrapper spreadplugin-clearfix"><span>' . __('Size', $this->stringTextdomain) . ':</span> <select id="size-select" name="size">';
 
                 foreach ($article['sizes'] as $k => $v) {
-                    $output .= '<option value="' . $k . '">' . $v['name'] . '</option>';
+                    $output .= '<option value="' . $k . '">' . (!empty($v['name'])?$v['name']:$k) . '</option>';
                 }
 
                 $output .= '</select></div>';
@@ -1921,7 +1962,7 @@ if (!class_exists('WP_Spreadplugin')) {
 
             // add a list with availabel product colors
             if (isset($article['appearances']) && is_array($article['appearances'])) {
-                $output .= '<div class="color-wrapper clearfix"><span>' . __('Color', $this->stringTextdomain) . ':</span> <ul class="colors" name="color">';
+                $output .= '<div class="color-wrapper spreadplugin-clearfix"><span>' . __('Color', $this->stringTextdomain) . ':</span> <ul class="colors" name="color">';
 
                 foreach ($article['appearances'] as $k => $v) {
                     $output .= '<li value="' . $k . '"><img src="' . $this->cleanURL($v) . '" alt="" /></li>';
@@ -1929,13 +1970,15 @@ if (!class_exists('WP_Spreadplugin')) {
 
                 $output .= '</ul></div>';
             }
-
+			
+			$output .= '<div class="quantity-wrapper spreadplugin-clearfix"><span>'.__('Quantity:', $this->stringTextdomain).'</span> <input type="text" value="1" id="quantity" name="quantity" maxlength="4" /></div>';
+			
             $output .= '<input type="hidden" value="' . $article['appearance'] . '" id="appearance" name="appearance" />';
             $output .= '<input type="hidden" value="' . $article['view'] . '" id="view" name="view" />';
             $output .= '<input type="hidden" value="' . $id . '" id="article" name="article" />';
 
             // $output .= '<div class="separator"></div>';
-            $output .= '<div class="price-wrapper clearfix">';
+            $output .= '<div class="price-wrapper spreadplugin-clearfix">';
             if (self::$shopOptions['shop_showextendprice'] == 1) {
                 $output .= '<span id="price-without-tax">' . __('Price (without tax):', $this->stringTextdomain) . " " . self::formatPrice($article['pricenet'], $article['currencycode']) . "<br /></span>";
                 $output .= '<span id="price-with-tax">' . __('Price (with tax):', $this->stringTextdomain) . " " . self::formatPrice($article['pricebrut'], $article['currencycode']) . "</span>";
@@ -1948,7 +1991,6 @@ if (!class_exists('WP_Spreadplugin')) {
             $output .= '</div>';
 
             // order buttons
-            $output .= '<input type="text" value="1" id="quantity" name="quantity" maxlength="4" />';
             $output .= '<input type="submit" name="submit" value="' . __('Add to basket', $this->stringTextdomain) . '" /><br>';
 
             // Social buttons
@@ -1967,9 +2009,7 @@ if (!class_exists('WP_Spreadplugin')) {
                  */
             }
             $output .= '
-			</td>
-			</tr>
-			</table>
+			</div>
 			</form>
 			';
 
@@ -2005,7 +2045,7 @@ if (!class_exists('WP_Spreadplugin')) {
 
             if (isset($article['sizes']) && is_array($article['sizes'])) {
                 foreach ($article['sizes'] as $k => $v) {
-                    $output .= '<th>' . $v['name'] . '</th>';
+                    $output .= '<th>' . (!empty($v['name'])?$v['name']:$k) . '</th>';
                 }
             }
 
@@ -2019,7 +2059,7 @@ if (!class_exists('WP_Spreadplugin')) {
 
             if (isset($article['sizes']) && is_array($article['sizes'])) {
                 foreach ($article['sizes'] as $k => $v) {
-                    $output .= '<td>' . ($_toInches ? self::mmToIn($v['measures'][0]['value']) : $v['measures'][0]['value']) . '</td>';
+                    $output .= '<td>' . (!empty($v['measures'][0]['value'])?($_toInches ? self::mmToIn($v['measures'][0]['value']) : $v['measures'][0]['value']):$k) . '</td>';
                 }
             }
 
@@ -2031,7 +2071,7 @@ if (!class_exists('WP_Spreadplugin')) {
 
             if (isset($article['sizes']) && is_array($article['sizes'])) {
                 foreach ($article['sizes'] as $k => $v) {
-                    $output .= '<td>' . ($_toInches ? self::mmToIn($v['measures'][1]['value']) : $v['measures'][1]['value']) . '</td>';
+                    $output .= '<td>' . (!empty($v['measures'][1]['value'])?($_toInches ? self::mmToIn($v['measures'][1]['value']) : $v['measures'][1]['value']):$k) . '</td>';
                 }
             }
 
@@ -2099,7 +2139,7 @@ if (!class_exists('WP_Spreadplugin')) {
                 $wpdb->query("DELETE FROM `" . $wpdb->options . "` WHERE `option_name` LIKE '_transient_%spreadplugin%cache%'");
 
                 // read posts/pages,... with shortcode
-                $result = $wpdb->get_results("SELECT id,post_title FROM `" . $wpdb->posts . "` WHERE post_type <> 'revision' and post_content like '%[spreadplugin%'");
+                $result = $wpdb->get_results("SELECT distinct " . $wpdb->posts . ".id,post_title FROM `" . $wpdb->posts . "` left join `" . $wpdb->postmeta . "` on `" . $wpdb->postmeta . "`.post_id =`" . $wpdb->posts . "`.id WHERE post_type <> 'revision' and (post_content like '%[spreadplugin%' or (meta_value like '%[spreadplugin%' and meta_key = 'panels_data'))");
 
                 if ($result) {
                     foreach ($result as $item) {
@@ -2168,7 +2208,7 @@ if (!class_exists('WP_Spreadplugin')) {
                             if (!empty($_SESSION['_tempArticleCache'][$_pageid])) {
 
                                 // build cache from session data
-                                set_transient('spreadplugin2-article-cache-' . $_pageid, $_SESSION['_tempArticleCache'][$_pageid], self::$shopCache * 3600);
+                                set_transient('spreadplugin2-article-cache-' . $_pageid, $_SESSION['_tempArticleCache'][$_pageid], self::$shopCache);
 
                                 die('Done');
                             }
@@ -2233,8 +2273,18 @@ if (!class_exists('WP_Spreadplugin')) {
          * @TODO find a different way
          */
         public function reparseShortcodeData($pageId = 0) {
-            $pageData = get_page(($pageId == 0 ? intval($_GET['pageid']) : $pageId));
+			$pageId = ($pageId == 0 ? intval($_GET['pageid']) : $pageId);
+            $pageData = get_page($pageId);
             $pageContent = $pageData->post_content;
+			
+			if (empty($pageContent) && $pageId > 0) {
+				$pageData = get_post_meta($pageId,"panels_data",true);
+				if (!empty($pageData['widgets'][0]['text'])) {
+					$pageContent = $pageData['widgets'][0]['text'];
+				} else {
+					$pageContent = "";	
+				}
+			}
 
             // get admin options (default option set on admin page)
             $conOp = $this->getAdminOptions();
@@ -2295,13 +2345,15 @@ if (!class_exists('WP_Spreadplugin')) {
                             if (isset($stringXmlShop->errors) && count($stringXmlShop->errors) > 0) die('Error getting articles. Please check Shop-ID, API and secret.');
                             if ($stringXmlShop['body'][0] != '<') die($stringXmlShop['body']);
                             $stringXmlShop = wp_remote_retrieve_body($stringXmlShop);
+							// Quickfix for Namespace changes of Spreadshirt API
+							$stringXmlShop = str_replace('<ns3:','<',$stringXmlShop);
                             $objArticles = new SimpleXmlElement($stringXmlShop);
                             if (!is_object($objArticles)) die('Articles not loaded');
 
                             echo '<div class="cart-row" data-id="' . (string)$item['id'] . '">
 							<div class="cart-delete"><a href="javascript:;" class="deleteCartItem" title="' . __('Remove', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/delete.png', __FILE__) . '"></a></div>
-							<div class="cart-preview"><img src="//image.spreadshirt.' . self::$shopOptions['shop_source'] . '/image-server/v1/products/' . (string)$item->element['id'] . '/views/1,width=60,height=60,appearanceId=' . (string)$item->element->properties->property[1] . '"></div>
-							<div class="cart-description"><strong>' . htmlspecialchars((empty($objArticles->name) ? $item->description : $objArticles->name), ENT_QUOTES) . '</strong><br>' . __('Size', $this->stringTextdomain) . ': ' . (string)$item->element->properties->property[0] . '<br>' . __('Quantity', $this->stringTextdomain) . ': ' . (int)$item->quantity . '</div>
+							<div class="cart-preview"><img src="//image.spreadshirt.' . self::$shopOptions['shop_source'] . '/image-server/v1/products/' . (string)$item->element['id'] . '/views/1,width=60,height=60,appearanceId=' . (string)$item->element->properties->property[2] . '"></div>
+							<div class="cart-description"><strong>' . htmlspecialchars((empty($objArticles->name) ? $item->description : $objArticles->name), ENT_QUOTES) . '</strong><br>' . __('Size', $this->stringTextdomain) . ': ' . (string)$item->element->properties->property[1] . '<br>' . __('Quantity', $this->stringTextdomain) . ': ' . (int)$item->quantity . '</div>
 							<div class="cart-price"><strong>' . self::formatPrice((float)$item->price->vatIncluded * (int)$item->quantity, '') . '</strong></div>
 							</div>';
                         } else {
@@ -2314,13 +2366,15 @@ if (!class_exists('WP_Spreadplugin')) {
                             if (isset($stringXmlShop->errors) && count($stringXmlShop->errors) > 0) die('Error getting articles. Please check Shop-ID, API and secret.');
                             if ($stringXmlShop['body'][0] != '<') die($stringXmlShop['body']);
                             $stringXmlShop = wp_remote_retrieve_body($stringXmlShop);
+							// Quickfix for Namespace changes of Spreadshirt API
+							$stringXmlShop = str_replace('<ns3:','<',$stringXmlShop);
                             $objArticles = new SimpleXmlElement($stringXmlShop);
                             if (!is_object($objArticles)) die('Articles not loaded');
 
                             echo '<div class="cart-row" data-id="' . (string)$item['id'] . '">
 							<div class="cart-delete"><a href="javascript:;" class="deleteCartItem" title="' . __('Remove', $this->stringTextdomain) . '"><img src="' . plugins_url('/img/delete.png', __FILE__) . '"></a></div>
-							<div class="cart-preview"><img src="//image.spreadshirt.' . self::$shopOptions['shop_source'] . '/image-server/v1/products/' . (string)$objArticles->product['id'] . '/views/' . (string)$objArticles->product->defaultValues->defaultView['id'] . ',viewId=' . (string)$objArticles->product->defaultValues->defaultView['id'] . ',width=60,height=60,appearanceId=' . (string)$item->element->properties->property[1] . '"></div>
-							<div class="cart-description"><strong>' . htmlspecialchars((empty($objArticles->name) ? $item->description : $objArticles->name), ENT_QUOTES) . '</strong><br>' . __('Size', $this->stringTextdomain) . ': ' . (string)$item->element->properties->property[0] . '<br>' . __('Quantity', $this->stringTextdomain) . ': ' . (int)$item->quantity . '</div>
+							<div class="cart-preview"><img src="//image.spreadshirt.' . self::$shopOptions['shop_source'] . '/image-server/v1/products/' . (string)$objArticles->product['id'] . '/views/' . (string)$objArticles->product->defaultValues->defaultView['id'] . ',viewId=' . (string)$objArticles->product->defaultValues->defaultView['id'] . ',width=60,height=60,appearanceId=' . (string)$item->element->properties->property[2] . '"></div>
+							<div class="cart-description"><strong>' . htmlspecialchars((empty($objArticles->name) ? $item->description : $objArticles->name), ENT_QUOTES) . '</strong><br>' . __('Size', $this->stringTextdomain) . ': ' . (string)$item->element->properties->property[1] . '<br>' . __('Quantity', $this->stringTextdomain) . ': ' . (int)$item->quantity . '</div>
 							<div class="cart-price"><strong>' . self::formatPrice((float)$item->price->vatIncluded * (int)$item->quantity, '') . '</strong></div>
 							</div>';
                         }
@@ -2334,9 +2388,9 @@ if (!class_exists('WP_Spreadplugin')) {
                 echo '<div class="spreadplugin-cart-total">' . __('Total (excl. Shipping)', $this->stringTextdomain) . '<strong class="price">' . self::formatPrice($priceSum, '') . '</strong></div>';
 
                 if ($intSumQuantity > 0) {
-                    echo '<div id="cart-checkout" class="spreadplugin-cart-checkout"><a href="' . $_SESSION['checkoutUrl'][self::$shopOptions['shop_source'] . self::$shopOptions['shop_language']] . '" target="' . self::$shopOptions['shop_linktarget'] . '">' . __('Proceed checkout', $this->stringTextdomain) . '</a></div>';
+                    echo '<div id="cart-checkout" class="spreadplugin-cart-checkout"><a href="' . $_SESSION['checkoutUrl'][self::$shopOptions['shop_source'] . self::$shopOptions['shop_language']] . '" target="' . self::$shopOptions['shop_linktarget'] . '">' . __('Proceed to checkout', $this->stringTextdomain) . '</a></div>';
                 } else {
-                    echo '<div id="cart-checkout" class="spreadplugin-cart-checkout"><a title="' . __('Basket is empty', $this->stringTextdomain) . '">' . __('Proceed checkout', $this->stringTextdomain) . '</a></div>';
+                    echo '<div id="cart-checkout" class="spreadplugin-cart-checkout"><a title="' . __('Basket is empty', $this->stringTextdomain) . '">' . __('Proceed to checkout', $this->stringTextdomain) . '</a></div>';
                 }
             }
 
@@ -2363,6 +2417,148 @@ if (!class_exists('WP_Spreadplugin')) {
         public static function mmToIn($val) {
             return number_format($val * 0.0393701, 1);
         }
+
+        // alternative für gzdecode
+        private function ownGzDecode($data, &$filename = '', &$error = '', $maxlength = null) {
+            $len = strlen($data);
+            if ($len < 18 || strcmp(substr($data, 0, 2), "\x1f\x8b")) {
+                $error = "Not in GZIP format.";
+                return null; // Not GZIP format (See RFC 1952)
+            }
+            $method = ord(substr($data, 2, 1)); // Compression method
+            $flags = ord(substr($data, 3, 1)); // Flags
+            if ($flags & 31 != $flags) {
+                $error = "Reserved bits not allowed.";
+                return null;
+            }
+            // NOTE: $mtime may be negative (PHP integer limitations)
+            $mtime = unpack("V", substr($data, 4, 4));
+            $mtime = $mtime[1];
+            $xfl = substr($data, 8, 1);
+            $os = substr($data, 8, 1);
+            $headerlen = 10;
+            $extralen = 0;
+            $extra = "";
+            if ($flags & 4) {
+                // 2-byte length prefixed EXTRA data in header
+                if ($len - $headerlen - 2 < 8) {
+                    return false; // invalid
+                }
+                $extralen = unpack("v", substr($data, 8, 2));
+                $extralen = $extralen[1];
+                if ($len - $headerlen - 2 - $extralen < 8) {
+                    return false; // invalid
+                }
+                $extra = substr($data, 10, $extralen);
+                $headerlen += 2 + $extralen;
+            }
+            $filenamelen = 0;
+            $filename = "";
+            if ($flags & 8) {
+                // C-style string
+                if ($len - $headerlen - 1 < 8) {
+                    return false; // invalid
+                }
+                $filenamelen = strpos(substr($data, $headerlen), chr(0));
+                if ($filenamelen === false || $len - $headerlen - $filenamelen - 1 < 8) {
+                    return false; // invalid
+                }
+                $filename = substr($data, $headerlen, $filenamelen);
+                $headerlen += $filenamelen + 1;
+            }
+            $commentlen = 0;
+            $comment = "";
+            if ($flags & 16) {
+                // C-style string COMMENT data in header
+                if ($len - $headerlen - 1 < 8) {
+                    return false; // invalid
+                }
+                $commentlen = strpos(substr($data, $headerlen), chr(0));
+                if ($commentlen === false || $len - $headerlen - $commentlen - 1 < 8) {
+                    return false; // Invalid header format
+                }
+                $comment = substr($data, $headerlen, $commentlen);
+                $headerlen += $commentlen + 1;
+            }
+            $headercrc = "";
+            if ($flags & 2) {
+                // 2-bytes (lowest order) of CRC32 on header present
+                if ($len - $headerlen - 2 < 8) {
+                    return false; // invalid
+                }
+                $calccrc = crc32(substr($data, 0, $headerlen)) & 0xffff;
+                $headercrc = unpack("v", substr($data, $headerlen, 2));
+                $headercrc = $headercrc[1];
+                if ($headercrc != $calccrc) {
+                    $error = "Header checksum failed.";
+                    return false; // Bad header CRC
+                }
+                $headerlen += 2;
+            }
+            // GZIP FOOTER
+            $datacrc = unpack("V", substr($data, -8, 4));
+            $datacrc = sprintf('%u', $datacrc[1] & 0xFFFFFFFF);
+            $isize = unpack("V", substr($data, -4));
+            $isize = $isize[1];
+            // decompression:
+            $bodylen = $len - $headerlen - 8;
+            if ($bodylen < 1) {
+                // IMPLEMENTATION BUG!
+                return null;
+            }
+            $body = substr($data, $headerlen, $bodylen);
+            $data = "";
+            if ($bodylen > 0) {
+                switch ($method) {
+                    case 8:
+                        // Currently the only supported compression method:
+                        $data = gzinflate($body, $maxlength);
+                        break;
+                    default:
+                        $error = "Unknown compression method.";
+                        return false;
+                }
+            } // zero-byte body content is allowed
+              // Verifiy CRC32
+            $crc = sprintf("%u", crc32($data));
+            $crcOK = $crc == $datacrc;
+            $lenOK = $isize == strlen($data);
+            if (!$lenOK || !$crcOK) {
+                $error = ($lenOK ? '' : 'Length check FAILED. ') . ($crcOK ? '' : 'Checksum FAILED.');
+                return false;
+            }
+            return $data;
+        }
+		
+		
+		// Workaround for checkout language | the new checkout needs locale urgently
+		private function workaroundLangUrl($url) {
+			
+			$_langCodeArr = @explode("_", (empty(self::$shopOptions['shop_language']) ? self::$shopOptions['shop_locale'] : self::$shopOptions['shop_language']));
+			$_langCode = $_langCodeArr[0];
+
+			if (!empty($_langCode)) {
+				if ($_langCodeArr[1] == "CA") {
+					$_langCode = "spreadshirt.ca";
+				} elseif ($_langCode == "us") {
+					$_langCode = "spreadshirt.com";
+				} elseif ($_langCode == "en" && $_langCodeArr[1] == "GB") {
+					$_langCode = "spreadshirt.co.uk";
+				} elseif ($_langCode == "nb") {
+					$_langCode = "spreadshirt.no";
+				} else {
+					$_langCode = "spreadshirt.".$_langCode;
+				}
+				
+				$checkoutUrl = str_replace(array("spreadshirt.net","spreadshirt.com"),$_langCode,$url);
+			} else {
+				// failover, if no checkout url set
+				$checkoutUrl = $url;
+			}
+			
+			return $checkoutUrl;
+		}
+		
     } // END class WP_Spreadplugin
 
     new WP_Spreadplugin();

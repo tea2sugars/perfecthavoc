@@ -1,9 +1,9 @@
 === SoundCloud Master ===
-Contributors: Techgasp
+Contributors: TechGasp
 Tags: plugin, soundcloud, sound, music, mp3, wav, player, playlist, embedded, music sets, sets, sound cloud
 Requires at least: 3.5
-Tested up to: 3.9.1
-Stable tag: 4.3.6
+Tested up to: 4.2.2
+Stable tag: 4.4.2.0
 License: GPLv2 or later
 
 SoundCloud Master is a light weight and shiny clean code wordpress plugin that you need to show off and sell your music.
@@ -37,6 +37,10 @@ IMPORTANT: Errors and conflicts free. NO JAVASCRIPT or AJAX
 * Fully Mobile Responsive
 
 * Soundcloud Buttons Widget (Connect and Lyrics Button)
+
+* Soundcloud Dashboard Widget
+
+* Soundcloud User Profile Widget
 
 * Soundcloud Basic Fast Page Loading Player Widget
 
@@ -115,9 +119,44 @@ IMPORTANT: Errors and conflicts free. NO JAVASCRIPT or AJAX
 3. Widget With SoundCloud Buttons + SoundCloud with TechGasp BANG! Artwork
 4. Widget inside pages and posts. Shortcode framework v3 implementation. SoundCloud Player with Set of Tracks. 
 5. Widget inside pages and posts. Shortcode framework v3 implementations. SoundCloud Player with Single Track.
+6. Widget Soundcloud User Profile.
+7. Administrator Dashboard Widget.
 
 
 == Changelog ==
+
+= 4.4.2.0 =
+* Includes several important fixes and speed-up's
+* New pre-installation flight
+* New text-domain because of updater
+
+= 4.4.1.5 =
+* Wordpress 4.2 ready
+* Fixing Warning
+
+= 4.4.1.4 =
+* Getting all widget titles network ready
+
+= 4.4.1.3 =
+* Tweaking Updater
+
+= 4.4.1.2 =
+* Adding Network Warnings and help texts
+* Adding Soundcloud User Profile Widget
+* Adding Soundcloud Dashboard Widget
+
+= 4.4.1.1 =
+* Fixing uninstall, plugin deletion on wordpress network and multi-sites
+
+= 4.4.1.0 =
+* Fixing Shortcodes
+* Fixing Widgets
+* General clean-up and speed boost
+
+= 4.4.0 =
+* Wordpress multi-site or wordpress network ready
+* New screenshots and images
+* Facebook Button Fly-out tweaked
 
 = 4.3.6 =
 * Added automatic deletion of site_transients

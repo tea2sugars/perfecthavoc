@@ -1,17 +1,28 @@
 <?php
 
 /*
-Plugin Name: WP Maintenance
-Plugin URI: http://wordpress.org/extend/plugins/wp-maintenance/
-Description: Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance ou du lancement de votre site. Personnalisez cette page de maintenance avec une image, un compte à rebours, etc... / The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture, countdown...
-Author: Florent Maillefaud
-Author URI: http://www.restezconnectes.fr/
-Version: 2.0
-*/
+ * Plugin Name: WP Maintenance
+ * Plugin URI: http://wordpress.org/extend/plugins/wp-maintenance/
+ * Description: Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance ou du lancement de votre site. Personnalisez cette page de maintenance avec une image, un compte à rebours, etc... / The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture, countdown...
+ * Author: Florent Maillefaud
+ * Author URI: http://www.restezconnectes.fr/
+ * Version: 2.5.7
+ * Text Domain: wp-maintenance
+ * Domain Path: /languages/
+ */
 
 
 /*
 Change Log
+30/04/2015 - Résolution bug fonction php / Fixed bug php function
+18/04/2015 - Fixed a bug on the end of message counter
+16/04/2015 - Résolution de divers bug CSS
+28/03/2015 - Résolution de divers bug CSS Responsive
+25/03/2015 - Résolution de divers bug CSS
+19/03/2015 - Résolution de divers bugs CSS, ajout d'un titre encart newsletter, ajout champs code header
+07/03/2015 - Résolution de divers bug CSS
+04/12/2014 - Ajout d'une notification dans la barre d'admin / Résolution de divers bug CSS
+03/12/2014 - Correction d'une notice sur un argument déprécié
 09/08/2014 - Ajout de Fonts et Styles
 17/07/2014 - Correction bug feuille de style
 20/05/2014 - Correction bug upload d'image
@@ -61,7 +72,7 @@ function wpm_make_multilang() {
 }
 
 /* Ajoute la version dans les options */
-define('WPM_VERSION', '2.0');
+define('WPM_VERSION', '2.5.7');
 $option['wp_maintenance_version'] = WPM_VERSION;
 if( !get_option('wp_maintenance_version') ) {
     add_option('wp_maintenance_version', $option);
@@ -74,6 +85,33 @@ function wpm_admin_panel() {
     include("wp-maintenance-admin.php");
 }
 
+/* Ajout feuille CSS pour l'admin barre */
+function wpm_admin_head() {
+    echo '<link rel="stylesheet" type="text/css" media="all" href="' .plugins_url('wpm-admin.css', __FILE__). '">';
+}
+add_action('admin_head', 'wpm_admin_head');
+
+/* Ajout Notification admin barre */
+function wpm_add_menu_admin_bar() {
+    global $wp_admin_bar;
+    
+    $checkActive = get_option('wp_maintenance_active');
+    if(isset($checkActive) && $checkActive==1) {
+        $textAdmin = '<img src="'.WP_PLUGIN_URL.'/wp-maintenance/images/lock.png" style="padding: 6px 0;float:left;margin-right: 6px;">Mode maintenance activé';
+    
+        $wp_admin_bar->add_menu(array(
+            'title' => $textAdmin, // Titre du menu
+            'href' => WPM_SETTINGS, // Lien du menu
+            'meta' => array(
+                'class' => 'wpmbackground'
+            )
+            /*'parent' => "wp-logo", // Parent du menu*/
+        ));
+    } 
+}
+add_action('admin_bar_menu', 'wpm_add_menu_admin_bar', 999);
+
+/* Liste les différents Rôles */
 function wpm_get_roles() {
 
     $wp_roles = new WP_Roles();
@@ -84,7 +122,7 @@ function wpm_get_roles() {
 }
 
 function wpm_add_admin() {
-    $hook = add_options_page("Options pour l'affichage de la page maintenance", "WP Maintenance",  10, __FILE__, "wpm_admin_panel");
+    $hook = add_options_page("Options pour l'affichage de la page maintenance", "WP Maintenance",  'manage_options', __FILE__, "wpm_admin_panel");
     
     $wp_maintenanceAdminOptions = array(
         'color_bg' => "#f1f1f1",
@@ -207,6 +245,10 @@ function wpm_social_shortcode( $atts ) {
     $paramSocial = get_option('wp_maintenance_social');
     $paramSocialOption = get_option('wp_maintenance_social_options');
     $countSocial = wpm_array_value_count($paramSocial);
+    // Si on est en mobile on réduite les icones
+    if ( wp_is_mobile() ) {
+           $paramSocialOption['size'] = 24;
+    }
         
 	// Attributes
 	extract( shortcode_atts(
@@ -250,8 +292,8 @@ function wpm_maintenance_mode() {
 
     get_currentuserinfo();
 
-    if(!$paramMMode['active']) { $paramMMode['active'] = 0 ; }
-    if(!$statusActive) { update_option('wp_maintenance_active', $paramMMode['active']); }
+    if( !isset($paramMMode['active']) ) { $paramMMode['active'] = 0 ; }
+    if( !isset($statusActive) ) { update_option('wp_maintenance_active', $paramMMode['active']); }
 
     $paramSocialOption = get_option('wp_maintenance_social_options');
     
@@ -267,7 +309,7 @@ function wpm_maintenance_mode() {
     if( current_user_can('administrator') == true ) {
         $statusActive = 0;
     }
-
+    
     /* Si on désactive le mode maintenance en fin de compte à rebours */
     if($paramMMode['disable']==1 && $statusActive == 1) {
 
@@ -289,13 +331,17 @@ function wpm_maintenance_mode() {
     }
 
     if ($statusActive == 1) {
+        
+        if ( file_exists( get_stylesheet_directory() ) ) {
+            $urlTpl = get_stylesheet_directory();
+        } else {
+            $urlTpl = get_template_directory();
+        }
+        
+        if( $paramMMode['pageperso']==1 && file_exists($urlTpl.'/maintenance.php') ) {
 
-        $urlTpl =  get_stylesheet_directory();
-
-        if($paramMMode['pageperso']==1) {
-
-            $urlTpl =  get_stylesheet_directory();
-            $content = file_get_contents( $urlTpl. '/maintenance.php' );
+            include_once( $urlTpl.'/maintenance.php' );
+            die();
             
         } else {
 
@@ -309,9 +355,6 @@ function wpm_maintenance_mode() {
             /* Paramètres par défaut */
             //if($paramMMode['text_maintenance']=="") { $paramMMode['text_maintenance'] = 'Ce site est en maintenance'; }
             //if($paramMMode['image']=="") { $paramMMode['image'] = WP_PLUGIN_URL.'/wp-maintenance/images/default.png'; }
-
-            /* On récupère les tailles de l'image */
-            list($width, $height, $type, $attr) = getimagesize($paramMMode['image']);
 
             /* Date compte à rebours / Convertie en format US */
             $timestamp = strtotime($paramMMode['date_cpt_aa'].'/'.$paramMMode['date_cpt_mm'].'/'.$paramMMode['date_cpt_jj'].' '.$paramMMode['date_cpt_hh'].':'.$paramMMode['date_cpt_mn']);
@@ -332,22 +375,21 @@ function wpm_maintenance_mode() {
 
             if($paramMMode['b_image'] && $paramMMode['b_enable_image']==1) {
                 if($paramMMode['b_repeat_image']=='') { $paramMMode['b_repeat_image'] = 'repeat'; }
-                //if($paramMMode['b_fixed_image']=='') { $paramMMode['b_fixed_image'] = 'fixed'; }
+                $optionBackground = '';
+                if(isset($paramMMode['b_fixed_image']) && $paramMMode['b_fixed_image']==1) { 
+                    $optionBackground = 'background-attachment:fixed;';
+                }
             $addBImage = '
-            body {
-                background:url('.$paramMMode['b_image'].') '.$paramMMode['b_repeat_image'].';
-                background-attachment:'.$paramMMode['b_fixed_image'].';
-                padding:0;
-                margin:0;
-            }';
+body {
+    background:url('.$paramMMode['b_image'].') '.$paramMMode['b_repeat_image'].';'.$optionBackground.'padding:0;margin:0;
+    background-size: cover;
+}';
             }
             if($paramMMode['b_pattern']>0 && $paramMMode['b_enable_image']==1) {
             $addBImage = '
-            body {
-                background:url('.WP_PLUGIN_URL.'/wp-maintenance/images/pattern'.$paramMMode['b_pattern'].'.png) '.$paramMMode['b_repeat_image'].'  '.$paramMMode['color_bg'].';
-                    padding:0;
-                    margin:0;
-            }';
+body {
+    background:url('.WP_PLUGIN_URL.'/wp-maintenance/images/pattern'.$paramMMode['b_pattern'].'.png) '.$paramMMode['b_repeat_image'].'  '.$paramMMode['color_bg'].';padding:0;margin:0;
+}';
             }
             if($paramSocialOption['align']=='') { $paramSocialOption['align'] = 'center'; }
             if($paramMMode['font_title_size']=='') { $paramMMode['font_title_size'] = 40; }
@@ -381,9 +423,11 @@ function wpm_maintenance_mode() {
     <head>
         <title>'.$site_title." - ".$site_description.'</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=yes" />
         <meta name="description" content="'.__('This site is down for maintenance', 'wp-maintenance').'" />
         '.$addStylesheet.'
         <style type="text/css">
+        /* VERSION '.WPM_VERSION.' */
 @import url(http://fonts.googleapis.com/css?family='.str_replace(' ', '+', $paramMMode['font_title']).'|'.str_replace(' ', '+',$paramMMode['font_text']).'|'.str_replace(' ', '+',$paramMMode['font_text_bottom']).'|'.str_replace(' ', '+',$paramMMode['font_cpt']).');
             '.$wpmStyle.'
             '.$addBImage.'
@@ -394,11 +438,14 @@ body {
   -o-background-size: cover;
   background-size: cover;
   top: 0;
+  margin: 0;
 }
 .wpm_newletter {
     margin-left: auto;
     margin-right: auto;
-    max-width:100%
+    max-width:100%;
+    line-height: '.($paramMMode['font_text_size']*0.9).'px;
+    font-family: '.$paramMMode['font_title'].', serif;
 }
 .wpm_social_icon {
     float:left;
@@ -424,12 +471,14 @@ body {
     font-style: '.$paramMMode['font_title_style'].';
     font-weight: '.$paramMMode['font_title_weigth'].';
     font-family: '.$paramMMode['font_title'].', serif;
+    line-height: 100%;
 }
 #main #intro p {
     font-family: '.$paramMMode['font_text'].', serif;
     font-size: '.$paramMMode['font_text_size'].'px;
     font-style: '.$paramMMode['font_text_style'].';
     font-weight: '.$paramMMode['font_text_weigth'].';
+    line-height: 100%;
 }
 .wpm_copyright {
     font-family: '.$paramMMode['font_text_bottom'].', serif;
@@ -442,6 +491,15 @@ body {
     max-width: 100%;
     height: auto;
 }
+.clear { clear:both; }
+#main #countdown {
+    clear:both;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
+    margin-top:30px;
+    /*min-height:150px;*/
+}
 
 @media screen and (min-width: 200px) and (max-width: 480px) {
     #cptR-day, #cptR-hours, #cptR-minutes, #cptR-seconds {
@@ -453,30 +511,44 @@ body {
     #cptR-days-span, #cptR-hours-span, #cptR-minutes-span, #cptR-seconds-span {
         font-size: 8px;
     }
+    #main #intro h3 {
+        font-size: '.($paramMMode['font_title_size']*0.5).'px;
+        line-height: 100%;
+    }
+    #main #intro p {
+        font-size: '.($paramMMode['font_text_size']*0.5).'px;
+        line-height: 100%;
+    }
+    .wpm_copyright {
+        font-size: '.($paramMMode['font_bottom_size']*0.8).'px;
+    }
+
 }
         </style>
         '.do_shortcode('[wpm_analytics enable="'.$paramMMode['analytics'].'"]').'
+'.stripslashes($paramMMode['headercode']).'
     </head>
     <body>';
+        
+        $content .= '<div id="wrapper">';
         if($paramSocialOption['position']=='top') {
             $content .= do_shortcode('[wpm_social]');
         }
-        $content .= '<div id="wrapper">';
-         if($paramMMode['image']) {
+        if($paramMMode['image']) {
             $content .= '
             <div id="header" class="full">
-                <div id="logo"><img src="'.$paramMMode['image'].'" '.$attr.' /></div>
+                <div id="logo"><img src="'.$paramMMode['image'].'" /></div>
             </div>
             ';
-         }
-         $content .= '
-             <div id="content" class="full">
-                 <div id="main">';
-                     $content .= '
-                    <div id="intro" class="block"><h3>'.stripslashes($paramMMode['titre_maintenance']).'</h3><p>'.stripslashes($paramMMode['text_maintenance']).'</p></div>';
-                     if( isset($paramMMode['message_cpt_fin']) && $paramMMode['message_cpt_fin']!='' && $paramMMode['date_cpt_aa']!='' && $paramMMode['active_cpt']==1) {
+        }
+        $content .= '
+         <div id="content" class="full">
+             <div id="main">';
+                 $content .= '
+                <div id="intro" class="block"><h3>'.stripslashes($paramMMode['titre_maintenance']).'</h3><p>'.stripslashes($paramMMode['text_maintenance']).'</p></div>';
+        if( isset($paramMMode['message_cpt_fin']) && $paramMMode['message_cpt_fin']!='' && $paramMMode['date_cpt_aa']!='' && $paramMMode['active_cpt']==1) {
                      $content .='
-                    <div style="margin-left:auto;margin-right:auto;text-align: center;margin-top:30px;">
+                    <div id="countdown">
                          <script language="JavaScript">
                             TargetDate = "'.$dateCpt.'";
                             BackColor = "'.$paramMMode['color_cpt_bg'].'";
@@ -492,29 +564,35 @@ body {
                      if($paramMMode['active_cpt_s']==1) {
                         $content .= '<div id="cptR-seconds">%%S%%<br /><span id="cptR-seconds-span">'.__('Seconds', 'wp-maintenance').'</span></div>';
                      }
-                     $content .= "';
-                            FinishMessage = '".stripslashes($paramMMode['message_cpt_fin'])."';
-                        </script>";
+                     $content .= "';";
+                     $content .='
+                            FinishMessage = "'.stripslashes($paramMMode['message_cpt_fin']).'";
+                        </script>';
                      $content .= '
                         <script language="JavaScript" src="'.WP_PLUGIN_URL.'/wp-maintenance/wpm-cpt-script.js"></script>
                     </div>';
                         }
                     if($paramMMode['newletter']==1 && $paramMMode['code_newletter']!='') {
-                        $content .= '<div class="wpm_newletter">'.do_shortcode(stripslashes($paramMMode['code_newletter'])).'</div>';
+                        $content .= '<div class="wpm_newletter">'.$paramMMode['title_newletter'].'<br />'.do_shortcode(stripslashes($paramMMode['code_newletter'])).'</div>
+                        <div class="clear">&nbsp;</div>';
                     }
         
                      
                      $content .= '
                      </div><!-- div main -->
             </div><!-- div content -->
-        </div><!-- div wrapper -->';
+        ';
                     if($paramSocialOption['position']=='bottom') {
                         $content .= do_shortcode('[wpm_social]');
                     }
-                    if($paramMMode['text_bt_maintenance']!='') {
-                        $content .= '<div id="wpm_footer"><p class="wpm_copyright">'.stripslashes($paramMMode['text_bt_maintenance']).'</p></div>';
+                    
+            $content .='</div><!-- div wrapper -->';
+            
+            if($paramMMode['text_bt_maintenance']!='') {
+                        $content .= '<div id="wpm_footer"><div class="clear"><p class="wpm_copyright">'.stripslashes($paramMMode['text_bt_maintenance']).'</p></div></div>';
                     }
-            $content .='
+            
+            $content .= '
     </body>
 </html>';
         }

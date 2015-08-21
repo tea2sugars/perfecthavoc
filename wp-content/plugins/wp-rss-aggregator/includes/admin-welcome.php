@@ -6,52 +6,9 @@
 
 	// Exit if the page is accessed directly
 	if ( ! defined( 'ABSPATH' ) ) exit;
-
-
-	/**
-	 * Parses the changelog, and returns an array of the last version entry.
-	 * 
-	 * @since 4.4
-	 * @return array
-	 */
-	function wprss_parse_changelog() {
-		// Read changelog file
-		$contents = file_get_contents( WPRSS_DIR . 'changelog.txt' );
-		// Split into lines and remove first line
-		$lines = explode( "\n", $contents );
-		unset($lines[0]);
-		
-		// Lines chosen for last changelog entry i.e. lines until an empty line is encountered
-		$chosen = array();
-		// Iterate the lines
-		foreach( $lines as $line ) {
-			// if the line is empty, stop iterating
-			if ( trim($line) == '' ) {
-				break;
-			}
-			// otherwise, add it to chosen
-			$chosen[] = $line;
-		}
-		
-		$final = array();
-		// Iterate lines
-		foreach( $chosen as $line ) {
-			// Split by colon
-			$colon = strpos( $line, ":" );
-			// Get the type (New Feature, Enhanced, Fixed Bug)
-			$type = trim( substr( $line, 0, $colon ) );
-			// Get the description
-			$desc = trim( substr( $line, $colon + 1 ) );
-			// Add it to the final array
-			$final[] = array(
-				'type'	=>	$type,
-				'desc'	=>	$desc
-			);
-		}
-		
-		// Return the final array
-		return $final;
-	}
+	
+	// The readme lib
+	require_once( WPRSS_INC . '/readme.php' );
 
 
 	// The tabs to be shown
@@ -80,10 +37,10 @@
 
 			<!-- TAB WRAPPER -->
 			<h2 class="nav-tab-wrapper">
-				<a class="nav-tab <?php if ( $tab === null ) echo 'nav-tab-active'; ?>"
+				<!--<a class="nav-tab <?php if ( $tab === null ) echo 'nav-tab-active'; ?>"
 					href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'wprss-welcome' ), 'index.php' ) ) ); ?>">
 					<?php _e( "What's New?", WPRSS_TEXT_DOMAIN ) ?>
-				</a>
+				</a>-->
 
 				<!-- SHOW ALL TABS -->
 				<?php foreach ($tabs as $slug => $title) : ?>
@@ -106,7 +63,7 @@
 					default: ?>
 		 					<div class="changelog">
 
-								<h2 class="about-headline-callout"><?php _e( 'Bulk Adding Feed Sources', WPRSS_TEXT_DOMAIN ) ?></h2>
+								<!--<h2 class="about-headline-callout"><?php _e( 'Bulk Adding Feed Sources', WPRSS_TEXT_DOMAIN ) ?></h2>
 								<div class="about-overview">
 									<img src="<?php echo WPRSS_IMG; ?>welcome-page/bulk-add.png" />
 									<?php echo wpautop( sprintf( __('The new bulk adding option saves you time by allowing you to enter your feed names and URLs all at once.
@@ -136,14 +93,14 @@
 											. "<strong>WP RSS Aggregator</strong> in the future, meaning it won't be imported from any of your feed sources."
 											. 'and added to the <strong>Blacklist</strong>.', WPRSS_TEXT_DOMAIN) ) ) ?>
 									</div>
-								</div>
+								</div>-->
 
 								<hr/>
 
 								<h3><?php _e( 'Check out our add-ons:', WPRSS_TEXT_DOMAIN ) ?></h3>
 
 									<ul>
-										<li><strong><a href="http://www.wprssaggregator.com/extension/feed-post/" target="wprss_ftp"><?php _e( 'Feed to Post', WPRSS_TEXT_DOMAIN ); ?></a></strong></li>
+										<li><strong><a href="http://www.wprssaggregator.com/extension/feed-to-post/" target="wprss_ftp"><?php _e( 'Feed to Post', WPRSS_TEXT_DOMAIN ); ?></a></strong></li>
 										<li><strong><a href="http://www.wprssaggregator.com/extension/excerpts-thumbnails/"  target="wprss_et"><?php _e( 'Excerpts &amp; Thumbnails', WPRSS_TEXT_DOMAIN ); ?></a></strong></li>
 										<li><strong><a href="http://www.wprssaggregator.com/extension/categories/" target="wprss_cat"><?php _e( 'Categories', WPRSS_TEXT_DOMAIN ); ?></a></strong></li>
 										<li><strong><a href="http://www.wprssaggregator.com/extension/keyword-filtering/" target="wprss_kf"><?php _e( 'Keyword Filtering', WPRSS_TEXT_DOMAIN ); ?></a></strong></li>
@@ -151,20 +108,19 @@
 										<li><strong><a href="http://www.wprssaggregator.com/extension/wordai/" target="wprss_ai"><?php _e( 'WordAi', WPRSS_TEXT_DOMAIN ); ?></a></strong></li>
 									</ul>
 								</p>
-								<?php echo wpautop( sprintf( __('More information about add-ons can be found on our website <a href="%1$s">%2$s</a>', WPRSS_TEXT_DOMAIN), 'http://www.wprssaggregator.com', 'www.wprssaggregator.com' ) ) ?>
+								<?php echo wpautop( sprintf( __( 'More information about add-ons can be found on our website <a href="%1$s">%2$s</a>', WPRSS_TEXT_DOMAIN ), 'http://www.wprssaggregator.com', 'www.wprssaggregator.com' ) ) ?>
 
 		 						<hr/>
 
-		 						<h3><?php printf( __( 'Changelog for v%1$s', WPRSS_TEXT_DOMAIN ), WPRSS_VERSION ) ?></h3>
-		 						<ul>
-									<?php // CHANGELOG
-										$changelog = wprss_parse_changelog();
-										foreach( $changelog as $entry ): ?>
-											<li><strong><?php _e( $entry['type'], WPRSS_TEXT_DOMAIN ) ?></strong>: <?php _e( $entry['desc'], WPRSS_TEXT_DOMAIN ) ?></li>
-									<?php endforeach; ?>
-		 						</ul>
+								<?php $changelog = wprss_parse_changelog() ?>
+								<?php if ( count( $changelog ) ): foreach( $changelog as $_version => $_changes_html ): ?>
+		 						<h3><?php printf( __( 'Changelog for v%1$s', WPRSS_TEXT_DOMAIN ), $_version ) ?></h3>
+									<div class="changelog-changeset" >
+										<?php echo $_changes_html ?>
+									</div>
+								<?php break; endforeach; endif; ?>
 								
-		 						<?php echo wpautop( sprintf( __('Need functionality not already available in core or the add-ons? You can <a href="%1$s">suggest new features</a>!', WPRSS_TEXT_DOMAIN), 'http://www.wprssaggregator.com/feature-requests/' ) ) ?>
+		 						<?php echo wpautop( sprintf( __( 'Need functionality not already available in core or the add-ons? You can <a href="%1$s">suggest new features</a>!', WPRSS_TEXT_DOMAIN ), 'https://trello.com/b/UJJwpvZu/wp-rss-aggregator-public-roadmap' ) ) ?>
 
 							</div>
 

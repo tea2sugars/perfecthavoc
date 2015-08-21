@@ -45,7 +45,8 @@ class Jetpack_Network {
 	 * @since 2.9
 	 */
 	private function __construct() {
-		 require_once( ABSPATH . '/wp-admin/includes/plugin.php' ); // For the is_plugin... check
+		require_once( ABSPATH . '/wp-admin/includes/plugin.php' ); // For the is_plugin... check
+		require_once( JETPACK__PLUGIN_DIR . 'modules/protect/shared-functions.php' ); // For managing the global whitelist
 		/*
 		 * Sanity check to ensure the install is Multisite and we
 		 * are in Network Admin
@@ -120,7 +121,7 @@ class Jetpack_Network {
 	 * @since 2.9
 	 */
 	public function body_class( $classes ) {
-		return 'network-admin';
+		return trim( $classes ) . ' network-admin ';
 	}
 
 	/**
@@ -255,11 +256,9 @@ class Jetpack_Network {
 	 * @since 2.9
 	 */
 	public function add_network_admin_menu() {
-		add_action( 'admin_print_styles', array( $this, 'network_admin_styles' ) );
-
-		add_menu_page(__('Jetpack', 'jetpack'), __('Jetpack', 'jetpack'), 'read', 'jetpack', array($this, 'network_admin_page'), 'div', 3);
-		add_submenu_page('jetpack', __('Jetpack Sites', 'jetpack'), __('Sites', 'jetpack'), 'manage_options', 'jetpack', array($this, 'network_admin_page'));
-		add_submenu_page('jetpack', __('Settings', 'jetpack'), __('Settings', 'jetpack'), 'read', 'jetpack-settings', array($this, 'render_network_admin_settings_page'));
+		add_menu_page( __( 'Jetpack', 'jetpack' ), __( 'Jetpack', 'jetpack' ), 'manage_network_plugins', 'jetpack', array( $this, 'network_admin_page' ), 'div', 3 );
+		add_submenu_page( 'jetpack', __( 'Jetpack Sites', 'jetpack' ), __( 'Sites', 'jetpack' ), 'manage_sites', 'jetpack', array( $this, 'network_admin_page' ) );
+		add_submenu_page( 'jetpack', __( 'Settings', 'jetpack' ), __( 'Settings', 'jetpack' ), 'manage_network_plugins', 'jetpack-settings', array( $this, 'render_network_admin_settings_page' ) );
 
 		/**
 		 * As jetpack_register_genericons is by default fired off a hook,
@@ -270,7 +269,7 @@ class Jetpack_Network {
 		jetpack_register_genericons();
 
 		if ( ! wp_style_is( 'jetpack-icons', 'registered' ) )
-			wp_register_style( 'jetpack-icons', plugins_url( '_inc/jetpack-icons.min.css', __FILE__ ), false, JETPACK__VERSION );
+			wp_register_style( 'jetpack-icons', plugins_url( 'css/jetpack-icons.min.css', JETPACK__PLUGIN_FILE ), false, JETPACK__VERSION );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_menu_css' ) );
 	}
@@ -358,6 +357,9 @@ class Jetpack_Network {
 	 * @see Jetpack_Network::jetpack_sites_list()
 	 */
 	public function do_subsitedisconnect( $site_id = null ) {
+		if ( ! current_user_can( 'jetpack_disconnect' ) ) {
+			return;
+		}
 		$site_id = ( is_null( $site_id ) ) ? $_GET['site_id']: $site_id;
 		switch_to_blog( $site_id );
 		Jetpack::disconnect();
@@ -372,6 +374,10 @@ class Jetpack_Network {
 	 * @see Jetpack_Network::jetpack_sites_list();
 	 */
 	public function do_subsiteregister( $site_id = null ) {
+		if ( ! current_user_can( 'jetpack_disconnect' ) ) {
+			return;
+		}
+
 		$jp = Jetpack::init();
 
 		// Figure out what site we are working on
@@ -502,18 +508,6 @@ class Jetpack_Network {
 	}
 
 	/**
-	 * Add css styles needed for the Network Admin area
-	 **/
-	function network_admin_styles() {
-		global $wp_styles;
-
-		$min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-		wp_enqueue_style( 'jetpack', plugins_url( "_inc/jetpack-network{$min}.css", __FILE__ ), false, JETPACK__VERSION . '-20121016' );
-		$wp_styles->add_data( 'jetpack', 'rtl', true );
-	}
-
-	/**
 	 * Handles the displaying of all sites on the network that are
 	 * dis/connected to Jetpack
 	 *
@@ -530,6 +524,12 @@ class Jetpack_Network {
 			switch_to_blog( $current_site->blog_id );
 			$main_active = $jp->is_active();
 			restore_current_blog();
+
+			// If we are in dev mode, just show the notice and bail
+			if ( Jetpack::is_development_mode() ) {
+				Jetpack::show_development_mode_notice();
+				return;
+			}
 
 			/*
 			 * Ensure the main blog is connected as all other subsite blog
@@ -588,6 +588,31 @@ class Jetpack_Network {
 	 */
 	public function save_network_settings_page() {
 
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'jetpack-network-settings' ) ) {
+			// no nonce, push back to settings page
+			wp_safe_redirect(
+				add_query_arg(
+					array( 'page' => 'jetpack-settings' ),
+					network_admin_url( 'admin.php' )
+				)
+			);
+			exit();
+		}
+
+		// try to save the Protect whitelist before anything else, since that action can result in errors
+		$whitelist = str_replace( ' ', '', $_POST['global-whitelist'] );
+		$whitelist = explode( PHP_EOL, $whitelist );
+		$result    = jetpack_protect_save_whitelist( $whitelist, $global = true );
+		if ( is_wp_error( $result ) ) {
+			wp_safe_redirect(
+				add_query_arg(
+					array( 'page' => 'jetpack-settings', 'error' => 'jetpack_protect_whitelist' ),
+					network_admin_url( 'admin.php' )
+				)
+			);
+			exit();
+		}
+
 		/*
 		 * Fields
 		 *
@@ -619,7 +644,12 @@ class Jetpack_Network {
 		);
 
 		update_site_option( $this->settings_name, $data );
-		wp_safe_redirect(add_query_arg(array('page' => 'jetpack-settings', 'updated' => 'true'), network_admin_url('admin.php')));
+		wp_safe_redirect(
+			add_query_arg(
+				array( 'page' => 'jetpack-settings', 'updated' => 'true' ),
+				network_admin_url( 'admin.php' )
+			)
+		);
 		exit();
 	}
 
@@ -643,7 +673,8 @@ class Jetpack_Network {
 
 		$data = array(
 			'modules' => $modules,
-			'options' => $options
+			'options' => $options,
+			'jetpack_protect_whitelist' => jetpack_protect_format_whitelist(),
 		);
 
 		Jetpack::init()->load_view( 'admin/network-settings.php', $data );

@@ -3,7 +3,7 @@ Contributors: impression11
 Tags: Twitter, Widget, Minimalist, Tweets,
 Requires at least: 3.5
 Tested up to: 3.9
-Stable tag: 1.3
+Stable tag: 1.5
 
 A quick and efficient Twitter widget to display tweets.
 
@@ -35,6 +35,12 @@ Something not working? [Contact Me](http://impression11.co.uk/contact/)
 5. If you run into API limits use the caching feature to speed up loading and to limit the amount of requests sent to Twitter.
 
 == Changelog ==
+
+= 1.4 =
+* Tweets displayed by shortcode should appear where the shortcode is placed, not before any other content.
+* Fixed an issue with displaying Retweets within a hashtag search.
+* General code improvements.
+* Added a "Debug Mode", if enabled it will display the raw data received from Twitter to allow easier diagnosis of issues.
 
 = 1.3 =
 * The option to decide if Replies and Retweets are shown.

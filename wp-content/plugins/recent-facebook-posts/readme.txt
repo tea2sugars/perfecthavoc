@@ -1,21 +1,21 @@
 === Plugin Name ===
 Contributors: DvanKooten
-Donate link: http://dannyvankooten.com/donate/
+Donate link: https://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
-Requires at least: 3.1
-Tested up to: 3.7.1
-Stable tag: 1.8.5
+Requires at least: 3.7
+Tested up to: 4.2.2
+Stable tag: 2.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Lists most recent Facebook posts from public Facebook pages. A faster, prettier and more customizable alternative to Facebooks Like Box. 
+Lists most recent Facebook posts from public Facebook pages. A faster, prettier and more customizable alternative to Facebooks Like Box.
 
 == Description ==
 
 This plugin adds a widget, a shortcode `[recent_facebook_posts]` and a template function `recent_facebook_posts()` to your WordPress website which you can use to list your most recent Facebook posts. This plugin works with public pages and to a certain extent with personal profiles.
 
 = Facebook Posts Widget =
-Render a number of most recent Facebook page updates in any of your widget areas using the Recent Facebook Posts widget. 
+Render a number of most recent Facebook page updates in any of your widget areas using the Recent Facebook Posts widget.
 
 = Facebook Posts Shortcode =
 Display a list of your most recent Facebook posts in your posts or pages using the `[recent_facebook_posts]` shortcode. Optionally, specify some arguments to customize the output.
@@ -28,21 +28,32 @@ Display a list of your most recent Facebook posts in your posts or pages using t
 * Easy Configuration, the plugin comes with a comprehensive [installation guide](http://wordpress.org/plugins/recent-facebook-posts/installation/) and [screenshots](http://wordpress.org/plugins/recent-facebook-posts/screenshots/).
 * Translation ready!
 
-**Demo**
+**Translations**
 
-There is a demo on [my own website](http://dannyvankooten.com/), I use the plugin to show my most recent Facebook post in the footer.
+English (en_US) - [Danny van Kooten](https://dannyvankooten.com/)<br />
+Dutch (nl_NL) - [Danny van Kooten](https://dannyvankooten.com/)<br />
+Spanish (es_ES) - [Hermann Bravo](http://hbravo.com/)
+Swedish (sv_SE) - [Robin Wellström](http://robinwellstrom.se/)
+German (de_DE) - [Henrik Heller ](http://www.gmx.net/)
+Italian (it_IT) - [Daniele Chianucci](http://frozen.me/)
+Turkish (tr_TR) - Halukcan Pehlivanoğlu
+
+_Looking for more translations.._
+
+If you have [created your own language pack](http://codex.wordpress.org/Translating_WordPress), you can send me the language files so that I can bundle it into the Recent Facebook Posts plugin. [You can download the latest POT file here](http://plugins.svn.wordpress.org/recent-facebook-posts/trunk/languages/recent-facebook-posts.pot).
 
 **Other Links**
 
-* [Recent Facebook Posts for WordPress](http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/)
-* Using MailChimp to send out email newsletters and looking to grow your lists? Try [MailChimp for WordPress](http://wordpress.org/plugins/mailchimp-for-wp/).
-* Check out more [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by Danny van Kooten
-* You should follow [@DannyvanKooten](http://twitter.com/DannyvanKooten) on Twitter.
+* [Contribute to the Recent Facebook Posts plugin on GitHub](https://github.com/dannyvankooten/wordpress-recent-facebook-posts)
+* Using MailChimp to send out email newsletters? You should [try MailChimp for WordPress](https://wordpress.org/plugins/mailchimp-for-wp/).
+* Want an unobtrusive conversion booster? Have a look at the [Scroll Triggered Boxes plugin](https://wordpress.org/plugins/scroll-triggered-boxes/).
+* Check out more [WordPress plugins](https://dannyvankooten.com/wordpress-plugins/) by the same author
+* Follow [@DannyvanKooten](https://twitter.com/DannyvanKooten) or [@ibericode](https://twitter.com/ibericode) on Twitter.
 
 == Installation ==
 
 = Installing the plugin =
-1. [Download the latest version of the plugin](http://downloads.wordpress.org/plugin/recent-facebook-posts.zip)
+1. [Download the latest version of the plugin](https://downloads.wordpress.org/plugin/recent-facebook-posts.zip)
 1. Upload the contents of the downloaded .zip-file to your WordPress plugin directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
@@ -54,24 +65,24 @@ This plugin requires a Facebook application to fetch posts from Facebook.
 
 = Configuring the plugin =
 1. Go to *Settings > Recent Facebook* posts in your WP Admin panel.
-1. Copy and paste your Facebook `App ID/API Key` and `App Secret` into the setting fields. 
+1. Copy and paste your Facebook `App ID/API Key` and `App Secret` into the setting fields.
 1. Find the numeric Facebook ID of your public Facebook page using [this website](http://findmyfacebookid.com/).
 1. Copy paste the ID in the `Facebook Page ID` field.
 1. Add `[recent_facebook_posts]` to the page where you would like to show a list of recent Facebook posts or use the widget.
 
 = Extra notes =
-* Take a look at the [screenshots](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/), they will tell you which values from Facebook you need.
+* Take a look at the [screenshots](https://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/), they will tell you which values from Facebook you need.
 * The plugin works with personal profiles, but only to a certain extend. I am not actively supporting personal profiles because of many privacy settings related issues.
 
-Ran into an error? Have a look at the [FAQ](http://wordpress.org/plugins/recent-facebook-posts/faq/) for solutions to common problems.
+Ran into an error? Have a look at the [FAQ](https://wordpress.org/plugins/recent-facebook-posts/faq/) for solutions to common problems or [open an issue on GitHub](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues).
 
 == Frequently Asked Questions ==
 
 = What does Recent Facebook Posts do? =
-With this plugin you can show a list of the most recent Facebook posts of a public page. You can display these posts in pages, posts and widget areas by using a shortcode or widget. Have a look at my [own WordPress website](http://dannyvankooten.com/) for an example, I have a widget with my latest Facebook update in my footer.
+With this plugin you can show a list of the most recent Facebook posts of a public page. You can display these posts in pages, posts and widget areas by using a shortcode or widget. Have a look at my [own WordPress website](https://dannyvankooten.com/) for an example, I have a widget with my latest Facebook update in my footer.
 
 = How to configure this plugin? =
-You need to create a Facebook application for this plugin to work. Have a **close** look at the [installation instructions](http://wordpress.org/plugins/recent-facebook-posts/installation/).
+You need to create a Facebook application for this plugin to work. Have a **close** look at the [installation instructions](https://wordpress.org/plugins/recent-facebook-posts/installation/).
 
 = No posts are showing.. =
 The plugin is only able to fetch posts from **public** pages with posts which are publicly available. Check your page its privacy settings and make sure you are using a page instead of a personal profile or group.
@@ -142,9 +153,104 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 1. The Recent Facebook Posts settings screen.
 2. This is where you'll find your App ID / API Key and App Secret in your [Facebook App Settings](https://developers.facebook.com/apps/).
-3. This is where you'll find your Facebook Page Slug on Facebook.com. 
+3. This is where you'll find your Facebook Page Slug on Facebook.com.
 
 == Changelog ==
+
+= 2.0.8 - July 1, 2015 =
+
+**Additions**
+
+- Added Turkish translations, thanks to Halukcan Pehlivanoğlu!
+
+= 2.0.7 - May 15, 2015 =
+
+**Fixes**
+
+- Video posts were not showing correctly
+
+**Improvements**
+
+- Added play icon overlay to video's
+
+**Additions**
+
+- Added Italian translations, thanks to [Luigi Savini](https://github.com/gigiame)
+- Added Portugese translations, thanks to [Jonadabe](https://github.com/Jonadabe)
+
+= 2.0.6 - May 15, 2015 =
+
+**Fixes**
+
+- Hooks were double added when using the widget
+
+**Improvements**
+
+- Added a notice about using the shortcode to the plugin's settings page.
+
+**Additions**
+
+- Added German translations, thanks to [Henrik Heller ](http://www.gmx.net/).
+
+= 2.0.5 - March 23, 2015 =
+
+**Additions**
+
+- Added Swedish translations, thanks to [Robin Wellström](http://robinwellstrom.se/).
+
+= 2.0.4 - February 19, 2015 =
+
+**Fixes**
+
+- Issue where settings page would just load an empty screen. ([Issue #6](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues/6))
+
+**Improvements**
+
+- Updated all links to use HTTPS protocol.
+
+= 2.0.3 - September 22, 2014 =
+
+**Improvements**
+
+- Now loading minified asset (.css and .js) files by default
+- Added some missing text domains
+- Minor improvements to settings page and settings handling.
+
+**Additions**
+
+- Added Spanish language, thanks [Hermann Bravo](http://hbravo.com/)
+- Added `rfpb_widget_options` filter to filter all widget options. Closes [#3](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues/3), thanks [KilukruMedia](https://github.com/KilukruMedia)
+- Added [languages/recent-facebook-posts.pot](http://plugins.svn.wordpress.org/recent-facebook-posts/trunk/languages/recent-facebook-posts.pot) file for easier translating. Please send in your language files (.po and .mo) if you created any.
+
+= 2.0.2 - September 17, 2014 =
+
+**Fixes**
+
+- Removed duplicate `picture` in call to Facebook API. Fixes a "Syntax error" in later API versions. Props [danielfharmonic](https://github.com/danielfharmonic).
+
+= 2.0.1 - September 15, 2014 =
+
+**Improvements**
+
+- The plugin will now show a detailed error message if anything related to the connection to Facebook failed.
+- Updated Dutch translation
+
+= 2.0 - September 15, 2014 =
+
+**Fixes**
+
+- Fixed an issue with Facebook statuses containing Emojis
+
+**Improvements**
+
+- Better sanitizing throughout the plugin, using native WP functions.
+- Improved inline code documentation
+- Prevent direct file access
+- Changing thumbnail sizes does not require a cache refresh to fetch new video images
+
+**Additions**
+
+- New FB configurations are now automatically tested.
 
 = 1.8.5 - December 3, 2013 =
 * Fixed: Character encoding for scandinavian languages etc.
@@ -271,7 +377,7 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 = 1.2 =
 * Fixed: Reverted back to 'posts' instead of 'feed', to exclude posts from others.
-* Fixed: undefined index 'count' when renewing cache file   
+* Fixed: undefined index 'count' when renewing cache file
 * Fixed: wrong comment or like count for some posts
 * Improved: calculation of cache file modification time to prevent unnecessary cache renewal
 * Improved: error message when cURL is not enabled
@@ -298,9 +404,9 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 * Fixed: FB API Error for unknown fields.
 * Added: Images from FB will now be shown too. Drop me a line if you think this should be optional.
 
-= 1.0.3 = 
+= 1.0.3 =
 * Improved the way the link to the actual status update is created (thanks Nepumuk84).
-* Improved: upped the limit of the call to Facebooks servers. 
+* Improved: upped the limit of the call to Facebooks servers.
 
 = 1.0.2 =
 * Fixed a PHP notice in the backend area when renewing cache and fetching shared status updates.
@@ -320,14 +426,8 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 == Upgrade Notice ==
 
-= 1.8.5 =
-Fixed character encoding for Scandinavian characters plus many improvements to the configuration process.
+= 2.0.1 =
+Fixed issue with Emojis in Facebook statuses, updated translations and various other improvements.
 
-= 1.8.1 =
-Added link previews (like Facebook) and Dutch translations. Please update your settings after updating.
-
-= 1.8 =
-Added link previews (like Facebook) and Dutch translations. Please update your settings after updating.
-
-= 1.6 =
-CSS and HTML output have changed. If you're using custom CSS styles you will have to edit them after updating.
+= 2.0 =
+Fixed issue with Emojis breaking all posts. Various other code improvements.

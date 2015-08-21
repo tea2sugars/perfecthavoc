@@ -3,8 +3,8 @@ Contributors: Florent73
 Donate link: 
 Tags: wordpress maintenance plugin
 Requires at least: 3.0
-Tested up to: 3.9.2
-Stable tag: 2.0
+Tested up to: 4.2.1
+Stable tag: 2.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,11 +65,46 @@ Oui mais merci de me soumettre les modifications souhaitées afin de mettre à j
 
 == Upgrade Notice ==
 
-= 2.0 =
+= 2.5.7 =
 Cette version est stable / This version is stable
 
-
 == Changelog ==
+
+= 2.5.7 =
+* Résolution bug fonction php / Fixed bug php function
+
+= 2.5.6 =
+* Résolution d'un bug sur le message de fin du compteur / Fixed a bug on the end of message counter
+
+= 2.5.5 =
+* Résolution de divers bugs CSS Responsive / Fixed various CSS bugs responsive mode
+
+= 2.5.4 =
+* Résolution de divers bugs CSS Responsive / Fixed various CSS bugs responsive mode
+
+= 2.5.3 =
+* Résolution de divers bugs CSS Responsive / Fixed various CSS bugs responsive mode
+
+= 2.5.2 =
+* Résolution de divers bugs CSS / Fixed various CSS bugs
+
+= 2.5.1 =
+* Résolution de divers bugs CSS / Fixed various CSS bugs
+
+= 2.5 =
+* Résolution de divers bugs CSS, ajout d'un titre encart newsletter, ajout champs code header / Fixed various CSS bugs, adding an input for newsletter title, adding a code header fields
+
+= 2.4 =
+* Résolution de divers bugs CSS / Fixed various CSS bugs
+
+= 2.3 =
+* Résolution d'un bug sur tailles des icônes sociaux et sur l'acivation de page maintenance.php du thème / Fixed a bug on sizes of social icons on the theme of maintenance.php page acivation
+
+= 2.2 =
+* Ajout d'une notification dans la barre d'admin et résolution de divers bugs CSS / Added a notification in the admin bar & fixed various CSS bugs
+
+= 2.1 =
+* Correction d'une notice sur un argument déprécié  / Fixed a notice on a depreciated argument
 
 = 2.0 =
 * Ajout des Google Fonts et style de police / Adding Google Fonts and font style 

@@ -7,7 +7,7 @@ if ( !defined( 'WPRSS_TRACKING_INTEVAL' ) )
 	define( 'WPRSS_TRACKING_INTEVAL', 'daily', TRUE );
 
 
-add_action( 'admin_init', 'wprss_send_tracking_data' );
+// add_action( 'admin_init', 'wprss_send_tracking_data' );
 function wprss_send_tracking_data() {
 
 	// Check the tracking option - if turned off, exit out of function
@@ -132,9 +132,9 @@ function wprss_send_tracking_data() {
 		)
 	);
 
-	// Set a transient that expires in 1 day. When it expires, this function will run agai
-	// Expiration: 60secs * 60mins * 24hrs = 1 day
-	set_transient( 'wprss_tracking_transient', '-', 60 * 60 * 24 );
+	// Set a transient that expires in 1 week. When it expires, this function will run again
+	// Expiration: 60secs * 60mins * 24hrs * 7days = 1 week
+	set_transient( 'wprss_tracking_transient', '-', 60 * 60 * 24 * 7 );
 }
 
 
