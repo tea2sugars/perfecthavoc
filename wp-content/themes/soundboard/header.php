@@ -6,12 +6,12 @@
         <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
    <meta property="og:title" content="Perfect Havoc">
 <meta property="og:description" content="Oliver Nelson, Skogsra, Tobtok and Televisor">
-<meta property="og:image" content="perfecthavoc/wp-content/uploads/2014/08/new-link.jpg">
+<meta property="og:image" content="/wp-content/uploads/2014/08/new-link.jpg">
 <meta property="og:image:type" content="image/png">
 <meta property="og:url" content="perfecthavoc/"
 <meta property="og:image:width" content="475">
 <meta property="og:image:height" content="319">
-<link rel=”image_src” href=”perfecthavoc/wp-content/uploads/2014/08/new-link.jpg” />
+<link rel=”image_src” href=”/wp-content/uploads/2014/08/new-link.jpg” />
         <!-- title -->
         <title> <?php wp_title(''); ?> <?php bloginfo('name'); ?></title>
         <!-- stylesheets -->
