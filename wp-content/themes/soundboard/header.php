@@ -6,12 +6,12 @@
         <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
    <meta property="og:title" content="Perfect Havoc">
 <meta property="og:description" content="Oliver Nelson, Skogsra, Tobtok and Televisor">
-<meta property="og:image" content="http://localhost:8888/perfecthavoc/wp-content/uploads/2014/08/new-link.jpg">
+<meta property="og:image" content="perfecthavoc/wp-content/uploads/2014/08/new-link.jpg">
 <meta property="og:image:type" content="image/png">
-<meta property="og:url" content="http://localhost:8888/perfecthavoc/"
+<meta property="og:url" content="perfecthavoc/"
 <meta property="og:image:width" content="475">
 <meta property="og:image:height" content="319">
-<link rel=”image_src” href=”http://localhost:8888/perfecthavoc/wp-content/uploads/2014/08/new-link.jpg” />
+<link rel=”image_src” href=”perfecthavoc/wp-content/uploads/2014/08/new-link.jpg” />
         <!-- title -->
         <title> <?php wp_title(''); ?> <?php bloginfo('name'); ?></title>
         <!-- stylesheets -->
@@ -194,7 +194,7 @@ box-shadow: none;
 			</form></li><li  class="boom boom-2"> <aside id="text-2" class="widget widget_text">			<div class="textwidget"><li class="soci"><a href="https://www.facebook.com/perfecthavocmusic" target="_blank"><span>Like us</span><i class="icon-facebook"></i></a></li><li class="soci"><a href="https://twitter.com/perfecthavoc" target="_blank"><span>Follow</span><i class="icon-twitter"></i></a></li><li class="soci"><a href="https://soundcloud.com/perfecthavocmusic" target="_blank"><span>Follow</span><i class="icon-soundcloud"></i></a></li><li class="soci"><a href="https://www.youtube.com/user/perfecthavoctv" target="_blank"><span>Subscribe</span><i class="icon-youtube"></i></a></li></div>
 		</aside></li>
 			<li class="boom boom-3"><a class="home-link" href="http://perfecthavoc.com" title="Perfect Havoc" rel="home">
-			<img src="http://www.perfecthavoc.com/wp-content/uploads/2014/07/perfect-havoc-TEXT_200.jpg" style="width:auto;height:30px;" />
+			<img src="/wp-content/uploads/2014/07/perfect-havoc-TEXT_200.jpg" style="width:auto;height:30px;" />
 			</a></li></ul></div>
         <div id="wraptop">
         <div id="header">
